@@ -5,7 +5,7 @@ All notable changes are listed here. Versions follow [Semantic Versioning](https
 ## Unreleased
 
 - Install.cmd and Update.cmd now start Windows PowerShell with its own module path, also from a PowerShell 7 window. Before, Windows PowerShell took the modules of PowerShell 7 there. Two commands that the installer needs were then missing, so a new install stopped with an error.
-- When the installer uses the other folder it offers (if the usual one cannot be used), it makes that folder readable by you only. That step now also removes an "OWNER RIGHTS" entry, if the folder has one. Windows Server can leave one behind for an administrator. The entry gives nobody else access, but the step counted it as another account and stopped the install.
+- When the installer uses the other folder it offers (if the usual one cannot be used), it makes that folder readable by you only. That step now also removes an "OWNER RIGHTS" entry, if the folder has one. The entry gives nobody else access, but before, the step counted it as another account and failed. Such an entry was seen only in tests on GitHub's Windows Server, on folders made inside a folder that Python had made private. A new folder at the top of a drive, where the installer's other folder goes, was not affected.
 
 ## 0.1.0
 
