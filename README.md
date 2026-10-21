@@ -219,7 +219,7 @@ IELTS is a registered trademark of the British Council, IDP IELTS and Cambridge 
 
 ## Made by
 
-Michael and Sina designed Fluentfolio together.
+Michael and Sina designed Fluentfolio app together.
 
 - Michael: [github.com/SacitDev](https://github.com/SacitDev)
 - Sina: [github.com/sina-builds](https://github.com/sina-builds)
