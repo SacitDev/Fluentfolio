@@ -4,8 +4,8 @@ All notable changes are listed here. Versions follow [Semantic Versioning](https
 
 ## Unreleased
 
-- Install.cmd and Update.cmd now also work when you start them from a PowerShell 7 window. Before, the install stopped with an error at the step that makes the app folder readable by you only.
-- That same step now also removes an "OWNER RIGHTS" entry, if the folder has one. Windows Server can leave one behind for an administrator. The entry gives nobody else access, but the step counted it as another account and stopped the install.
+- Install.cmd and Update.cmd now start Windows PowerShell with its own module path, also from a PowerShell 7 window. Before, Windows PowerShell took the modules of PowerShell 7 there. Two commands that the installer needs were then missing, so a new install stopped with an error.
+- When the installer uses the other folder it offers (if the usual one cannot be used), it makes that folder readable by you only. That step now also removes an "OWNER RIGHTS" entry, if the folder has one. Windows Server can leave one behind for an administrator. The entry gives nobody else access, but the step counted it as another account and stopped the install.
 
 ## 0.1.0
 
