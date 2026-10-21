@@ -77,6 +77,40 @@ def test_the_installer_files_use_none_of_the_launch_shapes_that_security_program
         assert ALLOWED_LAUNCH in (ROOT / launcher).read_text(encoding="utf-8"), launcher
 
 
+def test_the_test_runs_give_windows_powershell_its_own_module_path(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # A PowerShell 7 shell passes its module folders on, and Windows PowerShell cannot load 7's modules.
+    foreign = tmp_path / "other modules"
+    foreign.mkdir()
+    monkeypatch.setenv("PSModulePath", f"{foreign};{os.environ.get('PSModulePath', '')}")
+    done = powershell(tmp_path, "$env:PSModulePath")
+    assert done.returncode == 0, done.stdout + done.stderr
+    assert "WindowsPowerShell" in done.stdout and str(foreign) not in done.stdout, done.stdout
+
+
+@pytest.mark.parametrize(("launcher", "arguments"), [("Install.cmd", ""), ("Update.cmd", "-Update")])
+def test_the_launchers_give_windows_powershell_its_own_module_path(
+    tmp_path: Path, launcher: str, arguments: str
+) -> None:
+    # The real launcher, started as from a PowerShell 7 window, runs a stand-in for the installer next to it.
+    shutil.copy(ROOT / launcher, tmp_path / launcher)
+    stand_in = "'module path: ' + $env:PSModulePath; 'arguments: ' + ($args -join ' ')"
+    (tmp_path / "install.ps1").write_text(stand_in + "\n", encoding="utf-8")
+    foreign = tmp_path / "other modules"
+    foreign.mkdir()
+    env = {k: v for k, v in os.environ.items() if k.upper() != "PSMODULEPATH"}
+    env |= {"PSModulePath": f"{foreign};{os.environ.get('PSModulePath', '')}",
+            "APPDATA": str(tmp_path / "roaming"), "LOCALAPPDATA": str(tmp_path / "local"),
+            "USERPROFILE": str(tmp_path)}  # fmt: skip
+    cmd = Path(os.environ["SYSTEMROOT"]) / "System32" / "cmd.exe"
+    done = subprocess.run([str(cmd), "/d", "/c", str(tmp_path / launcher)], input="\n",
+                          capture_output=True, text=True, errors="replace", timeout=TIMEOUT_S, env=env,
+                          check=False)  # fmt: skip
+    assert f"arguments: {arguments}\n" in done.stdout, done.stdout + done.stderr  # the same launch as before
+    assert "module path: " in done.stdout and str(foreign) not in done.stdout, done.stdout
+
+
 def test_the_bootstrap_scripts_stay_thin() -> None:
     for script in ("install.ps1", "install.sh"):  # 250 lines, raised by 60 for the progress display
         assert len((ROOT / script).read_text(encoding="utf-8").splitlines()) <= 310, script

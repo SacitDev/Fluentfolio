@@ -18,9 +18,12 @@ def powershell(home: Path, command: str, **env: str) -> subprocess.CompletedProc
     exe = Path(os.environ["SYSTEMROOT"]) / "System32" / "WindowsPowerShell" / "v1.0" / "powershell.exe"
     own = {"APPDATA": str(home / "roaming"), "LOCALAPPDATA": str(home / "local"), "USERPROFILE": str(home)}
     argv = [str(exe), "-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass", "-Command", command]
+    # Without PSModulePath, Windows PowerShell builds its own; the one a PowerShell 7 shell passes on would
+    # make it load 7's modules, which fail there.
+    inherited = {k: v for k, v in os.environ.items() if k.upper() != "PSMODULEPATH"}
     return subprocess.run(
         argv, capture_output=True, text=True, errors="replace", timeout=TIMEOUT_S, check=False,
-        env={**os.environ, **own, "FF_SCRIPT": str(ROOT / "install.ps1"), **env},
+        env={**inherited, **own, "FF_SCRIPT": str(ROOT / "install.ps1"), **env},
     )  # fmt: skip
 
 

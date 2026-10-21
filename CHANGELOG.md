@@ -2,6 +2,10 @@
 
 All notable changes are listed here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## Unreleased
+
+- Install.cmd and Update.cmd now also work when you start them from a PowerShell 7 window. Before, the install stopped with an error at the step that makes the app folder readable by you only.
+
 ## 0.1.0
 
 The first release.
