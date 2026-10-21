@@ -112,6 +112,10 @@ function Set-OwnerOnly([string]$Folder) {
     $allowed = @([Security.Principal.WindowsIdentity]::GetCurrent().User.Value, 'S-1-5-18', 'S-1-5-32-544')
     & (Join-Path $env:SystemRoot 'System32\icacls.exe') $Folder /inheritance:r /grant:r "*$($allowed[0]):(OI)(CI)F" '*S-1-5-18:(OI)(CI)F' '*S-1-5-32-544:(OI)(CI)F' | Out-Null
     if ($LASTEXITCODE -ne 0) { return $false }
+    # An OWNER RIGHTS entry (S-1-3-4) from the parent can stay as the folder's own (Windows Server, as an administrator).
+    # It only restates the owner's rights, so it goes too.
+    & (Join-Path $env:SystemRoot 'System32\icacls.exe') $Folder /remove:g '*S-1-3-4' | Out-Null
+    if ($LASTEXITCODE -ne 0) { return $false }
     $acl = Get-Acl -LiteralPath $Folder  # read back: a folder another account made earlier keeps that owner and its own entries
     $others = @($acl.GetAccessRules($true, $true, [Security.Principal.SecurityIdentifier]) | Where-Object { $allowed -notcontains $_.IdentityReference.Value })
     return ($allowed -contains $acl.GetOwner([Security.Principal.SecurityIdentifier]).Value) -and $others.Count -eq 0

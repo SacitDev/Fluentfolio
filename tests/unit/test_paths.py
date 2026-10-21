@@ -81,21 +81,39 @@ def test_a_new_folder_is_readable_by_its_owner_only(tmp_path: Path) -> None:
         who = [str(system32 / "whoami.exe"), "/user", "/fo", "csv", "/nh"]
         me = subprocess.run(who, capture_output=True, text=True, check=True).stdout
         sid = next(csv.reader(io.StringIO(me)))[1]
+        # SDDL writes a few accounts by a short alias: the built-in Administrator (a CI runner's) as LA.
+        descriptor = "(New-Object Security.AccessControl.RawSecurityDescriptor ('O:' + $env:FF_SID))"
+        owner = powershell(tmp_path, descriptor + ".GetSddlForm('Owner')", FF_SID=sid)
+        mine = owner.stdout.strip().removeprefix("O:")
+        assert mine in (sid, "LA"), owner.stdout + owner.stderr
+        # SY is S-1-5-18 and BA is S-1-5-32-544; each has full control of the folder and all inside it.
+        expected = sorted([("OICI", "FA", mine), ("OICI", "FA", "SY"), ("OICI", "FA", "BA")])
 
-        def access_list() -> str:  # in SDDL form, which names accounts by SID
+        def access_list(of: Path) -> str:  # in SDDL form, which names accounts by SID
             saved = tmp_path / "acl.txt"
-            subprocess.run([str(system32 / "icacls.exe"), str(folder), "/save", str(saved)], check=True,
+            subprocess.run([str(system32 / "icacls.exe"), str(of), "/save", str(saved)], check=True,
                            capture_output=True)  # fmt: skip
             return saved.read_bytes().decode("utf-16-le").lstrip("\ufeff").splitlines()[1]
 
-        assert "D:P" not in access_list()  # a new folder inherits its parent's entries
+        def entries(sddl: str) -> list[tuple[str, str, str]]:
+            return sorted(re.findall(r"\(A;([^;]*);([^;]*);;;([^)]+)\)", sddl))
+
+        assert "D:P" not in access_list(folder)  # a new folder inherits its parent's entries
         done = powershell(tmp_path, ". $env:FF_SCRIPT; Set-OwnerOnly $env:FF_FOLDER", FF_FOLDER=str(folder))
         assert done.stdout.strip() == "True", done.stdout + done.stderr  # the installer's own step
-        sddl = access_list()
+        sddl = access_list(folder)
         assert "D:P" in sddl  # protected: nothing is inherited from the drive any more
-        aces = re.findall(r"\(A;([^;]*);([^;]*);;;([^)]+)\)", sddl)
-        # SY is S-1-5-18 and BA is S-1-5-32-544; each has full control of the folder and all inside it.
-        assert sorted(aces) == sorted([("OICI", "FA", sid), ("OICI", "FA", "SY"), ("OICI", "FA", "BA")])
+        assert entries(sddl) == expected
+        # An OWNER RIGHTS entry (S-1-3-4) of the folder's own, which Windows Server can leave behind from the
+        # parent for an administrator, goes too.
+        owned = tmp_path / "Owned"
+        owned.mkdir()
+        grant = [str(system32 / "icacls.exe"), str(owned), "/grant", "*S-1-3-4:(OI)(CI)F"]
+        subprocess.run(grant, check=True, capture_output=True)
+        assert "(A;OICI;FA;;;OW)" in access_list(owned)
+        done = powershell(tmp_path, ". $env:FF_SCRIPT; Set-OwnerOnly $env:FF_FOLDER", FF_FOLDER=str(owned))
+        assert done.stdout.strip() == "True", done.stdout + done.stderr
+        assert entries(access_list(owned)) == expected
         # A folder that already has its own entry for another account (here Everyone, S-1-1-0) keeps it after
         # the step, so the step says it failed and the installer stops.
         shared = tmp_path / "Shared"

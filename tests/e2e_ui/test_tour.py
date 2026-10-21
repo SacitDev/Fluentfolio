@@ -19,7 +19,7 @@ from typing import Any
 import psutil
 import pytest
 from axe_playwright_python.sync_playwright import Axe
-from playwright.sync_api import Browser, BrowserContext, ConsoleMessage, Error, Page
+from playwright.sync_api import Browser, BrowserContext, ConsoleMessage, Error, Page, expect
 
 from fluentfolio.core.files import read_json, write_json
 from fluentfolio.web.views import HELP_TABS
@@ -315,10 +315,17 @@ class Clicking:
     def settle(self, page: Page) -> None:
         """Wait until what the control started has ended, then put the jobs, settings and app state back."""
         jobs = self.served.home / "jobs"
+        # htmx marks a request's element until the answer is in; before that the server may not have started
+        # (or done) what the control asked for.
+        expect(page.locator(".htmx-request")).to_have_count(0, timeout=SETTLE_S * 1000)
         until = time.monotonic() + SETTLE_S
         while self.busy(page, jobs):
             assert time.monotonic() < until, "a job or task still runs"
             time.sleep(0.25)
+        # A page that shows a task's progress asks again within 2 s and then loads itself afresh; wait for
+        # that load, or it cuts into the next page load.
+        expect(page.locator(".task[hx-get]")).to_have_count(0, timeout=SETTLE_S * 1000)
+        page.wait_for_load_state("load")
         for kept in (self.saved / "jobs").iterdir():
             here = jobs / kept.name
             if not here.is_dir() or (here / "job.json").read_bytes() != (kept / "job.json").read_bytes():
@@ -371,6 +378,7 @@ def clicking(browser: Browser, tmp_path: Path, serving: ModuleType) -> Iterator[
 def ready(page: Page, place: Place, origin: str) -> list[Any]:
     """The page loaded afresh, its details opened so nothing is out of reach, and its visible controls."""
     page.goto(origin + place.path)
+    expect(page).to_have_url(origin + place.path)  # a reload of the page before can take this load's place
     place.setup(page)
     page.evaluate(OPEN_ALL)
     every = page.locator(CONTROLS)
