@@ -1,0 +1,7 @@
+{# Link tabs: each tab is its own page, so the browser's Back, a bookmark and a reload all keep the place. #}
+{% macro tabs(label, items, current) %}
+<nav class="tabs" aria-label="{{ label }}">
+  {% for key, text, link in items %}<a href="{{ link }}" data-label="{{ text }}"{% if key == current %} aria-current="page"{% endif %}>{{ text }}{% if key == current %}<span class="mark"></span>{% endif %}</a>
+  {% endfor %}
+</nav>
+{% endmacro %}

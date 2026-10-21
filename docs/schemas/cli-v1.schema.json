@@ -1,0 +1,1561 @@
+{
+  "$defs": {
+    "AudioFile": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate": {
+          "enum": [
+            "candidate",
+            "person1",
+            "person2"
+          ],
+          "title": "Candidate",
+          "type": "string"
+        },
+        "duration_ms": {
+          "title": "Duration Ms",
+          "type": "integer"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "candidate",
+        "path",
+        "duration_ms"
+      ],
+      "title": "AudioFile",
+      "type": "object"
+    },
+    "CancelData": {
+      "additionalProperties": false,
+      "properties": {
+        "job_id": {
+          "title": "Job Id",
+          "type": "string"
+        },
+        "requested": {
+          "title": "Requested",
+          "type": "boolean"
+        },
+        "state": {
+          "$ref": "#/$defs/JobState"
+        }
+      },
+      "required": [
+        "job_id",
+        "state",
+        "requested"
+      ],
+      "title": "CancelData",
+      "type": "object"
+    },
+    "CheckRow": {
+      "additionalProperties": false,
+      "properties": {
+        "blocking": {
+          "title": "Blocking",
+          "type": "boolean"
+        },
+        "code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Code"
+        },
+        "fix": {
+          "title": "Fix",
+          "type": "string"
+        },
+        "group": {
+          "title": "Group",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "level": {
+          "enum": [
+            "ok",
+            "warning",
+            "problem"
+          ],
+          "title": "Level",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "group",
+        "id",
+        "level",
+        "message",
+        "code",
+        "fix",
+        "blocking"
+      ],
+      "title": "CheckRow",
+      "type": "object"
+    },
+    "Checked": {
+      "additionalProperties": false,
+      "properties": {
+        "counts": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Counts",
+          "type": "object"
+        },
+        "job_id": {
+          "title": "Job Id",
+          "type": "string"
+        },
+        "passed": {
+          "title": "Passed",
+          "type": "boolean"
+        },
+        "results": {
+          "items": {
+            "$ref": "#/$defs/RuleResult"
+          },
+          "title": "Results",
+          "type": "array"
+        }
+      },
+      "required": [
+        "job_id",
+        "passed",
+        "counts",
+        "results"
+      ],
+      "title": "Checked",
+      "type": "object"
+    },
+    "ComponentInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "consent": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ConsentRecord"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "licence_class": {
+          "title": "Licence Class",
+          "type": "string"
+        },
+        "on": {
+          "title": "On",
+          "type": "boolean"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "size_bytes": {
+          "title": "Size Bytes",
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "ready",
+            "needs-download",
+            "needs-token",
+            "needs-consent",
+            "self-test-failed",
+            "not-available"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "kind",
+        "status",
+        "reason",
+        "on",
+        "size_bytes",
+        "licence_class",
+        "consent"
+      ],
+      "title": "ComponentInfo",
+      "type": "object"
+    },
+    "ComponentList": {
+      "additionalProperties": false,
+      "properties": {
+        "components": {
+          "items": {
+            "$ref": "#/$defs/ComponentInfo"
+          },
+          "title": "Components",
+          "type": "array"
+        }
+      },
+      "required": [
+        "components"
+      ],
+      "title": "ComponentList",
+      "type": "object"
+    },
+    "ConsentData": {
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "title": "Component",
+          "type": "string"
+        },
+        "consent": {
+          "$ref": "#/$defs/ConsentRecord"
+        },
+        "installer_needed": {
+          "title": "Installer Needed",
+          "type": "boolean"
+        },
+        "recorded": {
+          "title": "Recorded",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "component",
+        "consent",
+        "recorded",
+        "installer_needed"
+      ],
+      "title": "ConsentData",
+      "type": "object"
+    },
+    "ConsentRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "utc": {
+          "title": "Utc",
+          "type": "string"
+        }
+      },
+      "required": [
+        "utc",
+        "source"
+      ],
+      "title": "ConsentRecord",
+      "type": "object"
+    },
+    "Deleted": {
+      "additionalProperties": false,
+      "properties": {
+        "deleted": {
+          "title": "Deleted",
+          "type": "boolean"
+        },
+        "job_id": {
+          "title": "Job Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "job_id",
+        "deleted"
+      ],
+      "title": "Deleted",
+      "type": "object"
+    },
+    "DeviceChoice": {
+      "additionalProperties": false,
+      "properties": {
+        "choice": {
+          "title": "Choice",
+          "type": "string"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "choice",
+        "reason"
+      ],
+      "title": "DeviceChoice",
+      "type": "object"
+    },
+    "DoctorData": {
+      "additionalProperties": false,
+      "properties": {
+        "blocking": {
+          "title": "Blocking",
+          "type": "boolean"
+        },
+        "checks": {
+          "items": {
+            "$ref": "#/$defs/CheckRow"
+          },
+          "title": "Checks",
+          "type": "array"
+        },
+        "data_dir": {
+          "title": "Data Dir",
+          "type": "string"
+        },
+        "device": {
+          "$ref": "#/$defs/DeviceChoice"
+        },
+        "executable": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Executable"
+        },
+        "report": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Report"
+        }
+      },
+      "required": [
+        "blocking",
+        "checks",
+        "executable",
+        "data_dir",
+        "device",
+        "report"
+      ],
+      "title": "DoctorData",
+      "type": "object"
+    },
+    "DryRun": {
+      "additionalProperties": false,
+      "description": "`analyze --dry-run`: what the analysis would do, before any job exists.",
+      "properties": {
+        "audio_duration_ms": {
+          "title": "Audio Duration Ms",
+          "type": "integer"
+        },
+        "device": {
+          "title": "Device",
+          "type": "string"
+        },
+        "estimate_ms": {
+          "title": "Estimate Ms",
+          "type": "integer"
+        },
+        "missing": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing",
+          "type": "array"
+        },
+        "needs": {
+          "items": {
+            "enum": [
+              "partner_consent",
+              "confirm_long"
+            ],
+            "type": "string"
+          },
+          "title": "Needs",
+          "type": "array"
+        },
+        "probe": {
+          "items": {
+            "$ref": "#/$defs/Probe"
+          },
+          "title": "Probe",
+          "type": "array"
+        },
+        "will_run": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Will Run",
+          "type": "array"
+        }
+      },
+      "required": [
+        "probe",
+        "audio_duration_ms",
+        "estimate_ms",
+        "device",
+        "will_run",
+        "missing",
+        "needs"
+      ],
+      "title": "DryRun",
+      "type": "object"
+    },
+    "Exported": {
+      "additionalProperties": false,
+      "properties": {
+        "audio": {
+          "items": {
+            "$ref": "#/$defs/AudioFile"
+          },
+          "title": "Audio",
+          "type": "array"
+        },
+        "changed": {
+          "title": "Changed",
+          "type": "boolean"
+        },
+        "outputs": {
+          "$ref": "#/$defs/Outputs"
+        }
+      },
+      "required": [
+        "outputs",
+        "audio",
+        "changed"
+      ],
+      "title": "Exported",
+      "type": "object"
+    },
+    "ForAi": {
+      "additionalProperties": false,
+      "properties": {
+        "approx_tokens": {
+          "title": "Approx Tokens",
+          "type": "integer"
+        },
+        "candidate": {
+          "enum": [
+            "candidate",
+            "person1",
+            "person2"
+          ],
+          "title": "Candidate",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "candidate",
+        "path",
+        "approx_tokens"
+      ],
+      "title": "ForAi",
+      "type": "object"
+    },
+    "GuideData": {
+      "additionalProperties": false,
+      "description": "`guide agents`: the guide's text, and where `--write-skill` put the skill file, if asked.",
+      "properties": {
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Path"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "path"
+      ],
+      "title": "GuideData",
+      "type": "object"
+    },
+    "Installed": {
+      "additionalProperties": false,
+      "description": "`components install`: each part tried, and the parts in use that are still not ready.",
+      "properties": {
+        "download_bytes": {
+          "title": "Download Bytes",
+          "type": "integer"
+        },
+        "not_ready": {
+          "items": {
+            "$ref": "#/$defs/PartOutcome"
+          },
+          "title": "Not Ready",
+          "type": "array"
+        },
+        "parts": {
+          "items": {
+            "$ref": "#/$defs/PartOutcome"
+          },
+          "title": "Parts",
+          "type": "array"
+        }
+      },
+      "required": [
+        "download_bytes",
+        "parts",
+        "not_ready"
+      ],
+      "title": "Installed",
+      "type": "object"
+    },
+    "JobData": {
+      "additionalProperties": false,
+      "description": "`analyze`, `status` and `resume`: a job's state, outputs and limits, never transcript text.",
+      "properties": {
+        "asr": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Asr"
+        },
+        "audio_duration_ms": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Audio Duration Ms"
+        },
+        "commit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Commit"
+        },
+        "created_utc": {
+          "title": "Created Utc",
+          "type": "string"
+        },
+        "device": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device"
+        },
+        "elapsed_ms": {
+          "title": "Elapsed Ms",
+          "type": "integer"
+        },
+        "estimate_ms": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Estimate Ms"
+        },
+        "job_id": {
+          "title": "Job Id",
+          "type": "string"
+        },
+        "limits": {
+          "items": {
+            "$ref": "#/$defs/Limit"
+          },
+          "title": "Limits",
+          "type": "array"
+        },
+        "mode": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Mode"
+        },
+        "outputs": {
+          "$ref": "#/$defs/Outputs"
+        },
+        "stage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StageAt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stages": {
+          "items": {
+            "$ref": "#/$defs/StageRun"
+          },
+          "title": "Stages",
+          "type": "array"
+        },
+        "state": {
+          "$ref": "#/$defs/JobState"
+        },
+        "stub": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Stub"
+        },
+        "updated_utc": {
+          "title": "Updated Utc",
+          "type": "string"
+        }
+      },
+      "required": [
+        "job_id",
+        "state",
+        "stage",
+        "created_utc",
+        "updated_utc",
+        "elapsed_ms",
+        "estimate_ms",
+        "mode",
+        "asr",
+        "device",
+        "audio_duration_ms",
+        "outputs",
+        "limits",
+        "stub",
+        "commit",
+        "stages"
+      ],
+      "title": "JobData",
+      "type": "object"
+    },
+    "JobList": {
+      "additionalProperties": false,
+      "properties": {
+        "jobs": {
+          "items": {
+            "$ref": "#/$defs/JobRow"
+          },
+          "title": "Jobs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "jobs"
+      ],
+      "title": "JobList",
+      "type": "object"
+    },
+    "JobRow": {
+      "additionalProperties": false,
+      "properties": {
+        "audio_duration_ms": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Audio Duration Ms"
+        },
+        "created_utc": {
+          "title": "Created Utc",
+          "type": "string"
+        },
+        "job_id": {
+          "title": "Job Id",
+          "type": "string"
+        },
+        "mode": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Mode"
+        },
+        "state": {
+          "$ref": "#/$defs/JobState"
+        }
+      },
+      "required": [
+        "job_id",
+        "created_utc",
+        "state",
+        "mode",
+        "audio_duration_ms"
+      ],
+      "title": "JobRow",
+      "type": "object"
+    },
+    "JobState": {
+      "enum": [
+        "queued",
+        "running",
+        "completed",
+        "completed_with_gaps",
+        "failed",
+        "cancelled",
+        "interrupted"
+      ],
+      "title": "JobState",
+      "type": "string"
+    },
+    "Limit": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "component": {
+          "title": "Component",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "component",
+        "code",
+        "message"
+      ],
+      "title": "Limit",
+      "type": "object"
+    },
+    "Notice": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "hint": {
+          "title": "Hint",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "hint"
+      ],
+      "title": "Notice",
+      "type": "object"
+    },
+    "Outputs": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evidence"
+        },
+        "for_ai": {
+          "items": {
+            "$ref": "#/$defs/ForAi"
+          },
+          "title": "For Ai",
+          "type": "array"
+        },
+        "job_dir": {
+          "title": "Job Dir",
+          "type": "string"
+        },
+        "zip": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Zip"
+        }
+      },
+      "required": [
+        "job_dir",
+        "evidence",
+        "zip",
+        "for_ai"
+      ],
+      "title": "Outputs",
+      "type": "object"
+    },
+    "PartOutcome": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Code"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "ready",
+            "needs-download",
+            "needs-token",
+            "needs-consent",
+            "self-test-failed",
+            "not-available"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "status",
+        "code"
+      ],
+      "title": "PartOutcome",
+      "type": "object"
+    },
+    "Probe": {
+      "additionalProperties": false,
+      "properties": {
+        "channels": {
+          "title": "Channels",
+          "type": "integer"
+        },
+        "codec": {
+          "title": "Codec",
+          "type": "string"
+        },
+        "container": {
+          "title": "Container",
+          "type": "string"
+        },
+        "duration_ms": {
+          "title": "Duration Ms",
+          "type": "integer"
+        },
+        "lossy": {
+          "title": "Lossy",
+          "type": "boolean"
+        },
+        "sample_rate": {
+          "title": "Sample Rate",
+          "type": "integer"
+        },
+        "tracks": {
+          "title": "Tracks",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "container",
+        "codec",
+        "sample_rate",
+        "channels",
+        "tracks",
+        "lossy",
+        "duration_ms"
+      ],
+      "title": "Probe",
+      "type": "object"
+    },
+    "Problem": {
+      "additionalProperties": false,
+      "description": "Why a command failed and what to do next; `hint` is a command to run where one helps.",
+      "properties": {
+        "category": {
+          "enum": [
+            "input",
+            "setup",
+            "needs_user",
+            "busy",
+            "stage",
+            "internal"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "doc": {
+          "title": "Doc",
+          "type": "string"
+        },
+        "hint": {
+          "title": "Hint",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "retryable": {
+          "title": "Retryable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "code",
+        "category",
+        "message",
+        "hint",
+        "retryable",
+        "doc"
+      ],
+      "title": "Problem",
+      "type": "object"
+    },
+    "PromptData": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "grading",
+            "pronunciation"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "prompt_version": {
+          "title": "Prompt Version",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "prompt_version",
+        "text"
+      ],
+      "title": "PromptData",
+      "type": "object"
+    },
+    "Removed": {
+      "additionalProperties": false,
+      "properties": {
+        "parts": {
+          "items": {
+            "$ref": "#/$defs/PartOutcome"
+          },
+          "title": "Parts",
+          "type": "array"
+        }
+      },
+      "required": [
+        "parts"
+      ],
+      "title": "Removed",
+      "type": "object"
+    },
+    "RuleResult": {
+      "additionalProperties": false,
+      "properties": {
+        "detail": {
+          "title": "Detail",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "rule": {
+          "title": "Rule",
+          "type": "string"
+        },
+        "verdict": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "N/A"
+          ],
+          "title": "Verdict",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rule",
+        "name",
+        "verdict",
+        "detail"
+      ],
+      "title": "RuleResult",
+      "type": "object"
+    },
+    "SelfTestData": {
+      "additionalProperties": false,
+      "description": "`self-test`: the bundled clip through every part in use, each held to the clip's known answers.",
+      "properties": {
+        "budget_ms": {
+          "title": "Budget Ms",
+          "type": "integer"
+        },
+        "components": {
+          "items": {
+            "$ref": "#/$defs/SelfTestPart"
+          },
+          "title": "Components",
+          "type": "array"
+        },
+        "device": {
+          "enum": [
+            "cpu",
+            "gpu"
+          ],
+          "title": "Device",
+          "type": "string"
+        },
+        "elapsed_ms": {
+          "title": "Elapsed Ms",
+          "type": "integer"
+        },
+        "passed": {
+          "title": "Passed",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "passed",
+        "device",
+        "elapsed_ms",
+        "budget_ms",
+        "components"
+      ],
+      "title": "SelfTestData",
+      "type": "object"
+    },
+    "SelfTestPart": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "failed",
+            "unavailable",
+            "disabled",
+            "not-tested"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "values": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              }
+            ]
+          },
+          "title": "Values",
+          "type": "object"
+        }
+      },
+      "required": [
+        "id",
+        "status",
+        "reason",
+        "values"
+      ],
+      "title": "SelfTestPart",
+      "type": "object"
+    },
+    "SettingsData": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "read_only": {
+          "title": "Read Only",
+          "type": "boolean"
+        },
+        "settings": {
+          "additionalProperties": true,
+          "title": "Settings",
+          "type": "object"
+        }
+      },
+      "required": [
+        "settings",
+        "path",
+        "read_only"
+      ],
+      "title": "SettingsData",
+      "type": "object"
+    },
+    "StageAt": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "index": {
+          "title": "Index",
+          "type": "integer"
+        },
+        "total": {
+          "title": "Total",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "index",
+        "total"
+      ],
+      "title": "StageAt",
+      "type": "object"
+    },
+    "StageRun": {
+      "additionalProperties": false,
+      "properties": {
+        "device": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device"
+        },
+        "error_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Error Code"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "peak_ram_mb": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Peak Ram Mb"
+        },
+        "ran": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Ran"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Status"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Version"
+        },
+        "wall_ms": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Wall Ms"
+        }
+      },
+      "required": [
+        "id",
+        "status",
+        "ran",
+        "version",
+        "device",
+        "wall_ms",
+        "peak_ram_mb",
+        "error_code"
+      ],
+      "title": "StageRun",
+      "type": "object"
+    },
+    "Status": {
+      "description": "The status of a step, tool or analyzer; `disabled` is the user's choice and never a gap.",
+      "enum": [
+        "ok",
+        "partial",
+        "skipped",
+        "unavailable",
+        "failed",
+        "disabled"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "TokenCleared": {
+      "additionalProperties": false,
+      "properties": {
+        "removed": {
+          "title": "Removed",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "removed"
+      ],
+      "title": "TokenCleared",
+      "type": "object"
+    },
+    "TokenData": {
+      "additionalProperties": false,
+      "description": "`token status`: whether a token is saved, works and has pyannote's terms accepted; never its value.",
+      "properties": {
+        "present": {
+          "title": "Present",
+          "type": "boolean"
+        },
+        "pyannote_terms_ok": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Pyannote Terms Ok"
+        },
+        "valid": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Valid"
+        }
+      },
+      "required": [
+        "present",
+        "valid",
+        "pyannote_terms_ok"
+      ],
+      "title": "TokenData",
+      "type": "object"
+    },
+    "TokenSaved": {
+      "additionalProperties": false,
+      "properties": {
+        "saved": {
+          "title": "Saved",
+          "type": "boolean"
+        },
+        "token": {
+          "$ref": "#/$defs/TokenData"
+        }
+      },
+      "required": [
+        "token",
+        "saved"
+      ],
+      "title": "TokenSaved",
+      "type": "object"
+    },
+    "VersionData": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_schema": {
+          "title": "Evidence Schema",
+          "type": "string"
+        },
+        "os": {
+          "title": "Os",
+          "type": "string"
+        },
+        "prompt_version": {
+          "title": "Prompt Version",
+          "type": "string"
+        },
+        "python": {
+          "title": "Python",
+          "type": "string"
+        },
+        "version": {
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version",
+        "python",
+        "os",
+        "evidence_schema",
+        "prompt_version"
+      ],
+      "title": "VersionData",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "command": {
+      "title": "Command",
+      "type": "string"
+    },
+    "data": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/JobData"
+        },
+        {
+          "$ref": "#/$defs/JobList"
+        },
+        {
+          "$ref": "#/$defs/Exported"
+        },
+        {
+          "$ref": "#/$defs/Deleted"
+        },
+        {
+          "$ref": "#/$defs/CancelData"
+        },
+        {
+          "$ref": "#/$defs/Checked"
+        },
+        {
+          "$ref": "#/$defs/PromptData"
+        },
+        {
+          "$ref": "#/$defs/GuideData"
+        },
+        {
+          "$ref": "#/$defs/VersionData"
+        },
+        {
+          "$ref": "#/$defs/DryRun"
+        },
+        {
+          "$ref": "#/$defs/DoctorData"
+        },
+        {
+          "$ref": "#/$defs/ComponentList"
+        },
+        {
+          "$ref": "#/$defs/Installed"
+        },
+        {
+          "$ref": "#/$defs/Removed"
+        },
+        {
+          "$ref": "#/$defs/ConsentData"
+        },
+        {
+          "$ref": "#/$defs/TokenData"
+        },
+        {
+          "$ref": "#/$defs/TokenSaved"
+        },
+        {
+          "$ref": "#/$defs/TokenCleared"
+        },
+        {
+          "$ref": "#/$defs/SelfTestData"
+        },
+        {
+          "$ref": "#/$defs/SettingsData"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Data"
+    },
+    "error": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Problem"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "exit_code": {
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        130
+      ],
+      "title": "Exit Code",
+      "type": "integer"
+    },
+    "ok": {
+      "title": "Ok",
+      "type": "boolean"
+    },
+    "schema": {
+      "const": "fluentfolio.cli/1",
+      "title": "Schema",
+      "type": "string"
+    },
+    "version": {
+      "title": "Version",
+      "type": "string"
+    },
+    "warnings": {
+      "items": {
+        "$ref": "#/$defs/Notice"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "command",
+    "ok",
+    "exit_code",
+    "version",
+    "data",
+    "warnings",
+    "error"
+  ],
+  "title": "Fluentfolio command line output (fluentfolio.cli/1)",
+  "type": "object"
+}

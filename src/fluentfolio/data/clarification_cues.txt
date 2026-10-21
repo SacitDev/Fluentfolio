@@ -1,0 +1,15 @@
+# Phrases of a short request to repeat or explain a question; such a turn never counts as asking.
+# Written for Fluentfolio. One phrase per line, lower case; lines starting with # are comments.
+sorry
+pardon
+excuse me
+could you repeat
+can you repeat
+could you say
+can you say
+say that again
+say it again
+repeat the question
+what do you mean
+what does that mean
+what does it mean

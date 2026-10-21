@@ -1,0 +1,22 @@
+<figure class="strip" aria-labelledby="strip-caption">
+  <div class="lanes">
+    {% for lane in strip.lanes %}
+    <span class="lane-name">{{ lane.name }}</span>
+    <svg class="lane" viewBox="0 0 {{ strip.width }} 10" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      {% for x, w in lane.bars %}<rect class="{{ lane.style }}" x="{{ x }}" y="1" width="{{ w }}" height="8"/>{% endfor %}
+      {% for x in lane.ticks %}<line class="{{ lane.style }}" x1="{{ x }}" x2="{{ x }}" y1="0" y2="10"/>{% endfor %}
+    </svg>
+    {% endfor %}
+    <span></span><p class="ends"><span>0:00</span><span>{{ strip.end }}</span></p>
+  </div>
+  <figcaption id="strip-caption">{{ strip.caption }}</figcaption>
+  {% if strip.table %}
+  <details>
+    <summary>Show as table</summary>
+    <table>
+      <thead><tr><th scope="col">Part</th><th scope="col" class="num">Starts</th><th scope="col" class="num">Ends</th><th scope="col" class="num">Pauses of 1 s or more</th></tr></thead>
+      <tbody>{% for part, start, end, count in strip.table %}<tr><th scope="row">{{ part }}</th><td class="num">{{ start }}</td><td class="num">{{ end }}</td><td class="num">{{ count }}</td></tr>{% endfor %}</tbody>
+    </table>
+  </details>
+  {% endif %}
+</figure>

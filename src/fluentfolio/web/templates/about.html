@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}Help{% endblock %}
+{% block main %}
+<h1>Help</h1>
+{% from "partials/tabs.html" import tabs %}
+{{ tabs("Help pages", help_tabs, tab) }}
+
+{% if tab == "start" %}
+<p>Fluentfolio listens to a recording of your speaking practice and measures how you spoke. It gives you that evidence as a text for your AI chat, which writes an unofficial estimate. Everything is measured on this computer.</p>
+<h2>Your first practice, step by step</h2>
+<ol class="steps">
+  <li>Record a practice test. The <a href="/about?tab=record">recording tips</a> say how to get the clearest results.</li>
+  <li>Open <a href="/">New analysis</a>, choose the recording, and say who speaks in it.</li>
+  <li>Wait while it runs. Before you start, the page shows an estimate of how long it will take on this computer. You can leave the page; History keeps the analysis.</li>
+  <li>Read the results: who spoke when, the measures and the transcript, with a play button on each line.</li>
+  <li>Open Copy for AI and paste the text into your AI chat.</li>
+  <li>Read the chat's report: an unofficial estimate for each criterion and lessons built from your answers. To keep it, save it as a .md file.</li>
+</ol>
+<h2>Good to know</h2>
+<ul>
+  <li>Fluentfolio measures. It never gives a band. The estimate comes from your AI chat and is unofficial.</li>
+  <li>Your recording stays on this computer. Only what you paste or upload into a chat leaves it, and you choose when.</li>
+  <li>If someone else speaks in your recording, ask them first. Fluentfolio asks you to confirm that they agreed.</li>
+  <li>There are three ways to get an estimate: this app with your AI chat, the command line with your AI chat, or an AI agent on this computer that runs Fluentfolio and writes the estimate itself. The command's path is on the <a href="/components">Components</a> page under "More details", and the use-with-AI guide in the docs folder shows each way.</li>
+  <li>If something does not work, <a href="/doctor">run the system check</a>. Every problem has a code, and the troubleshooting guide in the docs folder explains each one.</li>
+</ul>
+
+{% elif tab == "how" %}
+<p>This is what happens after you choose Start analysis. Each step saves its result, so a stopped analysis can go on later from the first step that did not finish.</p>
+<ol class="steps">
+  <li><strong>Read the recording.</strong> Fluentfolio checks the file and makes a clean copy of its sound.</li>
+  <li><strong>Find the speech.</strong> It marks where someone is talking and where the pauses are.</li>
+  <li><strong>Write down the words.</strong> The speech recognition model turns speech into words, each with the moment it was said. It keeps hesitations such as "um", because they are part of fluency.</li>
+  <li><strong>Tell the voices apart.</strong> In a recording of two people, it works out who spoke when. If each person has their own track, the tracks already say it.</li>
+  <li><strong>Find the test's shape.</strong> It finds the questions, the answers, who asked and who answered, and the three Parts. If it is not sure, it says so, and you can correct it in the review form.</li>
+  <li><strong>Measure.</strong> From the answers alone, it measures speech rate, pauses, how long you speak between pauses, linking words, word variety, and the pitch and loudness of your voice. It also finds examples for you or your AI chat to check: hesitations such as "um", possible repeats and self-corrections, and grammar pointers.</li>
+  <li><strong>Write the evidence.</strong> Every measure gets its unit, a reliability word and a line on how it was measured. Then it writes the text for your AI chat.</li>
+</ol>
+<h2>Why not send the recording straight to an AI chat?</h2>
+<p>A chat that gets only your recording has to find your voice, follow the test and judge your pauses all at once, from the sound. It gives you an impression, but no numbers you can check. Fluentfolio measures first, then gives the chat the evidence:</p>
+<ul>
+  <li><strong>The whole test fits.</strong> Some chats take no audio, and others limit it (about 10 minutes on one free plan in October 2026). A whole test is 11 to 14 minutes. The text works in any chat.</li>
+  <li><strong>Only your answers are measured</strong>, separated from the questions and your partner's voice, and you can correct who spoke.</li>
+  <li><strong>Pauses and pace are measured</strong>, with their units and for each Part, the same way every time, so you can compare your practice tests. Hesitations, repeats and self-corrections are found in the transcript for you to check.</li>
+  <li><strong>You can check the reasons.</strong> The grading prompt asks the chat to tie each reason to a moment in your transcript, and the results page plays it. On the command line, the "fluentfolio check-answer" command also checks the answer's format and rules, and that its quotes match your transcript.</li>
+  <li><strong>Your recording stays here.</strong> Only what you choose leaves this computer: the text, which holds your partner's questions, and, if you make it, an audio file cut to your answers. Your partner can still be heard in that file where the speakers were mixed up or you spoke at once. Ask your partner first.</li>
+</ul>
+<h2>What Fluentfolio does not do</h2>
+<ul>
+  <li>It does not give a band or say how good your English is. Measures have no pass mark: faster, more or rarer is not better.</li>
+  <li>It does not correct your grammar. It points to examples of structures you used.</li>
+  <li>It does not send your recording anywhere, and an analysis needs no internet.</li>
+  <li>It was not checked against real examiners. The accuracy page in the docs folder shows how each part did on test data.</li>
+</ul>
+
+{% elif tab == "record" %}
+<p>The analysis can only measure what the recording holds. These habits make the biggest difference.</p>
+<ol class="steps">
+  <li><strong>Give each person their own track, if you can.</strong> Then Fluentfolio knows for certain who said what. A recording app with two tracks, or a meeting app that saves one audio file per person, does this.</li>
+  <li><strong>Keep the sound natural.</strong> Switch off noise reduction, noise cancellation, voice isolation and "enhance" options in the app you record with. They can remove quiet words and hesitation sounds. Record in a quiet room instead.</li>
+  <li><strong>Do not talk over each other.</strong> Let the other person finish. Speech where you both talk at once is left out of your measures.</li>
+  <li><strong>Read the topic card aloud.</strong> Fluentfolio finds the three Parts from the long Part 2 answer. Before it, read the card aloud, as an examiner does ("you should say", "one minute to prepare"), and prepare in silence. Without one of these signs, the Parts stay unknown.</li>
+  <li><strong>Practising alone?</strong> Read each question aloud, then pause briefly before you answer. The pause helps Fluentfolio tell the question from your answer.</li>
+  <li><strong>Record the whole test</strong>, all three Parts. More speech gives more reliable measures; under one minute is too little.</li>
+  <li><strong>Add the questions</strong> under "Add the questions or your own transcript" on the New analysis page, one per line. A line "Part 1", "Part 2" or "Part 3" before each Part's questions tells Fluentfolio where the Parts start.</li>
+</ol>
+<h2>With a phone</h2>
+<p>Use the voice recorder app, and choose its best quality. Put the phone on the table between you, or close to you if you practise alone. Look in the recorder's settings for noise reduction or "enhance" and switch it off.</p>
+<h2>With a video call</h2>
+<p>Before the call, switch off the call app's noise cancellation, or turn on its "original sound" option if it has one. If the app can save a separate audio file for each person, use that and choose "Two files" on the New analysis page. Otherwise use the call's one recording and choose "One recording of everyone".</p>
+<h2>With a recording program on your computer</h2>
+<p>A program that records your microphone and the call's sound on two separate tracks gives the clearest result. Choose "One track per person" on the New analysis page.</p>
+<p>The recording guide in the docs folder has the exact steps for common apps.</p>
+
+{% elif tab == "parts" %}
+<p>Fluentfolio uses several free parts. Each does one job. You can see their state and add or remove them on the <a href="/components">Components</a> page.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="What each part does">
+  <table>
+    <thead><tr><th scope="col">Part</th><th scope="col">What it does</th></tr></thead>
+    <tbody>{% for title, about in explained %}<tr><th scope="row">{{ title }}</th><td>{{ about }}</td></tr>
+    {% endfor %}</tbody>
+  </table>
+</div>
+
+{% else %}
+<p>Fluentfolio {{ version }} is free software under the MIT licence. It measures a practice recording on this computer and writes the evidence with a grading prompt for any AI chat. It gives no band itself.</p>
+<p>Fluentfolio is not affiliated with or endorsed by the British Council, IDP IELTS or Cambridge University Press &amp; Assessment.</p>
+<h2>Made by</h2>
+<p>Michael and Sina designed Fluentfolio together.</p>
+<ul>
+  <li>Michael: <a href="https://github.com/SacitDev" target="_blank" rel="noopener noreferrer">github.com/SacitDev</a></li>
+  <li>Sina: <a href="https://github.com/sina-builds" target="_blank" rel="noopener noreferrer">github.com/sina-builds</a></li>
+</ul>
+{% include "partials/updates.html" %}
+<h2>Parts and their licences</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Parts and their licences">
+  <table>
+    <thead><tr><th scope="col">Part</th><th scope="col">Licence</th><th scope="col">Credit</th></tr></thead>
+    <tbody>{% for title, licence, credit in parts %}<tr><th scope="row">{{ title }}</th><td>{{ licence }}</td><td>{{ credit }}</td></tr>
+    {% endfor %}</tbody>
+  </table>
+</div>
+<p>The font is Atkinson Hyperlegible Next (SIL Open Font License), the icons are Phosphor (MIT) and the page script is htmx (0BSD).</p>
+{% endif %}
+{% endblock %}

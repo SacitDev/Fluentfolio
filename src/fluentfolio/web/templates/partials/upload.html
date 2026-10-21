@@ -1,0 +1,19 @@
+<div class="upload" hx-disable>
+  <p class="chosen">{% include "icons/check-circle.svg" %} <span>{{ shown or "Your recording" }}</span></p>
+  <dl class="facts">
+    {% for label, value in facts %}<div><dt>{{ label }}</dt><dd>{{ value }}</dd></div>
+    {% endfor %}
+  </dl>
+  <input type="hidden" name="{{ slot }}" value="{{ upload_id }}">
+  <input type="hidden" name="{{ slot }}_name" value="{{ shown }}">
+  {% if estimates %}
+  <p class="help">Time to analyse it on this computer's {{ where }}:</p>
+  <dl class="facts">
+    {% for mode, time in estimates %}<div><dt>{{ mode }}</dt><dd>{{ time }}</dd></div>
+    {% endfor %}
+  </dl>
+  {% if memory %}<p class="notice" role="status">{{ memory }}</p>{% endif %}
+  {% if confirm %}<label class="choice"><input type="checkbox" name="confirm_long" value="yes"> Analyse this long recording</label>{% endif %}
+  {% if light %}<label class="choice"><input type="checkbox" name="light_run" value="yes"> Use a light run, which leaves out the three slowest optional parts</label>{% endif %}
+  {% endif %}
+</div>

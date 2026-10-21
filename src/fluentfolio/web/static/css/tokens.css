@@ -1,0 +1,134 @@
+/* The design tokens: the only raw colours, sizes, fonts and durations of the app. Light first; dark when
+   the user chose it, or when the system is dark and the user did not choose light. */
+
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  src: url("../fonts/AtkinsonHyperlegibleNext-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  src: url("../fonts/AtkinsonHyperlegibleNext-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+  --ground: #F2F4F5;
+  --surface: #FFFFFF;
+  --sunken: #F7F8F9;
+  --text: #172026;
+  --text-2: #4A5660;
+  --border: #D5DBDF;
+  --border-strong: #7D8A94;
+  --ink: #172026;
+  --on-ink: #FFFFFF;
+  --accent: #0B6670;
+  --on-accent: #FFFFFF;
+  --accent-bg: #E2F0F1;
+  --spk-1: #2A6BAA;
+  --spk-2: #B4600F;
+  --pause: #7D8A94;
+  --mark: #FFE680;
+  --ok: #2B6A3E;
+  --ok-bg: #E5F1E8;
+  --warn: #855700;
+  --warn-bg: #FBF1DA;
+  --bad: #A3332B;
+  --bad-bg: #FBE8E6;
+  --focus: #172026;
+
+  --font-ui: "Atkinson Hyperlegible Next", system-ui, "Segoe UI", sans-serif;
+  --font-ipa: "Segoe UI", "DejaVu Sans", sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", Consolas, "DejaVu Sans Mono", monospace;
+  --fs-xs: .8125rem;
+  --fs-sm: .875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: 1.375rem;
+  --fs-xl: 1.75rem;
+  --lh-body: 1.55;
+  --lh-head: 1.25;
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+  --s8: 64px;
+  --r-sm: 4px;
+  --r-md: 8px;
+  --dur: 150ms;
+  --ease: cubic-bezier(.2, 0, 0, 1);
+  --page-max: 1240px;
+  --measure: 72ch;
+  --header-h: 56px;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ground: #121619;
+  --surface: #1A1F23;
+  --sunken: #161A1D;
+  --text: #E6EAED;
+  --text-2: #A9B3BA;
+  --border: #2E363C;
+  --border-strong: #6E7A83;
+  --ink: #E6EAED;
+  --on-ink: #121619;
+  --accent: #5CB8C0;
+  --on-accent: #121619;
+  --accent-bg: #142A2D;
+  --spk-1: #5B9AD5;
+  --spk-2: #C27E3C;
+  --pause: #76828A;
+  --mark: #5C4D00;
+  --ok: #7CC08F;
+  --ok-bg: #1D3125;
+  --warn: #E2B04A;
+  --warn-bg: #33290F;
+  --bad: #F08A80;
+  --bad-bg: #3A1E1C;
+  --focus: #E6EAED;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --ground: #121619;
+    --surface: #1A1F23;
+    --sunken: #161A1D;
+    --text: #E6EAED;
+    --text-2: #A9B3BA;
+    --border: #2E363C;
+    --border-strong: #6E7A83;
+    --ink: #E6EAED;
+    --on-ink: #121619;
+    --accent: #5CB8C0;
+    --on-accent: #121619;
+    --accent-bg: #142A2D;
+    --spk-1: #5B9AD5;
+    --spk-2: #C27E3C;
+    --pause: #76828A;
+    --mark: #5C4D00;
+    --ok: #7CC08F;
+    --ok-bg: #1D3125;
+    --warn: #E2B04A;
+    --warn-bg: #33290F;
+    --bad: #F08A80;
+    --bad-bg: #3A1E1C;
+    --focus: #E6EAED;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur: 0ms;
+  }
+}

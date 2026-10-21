@@ -1,0 +1,74 @@
+# Discourse markers: words and phrases that link ideas or organise a spoken answer.
+# Written for Fluentfolio. One marker per line, lower case; lines starting with # are comments.
+# "like", "you know" and "I mean" are listed separately and never counted.
+# The match is on the words alone, so "well" in "I sing well" counts too; the list is evidence to check.
+# adding
+also
+as well
+in addition
+besides
+on top of that
+what's more
+apart from that
+# contrasting
+however
+although
+though
+whereas
+even so
+on the other hand
+on the contrary
+in contrast
+having said that
+that said
+# cause and result
+because
+since
+so
+therefore
+as a result
+that's why
+because of that
+# examples and detail
+for example
+for instance
+such as
+in particular
+especially
+# order and time
+first
+firstly
+first of all
+second
+secondly
+then
+after that
+next
+finally
+in the end
+eventually
+nowadays
+these days
+# opinion and stance
+i think
+i believe
+i guess
+i suppose
+in my opinion
+personally
+to be honest
+honestly
+actually
+of course
+obviously
+basically
+# summing up and returning
+anyway
+well
+overall
+in general
+generally
+all in all
+in short
+to sum up
+in other words

@@ -1,0 +1,113 @@
+# Pre-registration: is the Montreal Forced Aligner (MFA) accurate and safe enough to be on by default, on
+# Windows and on Linux? Committed before any test-split run. After the freeze no value, rule or threshold
+# below changes. The guard limits T1 and T2 are fitted on the dev sessions only, then frozen before the test
+# sessions run. All hashes are SHA-256 in lower-case hex.
+
+name = "mfa_gate"
+question = """
+With the product's setup and its check on MFA's output, does MFA give word times good enough to be on by
+default, separately on Windows and on Linux (Ubuntu 24.04 on its own ext4 disk)? The CTC aligner, the
+fallback, gets the same measures, reported but not gated."""
+seed = 20261013
+max_run_hours_per_os = 6
+systems = ["windows", "linux"]
+
+[setup]
+# As shipped: MFA in its own environment, one call per session, one speaker folder per candidate, speaker
+# adaptation on, an ASCII temporary root per job, and data paths that hold a space and non-ASCII letters.
+data_path = "a folder name with a space and non-ASCII letters"
+
+# ---------------------------------------------------------------------------------------------------------
+[data]
+# Composed sessions have exact truth: every clip's start and end (the -40 dBFS rule) and its words.
+set_a = "the six committed recipes as they are"
+# Set B: exactly as defined in asr_bakeoff.toml (seed + 1000, every voice of set A replaced).
+set_b = "six recipes, seed + 1000, every voice replaced: Kokoro voices by the map, LibriSpeech by hash"
+set_b_voices = { bf_emma = "bf_isabella", bm_george = "bm_lewis", af_bella = "af_nicole" }
+# L2 interviews: the CS-INT recipe with its candidate clips replaced by EdAcc rows of one speaker whose l1
+# does not contain "english": the speakers of the speech-model comparison's dev selection (for dev) or test
+# selection (for test), in the same hash order, the first 4 per split among those with at least as many
+# eligible rows in the split as CS-INT has candidate clips (42), so that every clip gets a row of its own;
+# each clip is replaced by that speaker's eligible row (as asr_bakeoff.toml defines it, so never a row left
+# out of scoring) closest in duration (ties by item ID), each row used once. EdAcc revision and shards as
+# in asr_bakeoff.toml.
+l2_interviews_per_split = 4
+dev = ["set_a", "l2_dev"]
+test = ["set_b", "l2_test", "CS-HES", "CS-LONG"]
+long_session = "CS-LONG, 15 minutes, derived at test time from CS-INT"
+
+# ---------------------------------------------------------------------------------------------------------
+[arms]
+T = "the reference words of each truth clip (an upper bound)"
+P = "the words of Parakeet TDT 0.6B v2 as the product runs it; this arm decides"
+# M: the reference with 1-3 words deleted in 30 % of utterances, a planted text/audio mismatch. An utterance
+# is chosen when int(sha256("20261013:" + session + ":" + utterance ID), 16) % 100 < 30; it loses
+# 1 + (that number % 3) words, at the interior positions first in order of sha256 of "<utterance ID>:<index>".
+M = "the reference with 1-3 interior words deleted in 30 % of utterances, chosen by hash"
+# The rule above in numbers: chosen when the number % 100 is under share_pct; it loses 1 + (number % words).
+m_rule = { share_pct = 30, words = 3 }
+
+# ---------------------------------------------------------------------------------------------------------
+[metrics]
+guard_pass_rate = "share of utterances whose MFA times pass every rule of the product's check"
+# An utterance's truth edges are the start of the first truth clip and the end of the last truth clip that
+# overlap it in time. The reference's first and last words come from those clips' normalised texts, except
+# that a text that starts or ends with a sound tag other than a filler (EdAcc's <LAUGH>, <NO-SPEECH>,
+# <OVERLAP> and the like) has that sound at its edge: no output word equals it, so that utterance is not
+# judged on its edges. Known limit: a clip's -40 dBFS edge can still hold a short sound its reference does
+# not mark (a breath, or the start of a following word in a LibriSpeech cut); such an edge counts against
+# the aligner, and the report lists each arm-P silent failure with the CTC aligner's errors beside it.
+clip_edge_error = """
+for each passed utterance whose first and last output words equal the reference's first and last words:
+the absolute difference in ms between MFA's first word start and the truth start, and between its last
+word end and the truth end; the median and the 90th percentile over all such edges"""
+silent_failure_rate = "share of the passed, edge-matched utterances with any edge error over 300 ms"
+silent_failure_ms = 300
+mismatch_detection = "arm M: share of the utterances with deleted words that the check fails"
+determinism = "two runs of the same input give identical word times (2 of 2 runs)"
+resources = "per session: wall time and the peak resident memory of the whole process tree"
+long_session = "CS-LONG completes; wall time and the peak resident memory of the whole process tree"
+
+[guard_fit]
+# On dev only: every pair (T1, T2) with T1 from 4.0 to 8.0 in steps of 0.5 and T2 from 2 to 8. Keep the
+# pairs with arm-M mismatch detection of 80 % or more and arm-P silent failures of 2 % or less; choose the
+# one with the highest arm-P pass rate; ties to the smaller T1, then the smaller T2. If no pair qualifies,
+# the starting values (T1 5.0, T2 4) stay and the report says so.
+t1_grid = [4.0, 8.0, 0.5]
+t2_grid = [2, 8, 1]
+start = { t1 = 5.0, t2 = 4 }
+
+# ---------------------------------------------------------------------------------------------------------
+[thresholds]
+# On the test sessions, arm P unless named; each system is judged on its own.
+guard_pass_rate_min = 0.80
+median_edge_error_ms_max = 50
+silent_failure_rate_max = 0.02
+mismatch_detection_min = 0.80  # arm M
+determinism_runs = 2
+long_session_peak_ram_gb_max = 3.0
+
+[statistics]
+# Decisions use the point values above. For the report, each value also gets a 95 % percentile interval
+# from a bootstrap over sessions, and the differences MFA minus CTC (pass rate, median edge error) get a
+# paired bootstrap over the same sessions.
+resamples = 2000
+seed = 20261013
+unit = "session"
+
+[calibration]
+# Before the run: on the public VOiCES test clip, MFA's first word start and last word end lie within 40 ms
+# of the speech edges that ffmpeg's silencedetect finds (the product's integration test). Otherwise no
+# decision is taken until the cause is found.
+voices_edge_ms_max = 40
+
+[decision]
+rule = """
+Per system: PASS when every threshold holds on the test sessions; then MFA is on by default there (still
+subject to the self-test). FAIL otherwise; then MFA is opt-in there, labelled experimental, and the README
+says there are no rhythm measures unless MFA is added. The CTC aligner's values are reported beside MFA's
+and decide nothing."""
+
+[report]
+lines = ["prereg_sha256: <sha256 of this file at the freeze commit>", "Decision: PASS | FAIL"]
+content = "one report per system, every arm, session and metric, with per-utterance outputs"

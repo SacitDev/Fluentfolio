@@ -1,0 +1,45 @@
+name: Problem report
+description: Something does not work as the guides say.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Never attach recordings or transcripts**, yours or anyone else's, and never paste your Hugging Face token.
+        For a security problem, use the Security tab instead (see SECURITY.md).
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: The output of `fluentfolio --version`, or the version on the Help page.
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows 11
+        - Windows 10
+        - Ubuntu 24.04
+        - Ubuntu 22.04
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: code
+    attributes:
+      label: Error code
+      description: The code at the bottom of the error card or in the output, such as E_INPUT_TOO_SHORT. Leave it empty if there was none.
+  - type: textarea
+    id: steps
+    attributes:
+      label: What you did and what happened
+      description: The steps, what you expected, and what happened instead. Describe the recording (its length, format and mode), but do not attach it.
+    validations:
+      required: true
+  - type: textarea
+    id: report
+    attributes:
+      label: Diagnostic report
+      description: Run `fluentfolio doctor --report report.txt`, or use Copy diagnostic report on the error card. Read it first, then paste it here.
+      render: text

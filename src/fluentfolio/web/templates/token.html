@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Hugging Face token{% endblock %}
+{% block main %}
+<h1>Hugging Face token</h1>
+<p>pyannote tells two voices apart best. It is free, but its makers ask each user to accept its terms, so it needs your own Hugging Face token. You can skip this step: without a token, Fluentfolio uses sherpa-onnx, and solo recordings need neither.</p>
+<ol class="steps">
+  <li>Make a free account at Hugging Face.</li>
+  <li>Open <a href="{{ model }}" target="_blank" rel="noopener noreferrer">the model page</a> and accept its terms. Accepting them shares your contact details with pyannote's makers.</li>
+  <li>Make a token of the Read kind on <a href="https://huggingface.co/settings/tokens" target="_blank" rel="noopener noreferrer">your token settings page</a>.</li>
+  <li>Paste the token below and save it. Fluentfolio then checks it with Hugging Face.</li>
+</ol>
+{% include "partials/token.html" %}
+<p><a href="/components">Back to Components</a></p>
+{% endblock %}

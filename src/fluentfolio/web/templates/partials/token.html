@@ -1,0 +1,18 @@
+<section id="token" aria-labelledby="token-title">
+  <h2 id="token-title">Your token</h2>
+  <p>{% if saved %}A token is saved on this computer.{% else %}No token is saved.{% endif %}</p>
+  {% if message %}<p class="notice" tabindex="-1" autofocus>{{ message }}{% if link %} <a href="{{ link[1] }}" target="_blank" rel="noopener noreferrer">{{ link[0] }}</a>{% endif %}</p>{% endif %}
+  <form hx-post="/token" hx-target="#token" hx-swap="outerHTML">
+    <label for="token-value">Token</label>
+    <p class="help" id="token-help">It starts with hf_. Hugging Face's own library saves it in its usual place, never in Fluentfolio's files.</p>
+    <input type="password" id="token-value" name="token" autocomplete="off" spellcheck="false" required aria-describedby="token-help">
+    <label class="choice"><input type="checkbox" data-show="token-value"> Show the token</label>
+    <p class="actions"><button type="submit" class="primary">Save token</button></p>
+  </form>
+  {% if saved %}
+  <p class="actions">
+    <button type="button" hx-post="/token/check" hx-target="#token" hx-swap="outerHTML">Check token</button>
+    <button type="button" hx-post="/token/clear" hx-target="#token" hx-swap="outerHTML">Remove token</button>
+  </p>
+  {% endif %}
+</section>

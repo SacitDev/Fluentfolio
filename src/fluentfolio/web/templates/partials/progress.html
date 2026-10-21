@@ -1,0 +1,6 @@
+{% set kinds = {"Running": "running", "Done": "done", "Done, with gaps": "gaps", "Failed": "failed"} %}
+<ol class="stages">
+  {% for title, word in steps %}<li{% if word in kinds %} class="{{ kinds[word] }}"{% endif %}><span>{{ title }}</span> <span class="word">{{ word }}</span></li>
+  {% endfor %}
+</ol>
+<p class="times">Time so far {{ elapsed }}.{% if estimate %} Estimated total: {{ estimate }}.{% endif %}</p>

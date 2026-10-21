@@ -1,0 +1,14 @@
+name: Idea
+description: Suggest a change or a new feature.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Never attach recordings or transcripts**, yours or anyone else's.
+  - type: textarea
+    id: idea
+    attributes:
+      label: The idea
+      description: What you would like Fluentfolio to do, and how it would help your practice.
+    validations:
+      required: true

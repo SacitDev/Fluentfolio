@@ -1,0 +1,16 @@
+# Words and phrases of a long-turn task: a topic card, a minute to prepare, two minutes to talk.
+# Written for Fluentfolio. One phrase per line, lower case; lines starting with # are comments.
+# A turn holding one of these before a long answer, with at most short exchanges between, is a sign that
+# the long turn (Part 2) starts.
+topic
+card
+cue card
+one minute
+a minute
+prepare
+preparation
+make notes
+some notes
+you should say
+two minutes
+and explain

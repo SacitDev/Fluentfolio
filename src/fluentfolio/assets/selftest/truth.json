@@ -1,0 +1,92 @@
+{
+ "duration_ms": 58450,
+ "speakers": {
+  "E": "examiner",
+  "C": "candidate"
+ },
+ "speech_ms": 43750,
+ "candidate_median_f0_hz": 167.15,
+ "segments": [
+  {
+   "speaker": "E",
+   "role": "examiner",
+   "turn": "q0",
+   "start_ms": 500,
+   "end_ms": 2910,
+   "text": "STUFF IT INTO YOU HIS BELLY COUNSELLED HIM",
+   "source": "LibriSpeech test-clean 1089-134686-0001"
+  },
+  {
+   "speaker": "C",
+   "role": "candidate",
+   "turn": "a0",
+   "start_ms": 3610,
+   "end_ms": 10470,
+   "text": "ALSO A POPULAR CONTRIVANCE WHEREBY LOVE MAKING MAY BE SUSPENDED BUT NOT STOPPED DURING THE PICNIC SEASON",
+   "source": "LibriSpeech test-clean 121-121726-0000"
+  },
+  {
+   "speaker": "C",
+   "role": "candidate",
+   "turn": "a0",
+   "start_ms": 12670,
+   "end_ms": 16330,
+   "text": "HARANGUE THE TIRESOME PRODUCT OF A TIRELESS TONGUE",
+   "source": "LibriSpeech test-clean 121-121726-0001"
+  },
+  {
+   "speaker": "C",
+   "role": "candidate",
+   "turn": "a0",
+   "start_ms": 18530,
+   "end_ms": 23260,
+   "text": "HAY FEVER A HEART TROUBLE CAUSED BY FALLING IN LOVE WITH A GRASS WIDOW",
+   "source": "LibriSpeech test-clean 121-121726-0003"
+  },
+  {
+   "speaker": "C",
+   "role": "candidate",
+   "turn": "a0",
+   "start_ms": 25460,
+   "end_ms": 30090,
+   "text": "HORSE SENSE A DEGREE OF WISDOM THAT KEEPS ONE FROM BETTING ON THE RACES",
+   "source": "LibriSpeech test-clean 121-121726-0007"
+  },
+  {
+   "speaker": "E",
+   "role": "examiner",
+   "turn": "q1",
+   "start_ms": 30890,
+   "end_ms": 32860,
+   "text": "HELLO BERTIE ANY GOOD IN YOUR MIND",
+   "source": "LibriSpeech test-clean 1089-134686-0003"
+  },
+  {
+   "speaker": "C",
+   "role": "candidate",
+   "turn": "a1",
+   "start_ms": 33560,
+   "end_ms": 38930,
+   "text": "HOTEL A PLACE WHERE A GUEST OFTEN GIVES UP GOOD DOLLARS FOR POOR QUARTERS",
+   "source": "LibriSpeech test-clean 121-121726-0009"
+  },
+  {
+   "speaker": "C",
+   "role": "candidate",
+   "turn": "a1",
+   "start_ms": 41130,
+   "end_ms": 48290,
+   "text": "HOUSECLEANING A DOMESTIC UPHEAVAL THAT MAKES IT EASY FOR THE GOVERNMENT TO ENLIST ALL THE SOLDIERS IT NEEDS",
+   "source": "LibriSpeech test-clean 121-121726-0010"
+  },
+  {
+   "speaker": "C",
+   "role": "candidate",
+   "turn": "a1",
+   "start_ms": 50490,
+   "end_ms": 57450,
+   "text": "SO I RETURN REBUK'D TO MY CONTENT AND GAIN BY ILL THRICE MORE THAN I HAVE SPENT",
+   "source": "LibriSpeech test-clean 121-123859-0004"
+  }
+ ]
+}

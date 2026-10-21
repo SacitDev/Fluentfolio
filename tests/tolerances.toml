@@ -1,0 +1,82 @@
+# Limits for tests that compare a result with independent truth.
+#
+# Every entry has a floor and a source: hand arithmetic, construction (the composed sessions and generated
+# signals), a published number, or a requirement of the design. None comes from the code's own output.
+#
+# calibrate = true: after the first green run on CPU and GPU, the value becomes
+#   max(floor, 2 x the larger of the CPU/GPU spread and the run-to-run spread),
+#   with the measured spreads written in the commit message; then it is frozen.
+#   `spread` records that measurement. Each value was measured in two CPU runs and two GPU runs: every
+#   spread was 0, so each value is its floor. (The pitch tools and the voice detector have no GPU path, and
+#   on the composed sessions only the speaker step ran on the GPU; its turns were the same on both.)
+# calibrate = false: a fixed bar. It never moves to make a test pass. Starting values of the design
+#   (thresholds no study fixes yet) are fixed bars too, and the product's constant must equal the entry.
+
+[builder]
+edge_dbfs = { floor = -40, calibrate = false, source = "construction: a clip edge is the first or last 10 ms frame whose peak reaches -40 dBFS" }
+inner_quiet_run_ms = { floor = 150, calibrate = false, source = "construction: a clip with an inner quiet run this long is refused, so every pause of 250 ms or more in a session is an inserted one" }
+
+[pipeline]
+pause_count_per_answer = { floor = 1, unit = "pauses", calibrate = true, spread = 0, source = "requirement: inserted pauses of 250 ms or more, counted per answer, within 1 of the truth" }
+pause_mean_ms = { floor = 80, unit = "ms", calibrate = true, spread = 0, source = "requirement: mean inserted pause length within 80 ms of the truth" }
+latency_ms = { floor = 200, unit = "ms", calibrate = true, spread = 0, source = "requirement: answer latency within 200 ms of the truth" }
+long_turn_s = { floor = 3, unit = "s", calibrate = true, spread = 0, source = "requirement: Part 2 long-turn length within 3 s of the truth" }
+speech_rate_relative = { floor = 0.10, unit = "share", calibrate = true, spread = 0, source = "requirement: speech rate within 10 % of the reference syllables over the truth answer time" }
+role_accuracy_interview_min = { floor = 0.98, unit = "share of speech time", calibrate = false, source = "requirement" }
+role_accuracy_role_swap_min = { floor = 0.95, unit = "share of speech time", calibrate = false, source = "requirement" }
+role_accuracy_solo_min = { floor = 0.90, unit = "share of speech time", calibrate = false, source = "requirement" }
+part_accuracy_min = { floor = 0.90, unit = "share of time, unknown counts half", calibrate = false, source = "requirement" }
+overlap_found_min_s = { floor = 1.0, unit = "s of the 2 s overlap", calibrate = false, source = "requirement, on the constructed 2 s overlap" }
+words_in_preparation_silence = { floor = 0, unit = "words", calibrate = false, source = "construction: the 60 s preparation silence holds no speech" }
+der_pyannote_max = { floor = 0.10, unit = "share, collar 0.25 s", calibrate = false, source = "requirement" }
+wer_margin_points = { floor = 3, unit = "WER points over the frozen value", calibrate = false, source = "requirement" }
+
+[device_parity]
+wer_points = { floor = 1.0, unit = "WER points, GPU against CPU", calibrate = false, source = "requirement" }
+word_time_median_ms = { floor = 40, unit = "ms, median word-time difference", calibrate = false, source = "requirement" }
+
+[integration]
+vad_inserted_pause_ms = { floor = 40, unit = "ms", calibrate = true, spread = 0, source = "construction: a 700 ms gap inserted between two clips" }
+asr_wer_clip_max = { floor = 0.08, unit = "share", calibrate = false, source = "requirement, on a 30 s LibriSpeech test-clean clip against its reference text" }
+diarization_der_max = { floor = 0.15, unit = "share, collar 0.25 s", calibrate = false, source = "requirement, on a 60 s builder clip of two speakers with a 2 s overlap" }
+mfa_edge_ms = { floor = 40, unit = "ms", calibrate = false, source = "requirement; the aligner works on a 10 ms grid" }
+ctc_edge_ms = { floor = 80, unit = "ms", calibrate = false, source = "requirement" }
+praat_tone_hz = { floor = 1.0, unit = "Hz", calibrate = true, spread = 0, source = "physics: a generated harmonic tone at 120 Hz" }
+praat_step_st = { floor = 0.3, unit = "semitones", calibrate = true, spread = 0, source = "hand arithmetic: 1 s at 100 Hz then 1 s at 200 Hz is 12 x log2(2) = 12.0 st" }
+praat_tone_jitter_pct_max = { floor = 0.1, unit = "%", calibrate = false, source = "physics: a strictly periodic tone has no change in length between cycles; the limit allows for 16 kHz sampling" }
+praat_tone_shimmer_pct_max = { floor = 0.5, unit = "%", calibrate = false, source = "physics: a tone of constant amplitude has no change in loudness between cycles; the limit allows for 16-bit samples" }
+praat_tone_hnr_db_min = { floor = 30, unit = "dB", calibrate = false, source = "physics: a strictly periodic tone has no noise; 16-bit samples alone keep it far above this" }
+swiftf0_tone_hz ={ floor = 1.0, unit = "Hz", calibrate = true, spread = 0, source = "physics: a generated harmonic tone at 120 Hz" }
+opensmile_tone_st = { floor = 0.3, unit = "semitones", calibrate = true, spread = 0, source = "hand arithmetic: 12 x log2(120 / 27.5) = 25.51 st, the eGeMAPS scale starting at 27.5 Hz" }
+fusion_agree_st = { floor = 0.3, unit = "semitones", calibrate = true, spread = 0, source = "physics: the 120 Hz tone through all three pitch tools" }
+native_words_to_check_per_min_max = { floor = 1.0, unit = "words per minute, median", calibrate = false, source = "requirement, on native LibriSpeech clips" }
+planted_substitution_flag_rate_min = { floor = 0.90, unit = "share", calibrate = false, source = "requirement, on the planted-substitution clips" }
+
+[pronunciation]
+min_answer_ms = { floor = 2000, unit = "ms", calibrate = false, source = "requirement: starting value; a shorter answer is not checked" }
+min_words = { floor = 5, unit = "checkable words", calibrate = false, source = "requirement: starting value; an answer with fewer is not checked" }
+
+[prosody]
+min_voiced_ms_per_answer = { floor = 10000, unit = "ms", calibrate = false, source = "requirement: starting value; an answer with less voiced speech is left out of the prosody statistics" }
+flat_min_ms = { floor = 2000, unit = "ms", calibrate = false, source = "requirement: heuristic starting value; a shorter stretch between pauses is never counted as flat" }
+
+[rhythm]
+min_vowels = { floor = 20, unit = "vowel sounds", calibrate = false, source = "requirement: starting value; fewer vowel sounds give insufficient sample, not a number" }
+
+[voice_quality]
+min_run_ms ={ floor = 1000, unit = "ms", calibrate = false, source = "requirement: starting value; voice quality uses only voiced stretches at least this long" }
+
+[speakers]
+edge_assign_ms = { floor = 500, unit = "ms", calibrate = false, source = "requirement: starting value; a word outside every speaker turn goes to the nearest turn this close, else its speaker is unknown" }
+
+[grading]
+# The grading prompt's caps and the audio check's pass mark: starting values the prompt text and the answer
+# checker must equal.
+candidate_speech_min_s = { floor = 240, unit = "s", calibrate = false, source = "requirement: starting value; under 4 minutes of candidate speech, no criterion's confidence is above medium" }
+part_min_s = { floor = 60, unit = "s", calibrate = false, source = "requirement: starting value; a Part under 1 minute caps confidence at medium" }
+unsure_words_share_max = { floor = 0.10, unit = "share of words", calibrate = false, source = "requirement: starting value; more unsure words than this caps the vocabulary and grammar confidence at low" }
+audio_check_pass_share = { floor = 0.60, unit = "share of the hidden content words", calibrate = false, source = "requirement: starting value; the audio check passes when the answer holds this share or more" }
+
+[media]
+bleed_louder_db ={ floor = 6, unit = "dB", calibrate = false, source = "requirement: starting value; the louder track wins a frame when louder by this much" }
+music_stability_min = { floor = 0.3, unit = "correlation", calibrate = false, source = "requirement: the one fixed threshold of the music heuristic, chosen by looking at synthetic music under speech and at speech, hum and noise without music" }

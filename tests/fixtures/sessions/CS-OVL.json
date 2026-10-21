@@ -1,0 +1,10 @@
+{
+ "name": "CS-OVL",
+ "base": "CS-INT",
+ "seed": 404,
+ "turns": {"p1bc": {"speaker": "E", "kind": "backchannel", "part": 1}},
+ "edits": [
+  {"after": "ls_4446_2271_0021", "insert": [{"clip": "int_mmhmm", "turn": "p1bc", "inside_ms": 400}]},
+  {"change": "int_p3_q2", "set": {"gap_ms": null, "overlap_ms": 2000}}
+ ]
+}

@@ -1,0 +1,112 @@
+# Public test data that is too large to commit. tools/fetch_test_data.py downloads each file into the folder named
+# by FF_TEST_DATA, checks its size and SHA-256, and unpacks archives. Nothing here is ever committed.
+# Mirrors are tried in order. The licence applies to the data; the credit line is what a copy must keep.
+
+[[file]]
+name = "librispeech-test-clean"
+urls = [
+    "https://openslr.trmal.net/resources/12/test-clean.tar.gz",
+    "https://openslr.elda.org/resources/12/test-clean.tar.gz",
+]
+size = 346663984
+sha256 = "39fde525e59672dc6d1551919b1478f724438a95aa55f874b576be21967e6c23"
+licence = "CC-BY-4.0"
+credit = "LibriSpeech ASR corpus, V. Panayotov, G. Chen, D. Povey and S. Khudanpur, 2015 (OpenSLR 12)"
+save_as = "librispeech/test-clean.tar.gz"
+unpack_to = "librispeech"
+
+[[file]]
+name = "voices-clip"
+urls = ["https://download.pytorch.org/torchaudio/tutorial-assets/Lab41-SRI-VOiCES-src-sp0307-ch127535-sg0042.wav"]
+size = 108844
+sha256 = "c65fcd726d6b08c82c1e5dc7558f863cd8d483e3ed2f4a7bcf271dc1865ada14"
+licence = "CC-BY-4.0"
+credit = "VOiCES corpus, Lab41 (In-Q-Tel) and SRI International; the copy published with the torchaudio tutorials"
+save_as = "voices/Lab41-SRI-VOiCES-src-sp0307-ch127535-sg0042.wav"
+
+# The test split only, for the pronunciation check script in eval/; never shipped or used for training.
+[[file]]
+name = "speechocean762-test"
+urls = [
+    "https://huggingface.co/datasets/mispeech/speechocean762/resolve/06385584fad212b26134c656fdd3ccf9f093f33e/data/test-00000-of-00001.parquet",
+]
+size = 311543671
+sha256 = "c951056c8bbc52f776b571c0d02f46b6753f49774a8526f130fcf89400736e98"
+licence = "CC-BY-4.0"
+credit = "speechocean762, J. Zhang, Z. Zhang, Y. Wang, Z. Yan, Q. Song, Y. Huang, K. Li, D. Povey and Y. Wang, 2021 (OpenSLR 101)"
+save_as = "speechocean762/test-00000-of-00001.parquet"
+
+# EdAcc, for the speech-model comparison and the aligner check: only the shards that
+# eval/prereg/asr_bakeoff.toml lists, chosen there by a seeded rule before any download.
+[[file]]
+name = "edacc-validation-00003"
+urls = ["https://huggingface.co/datasets/edinburghcstr/edacc/resolve/d9ae7bd344f0562b766ec93ee5ce8f2f9568ce66/data/validation-00003-of-00006-b26008b096562d41.parquet"]
+size = 491614484
+sha256 = "03c26e00c5e921d8316301a1088723e217e3f85c860f454565358e5bf27a01bf"
+licence = "CC-BY-SA-4.0"
+credit = "EdAcc, the Edinburgh International Accents of English Corpus, R. Sanabria, N. Bogoychev, N. Markl, A. Carmantini, O. Klejch and P. Bell, 2023"
+save_as = "edacc/validation-00003-of-00006-b26008b096562d41.parquet"
+
+[[file]]
+name = "edacc-validation-00004"
+urls = ["https://huggingface.co/datasets/edinburghcstr/edacc/resolve/d9ae7bd344f0562b766ec93ee5ce8f2f9568ce66/data/validation-00004-of-00006-8cad96ca1a653334.parquet"]
+size = 786779035
+sha256 = "aaab611405faacf6ea737f824ebd032e150c7b0d61fb2a9f7f9f82c42ba0cc3a"
+licence = "CC-BY-SA-4.0"
+credit = "EdAcc, the Edinburgh International Accents of English Corpus, R. Sanabria, N. Bogoychev, N. Markl, A. Carmantini, O. Klejch and P. Bell, 2023"
+save_as = "edacc/validation-00004-of-00006-8cad96ca1a653334.parquet"
+
+[[file]]
+name = "edacc-test-00004"
+urls = ["https://huggingface.co/datasets/edinburghcstr/edacc/resolve/d9ae7bd344f0562b766ec93ee5ce8f2f9568ce66/data/test-00004-of-00010-806407c9bc68112a.parquet"]
+size = 257093852
+sha256 = "923dde356508439b93babc65940567d80915ffe34d6fed8dad23e09931388320"
+licence = "CC-BY-SA-4.0"
+credit = "EdAcc, the Edinburgh International Accents of English Corpus, R. Sanabria, N. Bogoychev, N. Markl, A. Carmantini, O. Klejch and P. Bell, 2023"
+save_as = "edacc/test-00004-of-00010-806407c9bc68112a.parquet"
+
+[[file]]
+name = "edacc-test-00000"
+urls = ["https://huggingface.co/datasets/edinburghcstr/edacc/resolve/d9ae7bd344f0562b766ec93ee5ce8f2f9568ce66/data/test-00000-of-00010-f0aceb1ca4406ff1.parquet"]
+size = 471245844
+sha256 = "1aeffcba6a8a77b7b2c0be70fa7a30fa437f8a5705b02d1d5cab2932d76af767"
+licence = "CC-BY-SA-4.0"
+credit = "EdAcc, the Edinburgh International Accents of English Corpus, R. Sanabria, N. Bogoychev, N. Markl, A. Carmantini, O. Klejch and P. Bell, 2023"
+save_as = "edacc/test-00000-of-00010-f0aceb1ca4406ff1.parquet"
+
+[[file]]
+name = "edacc-test-00002"
+urls = ["https://huggingface.co/datasets/edinburghcstr/edacc/resolve/d9ae7bd344f0562b766ec93ee5ce8f2f9568ce66/data/test-00002-of-00010-2b021baedb4deb8a.parquet"]
+size = 333196154
+sha256 = "c165a89a35511863acf301fbca747a92b44a2694a344ebf3edc0586de337ba26"
+licence = "CC-BY-SA-4.0"
+credit = "EdAcc, the Edinburgh International Accents of English Corpus, R. Sanabria, N. Bogoychev, N. Markl, A. Carmantini, O. Klejch and P. Bell, 2023"
+save_as = "edacc/test-00002-of-00010-2b021baedb4deb8a.parquet"
+
+[[file]]
+name = "edacc-test-00008"
+urls = ["https://huggingface.co/datasets/edinburghcstr/edacc/resolve/d9ae7bd344f0562b766ec93ee5ce8f2f9568ce66/data/test-00008-of-00010-d1aa19b51ad423da.parquet"]
+size = 408862837
+sha256 = "9056bf79642ea7ef6044486b44a2e087cc2b2640bba50dde9f922882d8551598"
+licence = "CC-BY-SA-4.0"
+credit = "EdAcc, the Edinburgh International Accents of English Corpus, R. Sanabria, N. Bogoychev, N. Markl, A. Carmantini, O. Klejch and P. Bell, 2023"
+save_as = "edacc/test-00008-of-00010-d1aa19b51ad423da.parquet"
+
+# The Nyra disfluency set: the dev and test splits only; never the training split.
+[[file]]
+name = "nyra-validation"
+urls = ["https://huggingface.co/datasets/nyralabs/disfluency_speech_english/resolve/723e9e69bfbdc8214a9b8ce8815985e90afcbaa3/data/validation-00000-of-00001.parquet"]
+size = 53655526
+sha256 = "c4866c81d11c7166a5dc2ce8d971634397614193ce53e3b250c2af29b2fdab56"
+licence = "Apache-2.0"
+credit = "Nyra Disfluency Speech English (Nyra Health), from DisfluencySpeech, K. Wang and D. Herremans, 2024"
+save_as = "nyra/validation-00000-of-00001.parquet"
+
+[[file]]
+name = "nyra-test"
+urls = ["https://huggingface.co/datasets/nyralabs/disfluency_speech_english/resolve/723e9e69bfbdc8214a9b8ce8815985e90afcbaa3/data/test-00000-of-00001.parquet"]
+size = 50998705
+sha256 = "b1abf839d6dee9832d642b2d0be2de077cd9cdd1964bc505196f39720f55e9da"
+licence = "Apache-2.0"
+credit = "Nyra Disfluency Speech English (Nyra Health), from DisfluencySpeech, K. Wang and D. Herremans, 2024"
+save_as = "nyra/test-00000-of-00001.parquet"

@@ -1,0 +1,1 @@
+To download: {{ totals.size }}{% if totals.time %}, {{ totals.time }} at 50 Mbit/s{% endif %}. Free space: {{ totals.free }}.{% for line in totals.kept %} {{ line }}{% endfor %}

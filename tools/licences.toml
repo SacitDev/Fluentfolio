@@ -1,0 +1,122 @@
+# Licence table read by tools/notices.py.
+#
+# [override]: the licence of a package whose metadata gives none or a wrong one, or of a package that
+# not every supported install has (Windows or Linux, cpu or cu130), so every machine writes the same
+# notices. Each entry says where its licence was read. Check it again when its version changes.
+# [copyleft], [proprietary] and [noncommercial]: the named lists. A package with such a licence that
+# is not named here fails the check.
+
+[override]
+colorama = "BSD-3-Clause"  # Windows only; its LICENSE.txt has the three BSD clauses
+tzdata = "Apache-2.0"  # Windows only; License field in its metadata
+triton = "MIT"  # Linux only; License field in its wheel metadata
+# torch and torchaudio: the cpu and cu130 builds differ by machine; both builds' metadata agree.
+torch = "Apache-2.0 AND Apache-2.0 WITH LLVM-exception AND BSD-2-Clause AND BSD-3-Clause AND BSL-1.0 AND MIT"
+torchaudio = "BSD-2-Clause"  # its LICENSE file is the BSD 2-Clause text
+# pyannote: the metadata names no licence; each dist-info LICENSE file is the MIT text.
+pyannote-audio = "MIT AND Apache-2.0"  # also bundles WeSpeaker code with an Apache-2.0 LICENSE file
+pyannote-core = "MIT"
+pyannote-database = "MIT"
+pyannote-metrics = "MIT"
+pyannote-pipeline = "MIT"
+pyannoteai-sdk = "MIT"
+# av: its own code is BSD-3-Clause (LICENSE.txt); the FFmpeg libraries inside its wheel report
+# "LGPL version 3 or later" (avutil_license, avcodec_license, avformat_license).
+av = "BSD-3-Clause AND LGPL-3.0-or-later"
+sherpa-onnx = "Apache-2.0"  # License field "Apache licensed, as found in the LICENSE file"; that file is the Apache 2.0 text
+sherpa-onnx-core = "Apache-2.0 AND MIT"  # License field Apache-2.0; its wheel also carries the ONNX Runtime library (MIT)
+# espeakng-loader: no licence in its metadata; its wheel carries the espeak-ng library and data (GPL-3.0-or-later).
+espeakng-loader = "GPL-3.0-or-later"
+# The nc extra (openSMILE and what only it installs), read from each wheel.
+opensmile = "LicenseRef-openSMILE-Research"  # LICENSE is the audEERING Research License Agreement, whatever its MIT classifier says
+audobject = "LicenseRef-audobject-AllRightsReserved"  # LICENSE and License field: "All rights reserved ... Proprietary and confidential"; its classifier says MIT
+audresample = "MIT AND LGPL-2.1-or-later"  # MIT LICENSE; its audresample.dll holds soxr's error strings, and soxr is LGPL-2.1-or-later
+soundfile = "BSD-3-Clause AND LGPL-2.1-or-later"  # its bundled libsndfile COPYING is LGPL-2.1; licensing/license_notes.md lists the LGPL parts
+asttokens = "Apache-2.0"  # License field "Apache 2.0"
+# wordfreq: Apache-2.0 code (License field); its METADATA says its word lists may be redistributed under
+# CC BY-SA 4.0, so they keep that licence.
+wordfreq = "Apache-2.0 AND CC-BY-SA-4.0"
+locate = "MIT"  # its LICENSE file is the MIT text; its classifier says "Other/Proprietary License"
+audeer = "MIT"
+audformat = "MIT"
+audinterface = "MIT"
+audiofile = "MIT"
+audmath = "MIT"
+cffi = "MIT-0"
+iso3166 = "MIT"
+iso639-lang = "MIT"
+oyaml = "MIT"
+pyarrow = "Apache-2.0"
+pycparser = "BSD-3-Clause"
+# Development only (the browser tests): no licence in its metadata; its LICENSE is the MIT text, and the
+# axe.min.js inside it (axe-core 4.12.1) carries the MPL-2.0 header.
+axe-playwright-python = "MIT AND MPL-2.0"
+# Linux cu130 installs only, from the wheel metadata (License-Expression, License or classifier).
+cuda-bindings = "Apache-2.0"
+cuda-pathfinder = "Apache-2.0"
+cuda-toolkit = "LicenseRef-NVIDIA-Proprietary"  # a meta-package with no files of its own; it names no licence and installs the NVIDIA wheels below
+nvidia-cublas = "LicenseRef-NVIDIA-Proprietary"
+nvidia-cublas-cu12 = "LicenseRef-NVIDIA-Proprietary"  # cu130 extra on Windows and Linux; CUDA 12 cuBLAS for Whisper
+nvidia-cuda-nvrtc-cu12 = "LicenseRef-NVIDIA-Proprietary"  # required by nvidia-cublas-cu12
+nvidia-cuda-cupti = "LicenseRef-NVIDIA-Proprietary"
+nvidia-cuda-nvrtc = "LicenseRef-NVIDIA-Proprietary"
+nvidia-cuda-runtime = "LicenseRef-NVIDIA-Proprietary"
+nvidia-cudnn-cu13 = "LicenseRef-NVIDIA-Proprietary"
+nvidia-cufft = "LicenseRef-NVIDIA-Proprietary"
+nvidia-cufile = "LicenseRef-NVIDIA-Proprietary"
+nvidia-curand = "LicenseRef-NVIDIA-Proprietary"
+nvidia-cusolver = "LicenseRef-NVIDIA-Proprietary"
+nvidia-cusparse = "LicenseRef-NVIDIA-Proprietary"
+nvidia-cusparselt-cu13 = "LicenseRef-NVIDIA-Proprietary"  # its metadata says "NVIDIA Proprietary Software"
+nvidia-nccl-cu13 = "LicenseRef-NVIDIA-Proprietary"
+nvidia-nvjitlink = "LicenseRef-NVIDIA-Proprietary"
+nvidia-nvshmem-cu13 = "LicenseRef-NVIDIA-Proprietary"
+nvidia-nvtx = "Apache-2.0"  # License field; its classifier says Other/Proprietary
+
+[copyleft]
+names = ["audresample", "av", "espeakng-loader", "phonemizer", "praat-parselmouth", "soundfile", "wordfreq"]
+
+# Free to use but not open source: the NVIDIA CUDA libraries of GPU installs.
+[proprietary]
+licences = ["LicenseRef-NVIDIA-Proprietary"]
+names = [
+    "cuda-toolkit", "nvidia-cublas", "nvidia-cublas-cu12", "nvidia-cuda-cupti", "nvidia-cuda-nvrtc",
+    "nvidia-cuda-nvrtc-cu12", "nvidia-cuda-runtime", "nvidia-cudnn-cu13", "nvidia-cufft", "nvidia-cufile",
+    "nvidia-curand", "nvidia-cusolver", "nvidia-cusparse", "nvidia-cusparselt-cu13", "nvidia-nccl-cu13",
+    "nvidia-nvjitlink", "nvidia-nvshmem-cu13",
+]
+
+# Non-commercial or more restricted: only in the nc extra, installed after the user accepts openSMILE's licence.
+[noncommercial]
+licences = ["LicenseRef-openSMILE-Research", "LicenseRef-audobject-AllRightsReserved"]
+names = ["audobject", "opensmile"]
+
+# Files copied into the web app from their projects at a pinned version, each beside its licence file.
+# notices.py adds the SHA-256 of every file listed under `files`, which are copied unchanged; `changed`
+# says how the other copied files were changed.
+[[vendored]]
+name = "htmx"
+version = "2.0.11"
+source = "github.com/bigskysoftware/htmx, tag v2.0.11, dist/htmx.min.js"
+licence = "0BSD"
+licence_file = "src/fluentfolio/web/static/js/htmx-LICENSE.txt"
+files = ["src/fluentfolio/web/static/js/htmx.min.js"]
+
+[[vendored]]
+name = "Atkinson Hyperlegible Next"
+version = "7925f50f"
+source = "github.com/googlefonts/atkinson-hyperlegible-next, commit 7925f50f649b3813257faf2f4c0b381011f434f1"
+licence = "OFL-1.1"
+licence_file = "src/fluentfolio/web/static/fonts/OFL.txt"
+files = [
+    "src/fluentfolio/web/static/fonts/AtkinsonHyperlegibleNext-Regular.woff2",
+    "src/fluentfolio/web/static/fonts/AtkinsonHyperlegibleNext-SemiBold.woff2",
+]
+
+[[vendored]]
+name = "Phosphor Icons, regular"
+version = "2.1.1"
+source = "github.com/phosphor-icons/core, commit 2b75f3ad12b420c9504ef05df8d2564a28f8500e (package 2.1.1)"
+licence = "MIT"
+licence_file = "src/fluentfolio/web/templates/icons/LICENSE"
+changed = "14 SVG files in templates/icons, each with class, aria-hidden and focusable added"

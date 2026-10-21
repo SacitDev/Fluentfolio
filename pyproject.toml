@@ -1,0 +1,288 @@
+[project]
+name = "fluentfolio"
+version = "0.1.0"
+description = "Measured evidence from IELTS Speaking practice recordings, with a grading prompt for any AI chat."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Michael" }]
+requires-python = "==3.12.*"
+dependencies = [
+    "av",
+    "click",
+    "ctranslate2>=4.6.3",
+    "espeakng-loader",
+    "fastapi",
+    "faster-whisper",
+    "huggingface-hub==1.33.0",
+    "jinja2",
+    "numpy",
+    "onnx-asr",
+    "onnxruntime",
+    "phonemizer",
+    "praat-parselmouth",
+    "psutil",
+    "pydantic",
+    "sherpa-onnx==1.13.8",
+    # Its Windows wheel needs this, but the wheels disagree, so the lock missed it; without it, Windows'
+    # own System32 onnxruntime.dll was loaded.
+    "sherpa-onnx-core==1.13.8",
+    "soundfile",
+    # The English model was built for spaCy 3.7, which cannot run with numpy 2; its parses are tested on 3.8.
+    "spacy>=3.8,<3.9",
+    # Older versions have a Range-header denial of service in FileResponse (CVE-2025-62727).
+    "starlette>=0.49.1",
+    "swift-f0==0.3.0",
+    "tomli-w",
+    "uvicorn",
+    "wordfreq",
+]
+
+[project.optional-dependencies]
+# Exactly one of cpu and cu130 is installed; the installer picks it.
+cpu = ["torch>=2.14,<2.15", "torchaudio==2.11.0", "pyannote.audio==4.0.7"]
+# Whisper on the GPU needs only cuBLAS 12; the CTranslate2 wheels load it at run time.
+cu130 = ["torch>=2.14,<2.15", "torchaudio==2.11.0", "pyannote.audio==4.0.7", "nvidia-cublas-cu12==12.9.2.10"]
+# Non-commercial licence: installed only after the user accepts it.
+nc = ["opensmile==2.6.0"]
+
+[project.scripts]
+fluentfolio = "fluentfolio.cli:main"
+
+[dependency-groups]
+dev = [
+    "axe-playwright-python>=0.1.8",
+    "bandit",
+    "coverage",
+    "deptry",
+    "httpx",
+    "hypothesis",
+    "import-linter",
+    "jiwer",
+    "jsonschema>=4.26.0",
+    "mypy",
+    "packaging",
+    "playwright",
+    "pyarrow",
+    "pytest",
+    "pytest-timeout==2.4.0",
+    "pytest-xdist>=3.8.0",
+    "ruff",
+    "shellcheck-py>=0.11.0,<0.12",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.0,<0.14"]
+build-backend = "uv_build"
+
+[tool.uv]
+# Only versions at least two weeks old, and wheels for both supported platforms.
+exclude-newer = "14 days"
+# Two exceptions, for security fixes. Remove each one after the date given, when that version is two weeks old.
+# certifi 2026.10.19 drops a certificate authority whose keys leaked (GHSA-6q48-6c7w-9gw2): after 3 November 2026.
+# pillow 13.0.0 fixes nine image flaws published on 20 October 2026: after 30 October 2026.
+exclude-newer-package = { certifi = "2026-10-21T00:00:00Z", pillow = "2026-10-21T00:00:00Z" }
+required-environments = [
+    "sys_platform == 'win32' and platform_machine == 'AMD64'",
+    "sys_platform == 'linux' and platform_machine == 'x86_64'",
+]
+conflicts = [[{ extra = "cpu" }, { extra = "cu130" }]]
+# pyannote gets an in-memory waveform, so the file decoder is never needed.
+exclude-dependencies = ["torchcodec"]
+
+[tool.uv.sources]
+torch = [
+    { index = "pytorch-cpu", extra = "cpu" },
+    { index = "pytorch-cu130", extra = "cu130" },
+]
+torchaudio = [
+    { index = "pytorch-cpu", extra = "cpu" },
+    { index = "pytorch-cu130", extra = "cu130" },
+]
+
+# Explicit, so only torch and torchaudio can come from these indexes.
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true
+
+[tool.ruff]
+target-version = "py312"
+line-length = 110
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "BLE001", "PLR0912", "PLR0915"]
+
+[tool.ruff.lint.per-file-ignores]
+# Process launches live in the job runner only; the dev tools and tests may start processes too.
+"src/fluentfolio/jobs/runner.py" = ["S603"]
+"tools/check.py" = ["S603"]
+"eval/**" = ["S603"]
+"tests/**" = ["S101", "S603"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+mypy_path = "src"
+files = [
+    "src/fluentfolio/core",
+    "src/fluentfolio/settings",
+    "src/fluentfolio/structure",
+    "src/fluentfolio/evidence",
+    "src/fluentfolio/export",
+    "src/fluentfolio/analyzers/measures",
+]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+addopts = ["--strict-markers", "--import-mode=importlib", "-m", "not (slow or gpu or network or private_sample)"]
+timeout = 3600
+
+[tool.coverage.run]
+branch = true
+source = ["fluentfolio"]
+
+[tool.coverage.report]
+include = [
+    "*/fluentfolio/core/*",
+    "*/fluentfolio/settings/*",
+    "*/fluentfolio/structure/*",
+    "*/fluentfolio/evidence/*",
+    "*/fluentfolio/export/*",
+    "*/fluentfolio/analyzers/measures/*",
+]
+fail_under = 85
+show_missing = true
+
+[tool.deptry]
+known_first_party = ["fluentfolio"]
+
+[tool.deptry.package_module_name_map]
+praat-parselmouth = "parselmouth"  # its wheel does not list the module it installs
+
+[tool.deptry.per_rule_ignores]
+# Needed without an import: torchaudio pins the CUDA build that pyannote loads, and the Whisper GPU child
+# finds the cuBLAS libraries by folder.
+DEP002 = [
+    "torchaudio",
+    "nvidia-cublas-cu12",
+]
+
+[tool.importlinter]
+root_package = "fluentfolio"
+include_external_packages = true
+
+[[tool.importlinter.contracts]]
+name = "Layers: the front ends sit on top and the core at the bottom"
+type = "layers"
+containers = ["fluentfolio"]
+layers = [
+    "web | cli",
+    "app",
+    "doctor",
+    "setup",
+    "jobs",
+    "media : ingest : asr : speakers : structure : alignment : analyzers : evidence : export : models",
+    "settings",
+    "core",
+]
+
+# sherpa-onnx ships its own ONNX Runtime; two copies in one process clash.
+[[tool.importlinter.contracts]]
+name = "sherpa-onnx stays apart from the onnxruntime package"
+type = "forbidden"
+source_modules = ["fluentfolio.speakers.sherpa"]
+forbidden_modules = [
+    "onnxruntime",
+    "onnx_asr",
+    "swift_f0",
+    "fluentfolio.asr.vad",
+    "fluentfolio.asr.onnx_engine",
+    "fluentfolio.alignment.phones",
+    "fluentfolio.analyzers.swiftf0",
+]
+
+[[tool.importlinter.contracts]]
+name = "The onnxruntime children never load sherpa-onnx"
+type = "forbidden"
+source_modules = ["fluentfolio.asr.vad", "fluentfolio.asr.onnx_engine", "fluentfolio.alignment.phones"]
+forbidden_modules = ["sherpa_onnx"]
+
+# torch and CTranslate2 bring two OpenMP and CUDA stacks, which crash together in one process on Windows.
+[[tool.importlinter.contracts]]
+name = "The pyannote child never loads CTranslate2"
+type = "forbidden"
+source_modules = ["fluentfolio.speakers.pyannote"]
+forbidden_modules = [
+    "ctranslate2",
+    "faster_whisper",
+    "fluentfolio.asr.whisper_engine",
+    "fluentfolio.asr.language",
+]
+
+[[tool.importlinter.contracts]]
+name = "The Whisper children never load torch"
+type = "forbidden"
+source_modules = ["fluentfolio.asr.whisper_engine", "fluentfolio.asr.language"]
+forbidden_modules = ["torch", "torchaudio", "pyannote"]
+
+# openSMILE's non-commercial licence and GPL code never meet in one process.
+[[tool.importlinter.contracts]]
+name = "The GPL children never load openSMILE"
+type = "forbidden"
+source_modules = ["fluentfolio.media", "fluentfolio.alignment.phones", "fluentfolio.analyzers.praat"]
+forbidden_modules = ["opensmile"]
+
+[[tool.importlinter.contracts]]
+name = "The openSMILE child never loads GPL code"
+type = "forbidden"
+source_modules = ["fluentfolio.analyzers.opensmile"]
+forbidden_modules = [
+    "parselmouth",
+    "phonemizer",
+    "espeakng_loader",
+    "av",
+    "fluentfolio.media",
+    "fluentfolio.analyzers.praat",
+    "fluentfolio.alignment.phones",
+]
+
+# The tool adapters share data only through files, so each child loads one tool.
+[[tool.importlinter.contracts]]
+name = "The tool adapters are independent"
+type = "independence"
+modules = [
+    "fluentfolio.analyzers.praat",
+    "fluentfolio.analyzers.swiftf0",
+    "fluentfolio.analyzers.opensmile",
+    "fluentfolio.analyzers.nlp",
+]
+
+# The app process stays light, so it starts fast and fits small machines; heavy stages run in their own child.
+# Imports through the lower layers are left to the light-process test, which sees lazy and dotted-string imports too.
+[[tool.importlinter.contracts]]
+name = "The front ends, app, doctor and setup import no heavy library"
+type = "forbidden"
+source_modules = [
+    "fluentfolio.web",
+    "fluentfolio.cli",
+    "fluentfolio.app",
+    "fluentfolio.doctor",
+    "fluentfolio.setup",
+]
+forbidden_modules = [
+    "torch",
+    "onnxruntime",
+    "ctranslate2",
+    "faster_whisper",
+    "pyannote",
+    "sherpa_onnx",
+    "transformers",
+]
+allow_indirect_imports = true

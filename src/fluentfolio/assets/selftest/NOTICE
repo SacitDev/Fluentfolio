@@ -1,0 +1,23 @@
+Self-test clip: sources and licence
+
+selftest.opus, reference.txt and truth.json are installed with Fluentfolio. `fluentfolio self-test` runs the
+clip through every part that is installed and switched on, and checks the results against these files.
+
+selftest.opus
+  A 58 s exchange of two readers from LibriSpeech test-clean: speaker 1089 asks twice (utterances
+  1089-134686-0001 and 1089-134686-0003), and speaker 121 answers each time with several sentences
+  (121-121726-0000, -0001, -0003, -0007, -0009, -0010 and 121-123859-0004).
+  LibriSpeech ASR corpus, Vassil Panayotov, Guoguo Chen, Daniel Povey and Sanjeev Khudanpur, 2015.
+  https://www.openslr.org/12
+  Licence: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
+  Changes: level raised to -20 dBFS active speech (peak at most -6 dBFS), inner silences longer than 100 ms
+  shortened to 100 ms, a -75 dBFS dither added, the utterances laid out on one timeline with pauses between
+  them and a quiet noise floor, and encoded as 16 kHz mono Ogg Opus. tools/selftest_clip.py makes it.
+
+reference.txt
+  The corpus transcripts of the nine utterances, in time order.
+
+truth.json
+  Where each utterance starts and ends, who speaks it, the total speech time, and the median pitch of the
+  reader who answers, measured with Praat on the encoded clip. They are derived from the corpus under the
+  same licence.

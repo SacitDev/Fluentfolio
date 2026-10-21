@@ -1,0 +1,78 @@
+# Pre-registration: do the three pitch tools agree on clean speech? Committed before the run. After the
+# freeze no value, rule or threshold below changes; the agreement limits are fixed by design and are never
+# widened. All hashes are SHA-256 in lower-case hex.
+
+name = "pitch_fusion"
+question = """
+On clean speech, how often do Praat, SwiftF0 and openSMILE agree on the median pitch and the pitch range
+(p20-p80) closely enough for the combined value to be labelled "agree" (spread at most 1.0 semitone) rather
+than "approximate" (at most 3.2) or "unreliable"?"""
+seed = 20261013
+max_run_hours = 2
+
+[tools]
+# Each tool's values come from the product: a composed session goes through the product's own analysis, run
+# as a learner runs it, and its per-tool values are read from the output; a clean clip or a tone is passed
+# whole, as one answer, to the product's three tool adapters. openSMILE runs under a test consent record.
+# The spreads and labels are computed in eval/ from those values, by the app's agreement rule: semitones re
+# 27.5 Hz, the limits below, under 5 s of voiced speech too little.
+tools = ["praat", "swiftf0", "opensmile"]
+agree_st = 1.0
+approximate_st = 3.2
+
+# ---------------------------------------------------------------------------------------------------------
+[data]
+composed = "the candidates of the six committed recipes, each session analysed as the product does"
+# Twenty clean clips: 19 from LibriSpeech test-clean and the one public VOiCES clip. The 19 speakers are the
+# first in order of sha256("20261013:" + speaker ID) among test-clean speakers who appear in no committed
+# recipe; each clip joins that speaker's utterances in ID order, with 300 ms of silence between them, until
+# it lasts 30 s or more. Each clip is one answer of a solo session.
+librispeech_source = "https://openslr.trmal.net/resources/12/test-clean.tar.gz"
+librispeech_sha256 = "39fde525e59672dc6d1551919b1478f724438a95aa55f874b576be21967e6c23"
+librispeech_clips = 19
+clip_min_s = 30
+gap_ms = 300
+voices_source = "https://download.pytorch.org/torchaudio/tutorial-assets/Lab41-SRI-VOiCES-src-sp0307-ch127535-sg0042.wav"
+voices_sha256 = "c65fcd726d6b08c82c1e5dc7558f863cd8d483e3ed2f4a7bcf271dc1865ada14"
+# Known: the VOiCES clip lasts about 3.4 s, under the product's 10 s of voiced speech per answer, so it is
+# expected to get "too_little_speech"; it is reported with its label like every other clip.
+tones_hz = [100.0, 150.0, 220.0]  # harmonic tones of 12 s, 8 harmonics, made locally
+tone_s = 12
+
+# ---------------------------------------------------------------------------------------------------------
+[metrics]
+spreads = """
+per clip and per statistic (p20, p50, p80, and the p20-p80 range): the largest minus the smallest tool
+value, in semitones"""
+labels = "per clip: the label of the median, the label of the range, and the clip label, the worse of the two"
+shares = "the share of each clip label: agree, approximate, unreliable, too_little_speech, single_tool"
+tones = "per tone: each tool's median against the true pitch, and the combined label"
+
+[calibration]
+# Before the run: every tool's median on each tone lies within 0.3 semitones of the true pitch, as in the
+# product's integration test. Otherwise no decision is taken until the cause is found.
+tone_st_max = 0.3
+
+[statistics]
+# The decision uses the point share. The report also gives the share's 95 % percentile interval from a
+# bootstrap over clips, so a reader sees how little 20 clips can tell.
+# If the inputs are fixed once and the run repeated, the change in that share between the two runs gets a
+# paired bootstrap over the same clips, also reported only.
+method = "counts and shares; bootstrap interval for the approximate-or-worse share, reported only"
+resamples = 2000
+seed = 20261013
+unit = "clip"
+
+[decision]
+# "Approximate or worse" means a clip label of approximate or unreliable. The share is taken over the clean
+# clips that have a combined label (agree, approximate or unreliable); clips without one are listed apart.
+limit_share = 0.20
+rule = """
+If more than 20 % of the clean clips land in approximate or worse, fix the inputs once (the pitch range
+settings or the voicing input) and run again; the report keeps the label shares of both runs. The agreement
+limits are never widened. If the share is still over 20 % after that one fix, the limits stay and the
+accuracy page says so plainly."""
+
+[report]
+lines = ["prereg_sha256: <sha256 of this file at the freeze commit>", "Decision: <one line>"]
+content = "every clip, session and tone with each tool's values, the spreads and the labels"

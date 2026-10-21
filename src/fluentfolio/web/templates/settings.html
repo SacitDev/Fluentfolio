@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Settings{% endblock %}
+{% block main %}
+<h1>Settings</h1>
+{% from "partials/tabs.html" import tabs %}
+{{ tabs("Settings pages", [("basic", "Basic", "/settings"), ("advanced", "Advanced", "/settings?tab=advanced")], tab) }}
+{% if read_only %}<p class="notice">A newer version of Fluentfolio wrote these settings, so this version uses them but cannot change them.</p>{% endif %}
+{% for problem in problems %}<p class="notice">{{ problem }}. The default is used instead.</p>{% endfor %}
+<p class="help">Each change is saved at once and applies to the next analysis.</p>
+<form id="settings" hx-post="/settings" hx-trigger="change" hx-target="#saved">
+  <input type="hidden" name="tab" value="{{ tab }}">
+  {% for title, controls in groups %}
+  <fieldset>
+    <legend>{{ title }}</legend>
+    {% for c in controls %}
+    {% if c.kind == "switch" %}
+    <label class="choice"><input type="checkbox" name="{{ c.key }}" value="yes" aria-describedby="help-{{ c.key }}"{% if c.value == "true" %} checked{% endif %}> {{ c.title }}</label>
+    <p class="help" id="help-{{ c.key }}">{{ c.help }}</p>
+    {% elif c.kind == "number" %}
+    <label for="{{ c.key }}">{{ c.title }}</label>
+    <p class="help" id="help-{{ c.key }}">{{ c.help }}</p>
+    <input type="number" id="{{ c.key }}" name="{{ c.key }}" value="{{ c.value }}" step="1"{% if c.least is not none %} min="{{ c.least }}"{% endif %} aria-describedby="help-{{ c.key }}">
+    {% else %}
+    <fieldset class="choices" aria-describedby="help-{{ c.key }}">
+      <legend>{{ c.title }}</legend>
+      <p class="help" id="help-{{ c.key }}">{{ c.help }}</p>
+      {% for value, label in c.options %}<label class="choice"><input type="radio" name="{{ c.key }}" value="{{ value }}"{% if value == c.value %} checked{% endif %}> {{ label }}</label>{% endfor %}
+    </fieldset>
+    {% endif %}
+    {% endfor %}
+  </fieldset>
+  {% endfor %}
+</form>
+<p id="saved" class="result" role="status"></p>
+<details>
+  <summary>Restore defaults</summary>
+  <p>Every setting on both pages goes back to its first value. Your analyses stay.</p>
+  <p class="actions"><button type="button" hx-post="/settings/restore" hx-target="#saved">Restore all settings</button></p>
+</details>
+{% if folders %}
+<section id="folders" aria-labelledby="folders-title">
+  <h2 id="folders-title">Folders</h2>
+  <p>A move copies every file to the new folder and checks the copy. Only then does it delete the old folder. It waits until no analysis, download or check is running.</p>
+  {% for f in folders %}
+  <h3>{{ f.title }}</h3>
+  <p hx-disable>Now in <span class="path">{{ f.path|path_text }}</span></p>
+  {% if f.fixed %}
+  <p class="help">{{ f.fixed }}</p>
+  {% else %}
+  <form hx-post="/settings/move" hx-target="#move-status-{{ f.kind }}" hx-indicator="#move-busy-{{ f.kind }}" hx-disabled-elt="find button[type=submit]">
+    <input type="hidden" name="kind" value="{{ f.kind }}">
+    <label for="move-{{ f.kind }}">New folder</label>
+    <p class="help" id="move-help-{{ f.kind }}">{{ f.help }}</p>
+    <input type="text" id="move-{{ f.kind }}" name="target" required autocomplete="off" spellcheck="false" aria-describedby="move-help-{{ f.kind }}">
+    <p class="actions"><button type="submit">Move the {{ f.title|lower }}</button></p>
+  </form>
+  <p id="move-busy-{{ f.kind }}" class="htmx-indicator" role="status">Moving the files. This can take some minutes...</p>
+  <div id="move-status-{{ f.kind }}" aria-live="polite"></div>
+  {% endif %}
+  {% endfor %}
+</section>
+{% endif %}
+{% endblock %}

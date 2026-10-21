@@ -1,0 +1,18 @@
+<section class="error-card{% if in_place %} in-place{% endif %}" aria-labelledby="error-title">
+  {# Put in place inside a page, the card sits under that page's own h1, beside its primary button. #}
+  {% if in_place %}<h2 id="error-title" tabindex="-1" autofocus>{{ entry.title }}</h2>{% else %}<h1 id="error-title">{{ entry.title }}</h1>{% endif %}
+  <p>{{ entry.message }}</p>
+  {% if detail %}<p>In this case: {{ detail }}.</p>{% endif %}
+  <p><a class="button{% if not in_place %} primary{% endif %}" href="{{ next_link }}">{{ next_label }}</a></p>
+  <details>
+    <summary>Diagnostic report</summary>
+    <p class="help" id="report-help">Read it before you share it. Folders are replaced by short names, and it holds no recording, transcript or file name.</p>
+    <label for="report">Report text</label>
+    <textarea id="report" class="mono" rows="12" readonly aria-describedby="report-help">{{ report }}</textarea>
+    <p class="actions">
+      <button type="button" data-copy="report">{% include "icons/copy.svg" %} Copy diagnostic report</button>
+      <span class="result" data-copy-result="report" role="status"></span>
+    </p>
+  </details>
+  {% if entry.code %}<p class="code">Error code {{ entry.code }}</p>{% endif %}
+</section>

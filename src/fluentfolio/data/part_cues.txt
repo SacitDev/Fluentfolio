@@ -1,0 +1,16 @@
+# Phrases by which the person asking may announce a Part of the test: the Part number, then the phrase.
+# Written for Fluentfolio. One cue per line, lower case; lines starting with # are comments.
+# A cue may move a Part boundary to the nearest exchange; it never puts the Parts out of order.
+1 part one
+1 part 1
+2 part two
+2 part 2
+2 give you a topic
+2 here is your topic
+2 here's your topic
+3 part three
+3 part 3
+3 more general questions
+3 discuss some
+3 we've been talking about
+3 we have been talking about

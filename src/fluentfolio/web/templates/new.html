@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}New analysis{% endblock %}
+{% block main %}
+<h1>New analysis</h1>
+<form id="form" class="new" hx-post="/jobs" hx-target="#form-result">
+  <fieldset>
+    <legend>Recording</legend>
+    <label for="recording">Recording of a practice test</label>
+    <p class="help" id="recording-help">An audio or video file. It stays on this computer. If someone else speaks in it, ask them first.</p>
+    <input type="file" id="recording" data-upload="recording-result" data-slot="upload" aria-describedby="recording-help">
+    <progress data-upload-progress="recording" max="1" hidden></progress>
+    <div id="recording-result" aria-live="polite"></div>
+  </fieldset>
+  <fieldset>
+    <legend>Who speaks</legend>
+    {% set about_mode = {"solo": "Only you. The questions are read aloud by you or played.", "interview": "Someone asks you the questions.", "role-swap": "Two learners take turns to ask and answer."} %}
+    {% for value, label in modes.items() %}
+    <label class="option"><input type="radio" name="mode" value="{{ value }}"{% if value == mode %} checked{% endif %} aria-labelledby="mode-{{ value }}-name" aria-describedby="mode-{{ value }}"> <span class="title" id="mode-{{ value }}-name">{{ label }}</span> <span class="help" id="mode-{{ value }}">{{ about_mode[value] }}</span>
+      <svg class="diagram" viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true" focusable="false">{% for lane, kind, x, width in diagrams[value] %}<rect class="{{ kind }}" x="{{ x }}" y="{{ 1 + lane * 6 }}" width="{{ width }}" height="4"></rect>{% endfor %}</svg></label>
+    {% endfor %}
+  </fieldset>
+  <fieldset class="two-people">
+    <legend>How it was recorded</legend>
+    {% for value, label in layouts.items() %}
+    <label class="choice"><input type="radio" name="layout" value="{{ value }}"{% if value == layout %} checked{% endif %}> {{ label }}</label>
+    {% endfor %}
+    <div class="second">
+      <label for="second">The other person's file</label>
+      <input type="file" id="second" data-upload="second-result" data-slot="second">
+      <progress data-upload-progress="second" max="1" hidden></progress>
+      <div id="second-result" aria-live="polite"></div>
+    </div>
+  </fieldset>
+  <fieldset class="swap">
+    <legend>When the roles change</legend>
+    <label class="choice"><input type="radio" name="swap_style" value="once" checked> Once in each Part</label>
+    <label class="choice"><input type="radio" name="swap_style" value="per-question"> After each question</label>
+  </fieldset>
+  <fieldset class="two-people">
+    <legend>Agreement</legend>
+    <label class="choice"><input type="checkbox" name="consent" value="yes"> The other person agreed to be recorded and analysed on this computer.</label>
+  </fieldset>
+  <fieldset>
+    <legend>Show the review form for this run</legend>
+    <p class="help" id="review-help">The form lets you correct who spoke and where each Part starts, then analyses again.</p>
+    {% for value, label in reviews.items() %}
+    <label class="choice"><input type="radio" name="review" value="{{ value }}"{% if value == review %} checked{% endif %} aria-describedby="review-help"> {{ label }}</label>
+    {% endfor %}
+  </fieldset>
+  <details>
+    <summary>Add the questions or your own transcript (optional)</summary>
+    <label for="questions">Questions</label>
+    <p class="help" id="questions-help">One question per line. They help Fluentfolio find where each answer starts.</p>
+    <textarea id="questions" name="questions" rows="5" aria-describedby="questions-help"></textarea>
+    <label for="transcript">Your own transcript</label>
+    <p class="help" id="transcript-help">Lines such as "A: words". The names Fluentfolio finds in the speaker labels become Speaker A, Speaker B and so on before the text is kept. Some labels and some forms of a name are not found, so check the text first.</p>
+    <textarea id="transcript" name="transcript" rows="5" aria-describedby="transcript-help"></textarea>
+  </details>
+  <p class="actions"><button type="submit" class="primary">Start analysis</button></p>
+  <div id="form-result" aria-live="polite"></div>
+</form>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% from "partials/tabs.html" import tabs as tab_bar %}
+<div class="page-head">
+  <h1 hx-disable>{{ name }}</h1>
+  <p class="meta">{% if view == "results" %}<span class="tag{% if tone %} tag-{{ tone }}{% endif %}">{{ state }}</span> {% endif %}<span>{% set facts = [mode, length] | select | join(", ") %}{% if facts %}{{ facts }}. {% endif %}Started {{ when }}.{% if view == "results" and device %} Analysed on the {{ device }}.{% endif %}</span></p>
+</div>
+{% if view == "results" %}
+{{ tab_bar("Results", tabs, tab) }}
+{% include "partials/disclaimer.html" %}
+{% endif %}

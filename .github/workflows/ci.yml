@@ -1,0 +1,114 @@
+# The checks a push or pull request runs on GitHub. Runners have no graphics card, no models and no
+# private recordings, so the slow pipeline tests and the GPU tests run only on a developer's own computer.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  UV_VERSION: "0.13.4"
+  PYTHONUTF8: "1"
+
+jobs:
+  checks:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-22.04, windows-2025]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with:
+          version: ${{ env.UV_VERSION }}
+          python-version: "3.12"
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+      - run: uv sync --locked --extra cpu
+      - run: uv run --locked python tools/check.py fast
+      - name: PSScriptAnalyzer on the Windows scripts
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          # Skipped by choice: Write-Host is how the scripts talk to the learner, and the helpers are internal,
+          # not cmdlets, so they offer no -WhatIf and keep their names. The analyzer reports script parameters
+          # used only inside functions as unused.
+          $skip = 'PSAvoidUsingWriteHost', 'PSUseShouldProcessForStateChangingFunctions',
+              'PSUseSingularNouns', 'PSReviewUnusedParameter'
+          # -Path takes one path, so one call per script. A script that does not parse is a ParseError, not an Error.
+          $found = 'install.ps1', 'uninstall.ps1' | ForEach-Object {
+              Invoke-ScriptAnalyzer -Path $_ -Severity Warning, Error, ParseError -ExcludeRule $skip
+          }
+          $found | Format-Table -AutoSize
+          if ($found) { exit 1 }
+
+  security:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with:
+          version: ${{ env.UV_VERSION }}
+          python-version: "3.12"
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+      - name: Install gitleaks 8.30.1 (checksum pinned)
+        run: |
+          curl -sSfL -o "$RUNNER_TEMP/gitleaks.tgz" \
+            https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz
+          echo "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  $RUNNER_TEMP/gitleaks.tgz" | sha256sum -c -
+          mkdir -p "$RUNNER_TEMP/bin"
+          tar -xzf "$RUNNER_TEMP/gitleaks.tgz" -C "$RUNNER_TEMP/bin" gitleaks
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+      - name: Install osv-scanner 2.4.0 (checked against its release checksums)
+        run: |
+          base=https://github.com/google/osv-scanner/releases/download/v2.4.0
+          curl -sSfL -o "$RUNNER_TEMP/osv-scanner_linux_amd64" "$base/osv-scanner_linux_amd64"
+          curl -sSfL -o "$RUNNER_TEMP/osv-scanner_SHA256SUMS" "$base/osv-scanner_SHA256SUMS"
+          (cd "$RUNNER_TEMP" && grep " osv-scanner_linux_amd64$" osv-scanner_SHA256SUMS | sha256sum -c -)
+          mkdir -p "$RUNNER_TEMP/bin"
+          install -m 755 "$RUNNER_TEMP/osv-scanner_linux_amd64" "$RUNNER_TEMP/bin/osv-scanner"
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+      - run: uv sync --locked --extra cpu
+      - run: uv lock --check
+      - run: osv-scanner scan source --lockfile uv.lock
+      - run: uv run --locked deptry src
+      - run: uv run --locked python tools/notices.py --check
+      - run: gitleaks git . --redact --no-banner --ignore-gitleaks-allow
+      - run: uv run --locked shellcheck install.sh uninstall.sh
+
+  ui:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with:
+          version: ${{ env.UV_VERSION }}
+          python-version: "3.12"
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+      - run: uv sync --locked --extra cpu
+      - run: uv run --locked playwright install --with-deps --only-shell chromium
+      - run: uv run --locked pytest -q -m slow tests/e2e_ui
+        env:
+          FF_TEST_STUB: "1"

@@ -1,0 +1,26 @@
+# The closed set of parse labels and words behind the grammar pointers. The labels are those that
+# spaCy's English models give (ClearNLP style). Written for Fluentfolio, not taken from a book or a test.
+
+# A main clause is the root of a sentence, or a verb joined to it with its own subject.
+joined = ["conj", "parataxis"]
+subjects = ["nsubj", "nsubjpass", "csubj", "csubjpass", "expl"]
+
+# A subordinate clause is a finite verb with one of these labels. Infinitives and -ing forms
+# ("to go", "going") stay part of the clause around them.
+subordinate = ["advcl", "relcl", "ccomp", "csubj", "csubjpass", "acl"]
+
+# Tags of a finite verb, auxiliary or modal.
+finite = ["VBD", "VBZ", "VBP", "MD"]
+
+# Words that open a conditional clause, and a second opening word that makes it a comparison
+# ("as if it rained") instead.
+conditional = ["if", "unless"]
+comparison = ["as"]
+
+# A passive is a passive auxiliary before a past participle; "be" itself has no passive.
+participle = ["VBN"]
+
+# Modals of speculation: the first list always counts; the second only before "be" or a perfect
+# "have" ("could be", "must have been").
+speculation = ["might", "may"]
+speculation_before_be_or_have = ["could", "must"]

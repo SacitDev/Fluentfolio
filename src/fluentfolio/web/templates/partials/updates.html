@@ -1,0 +1,14 @@
+<section id="updates" aria-labelledby="updates-title">
+  <h2 id="updates-title">Updates</h2>
+  {% if failed | default(false) %}<p class="notice" tabindex="-1" autofocus>Fluentfolio could not reach GitHub to look for a newer version. Check the internet connection, then try again.</p>
+  {% elif release | default(none) %}<p class="notice" tabindex="-1" autofocus>{% if release.newer %}Version {{ release.latest }} is available. You have version {{ release.current }}.{% elif release.latest %}You have the newest version, {{ release.current }}.{% else %}No version has been published yet. You have version {{ release.current }}.{% endif %}</p>
+  {% endif %}
+  <p>To update, install the new version over this one:</p>
+  <ol class="steps">
+    <li>Open the <a href="{{ releases }}" target="_blank" rel="noopener noreferrer">releases page</a> and download the newest Source code zip.</li>
+    <li>Extract the zip to a folder of your choice.</li>
+    <li>Quit Fluentfolio, then double-click Install.cmd in that folder (on Linux, run install.sh). Your recordings, results and settings are kept.</li>
+  </ol>
+  <p class="help" id="updates-help">This asks GitHub for the newest version number. Nothing about you or your recordings is sent.</p>
+  <p class="actions"><button type="button" hx-post="/updates/check" hx-target="#updates" hx-swap="outerHTML" aria-describedby="updates-help">Check for updates</button></p>
+</section>

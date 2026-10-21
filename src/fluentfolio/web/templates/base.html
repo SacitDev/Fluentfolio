@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en"{% if theme %} data-theme="{{ theme }}"{% endif %}>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="htmx-config" content='{"historyCacheSize":0,"allowEval":false,"allowScriptTags":false,"includeIndicatorStyles":false,"selfRequestsOnly":true}'>
+<title>{% block title %}{% endblock %} - Fluentfolio</title>
+<link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/css/tokens.css">
+<link rel="stylesheet" href="/static/css/app.css">
+<script src="/static/js/htmx.min.js" defer></script>
+<script src="/static/js/app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <nav aria-label="Main">
+    <a class="brand" href="/">Fluentfolio</a>
+    <ul>
+      {% for key, text, link in [("new", "New analysis", "/"), ("history", "History", "/jobs"), ("components", "Components", "/components"), ("settings", "Settings", "/settings"), ("help", "Help", "/about")] %}
+      <li><a href="{{ link }}"{% if nav == key %} aria-current="page"{% endif %}>{{ text }}{% if nav == key %}<span class="mark"></span>{% endif %}</a></li>
+      {% endfor %}
+      <li><button type="button" class="text" hx-post="/quit" hx-target="#main">{% include "icons/power.svg" %} Quit</button></li>
+    </ul>
+  </nav>
+</header>
+<main id="main" tabindex="-1">
+{% block main %}{% endblock %}
+</main>
+<footer class="site">
+  <p>Fluentfolio {{ version }}. Runs on this computer only.</p>
+</footer>
+</body>
+</html>

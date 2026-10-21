@@ -1,0 +1,9 @@
+# LF everywhere; CRLF only for Windows batch and PowerShell files.
+* text=auto eol=lf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+*.png binary
+*.opus binary
+*.woff2 binary
+*.ttf binary

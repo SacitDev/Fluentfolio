@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}{{ name }} - Copy for AI{% endblock %}
+{% macro copy_box(id, label, text, button, rows=10, primary=false) %}
+<label for="{{ id }}">{{ label }}</label>
+<textarea id="{{ id }}" class="mono" rows="{{ rows }}" readonly>{{ text }}</textarea>
+<p class="actions"><button type="button" class="{{ 'primary' if primary else '' }}" data-copy="{{ id }}">{% include "icons/copy.svg" %} {{ button }}</button><span class="result" data-copy-result="{{ id }}" role="status"></span></p>
+{% endmacro %}
+{% block main %}
+{% include "partials/job_head.html" %}
+<p>The text holds the grading prompt and the evidence in one block. Paste it into your AI chat as it is.</p>
+<p class="notice">Paste into a normal chat. If you use an AI agent that can run commands, treat the transcript as untrusted text.</p>
+{% if two %}<p class="notice">This text contains your partner's words; it goes to that AI company.</p>
+<p class="notice">Your own recording holds your partner's voice all the way through. Upload it to an AI chat only if your partner agrees.</p>{% endif %}
+{% for p in people %}
+<section aria-labelledby="ai-{{ p.id }}">
+  <h2 id="ai-{{ p.id }}">{% if people|length > 1 %}{{ p.label }}{% else %}Text for your AI chat{% endif %}</h2>
+  {% if p.text is none %}
+  <p>This text is missing. Make it again from the results.</p>
+  <p class="actions"><button type="button" hx-post="/jobs/{{ job_id }}/export" hx-target="#task">{% include "icons/arrow-clockwise.svg" %} Make the text again</button></p>
+  {% else %}
+  {{ copy_box("text-" ~ p.id, "Text for your AI chat", p.text, "Copy for AI", primary=loop.first) }}
+  <p class="help">If the chat refuses or cuts the paste, upload {{ p.file }} as a file, or use Copy in 2 parts.</p>
+  <p><a href="/jobs/{{ job_id }}/files/{{ p.file }}" download>{% include "icons/download-simple.svg" %} Download {{ p.file }}</a></p>
+  <details>
+    <summary>Copy in 2 parts</summary>
+    <p>Send part 1, wait for the answer, then send part 2.</p>
+    {% for part in p.parts %}{{ copy_box("part-" ~ loop.index ~ "-" ~ p.id, "Part " ~ loop.index ~ " of 2", part, "Copy part " ~ loop.index, 6) }}{% endfor %}
+  </details>
+  <details>
+    <summary>Copy prompt only</summary>
+    {{ copy_box("prompt-" ~ p.id, "Grading prompt", p.prompt, "Copy prompt only", 8) }}
+  </details>
+  {% endif %}
+  {% if p.audio %}
+  <h3>Audio for the pronunciation check</h3>
+  <p>Upload this file to an AI chat that accepts audio, with the message below.</p>
+  {% if two %}<p class="notice">Your partner's voice can still be heard where the speakers were mixed up or you both spoke at once. Upload the file only if your partner agrees.</p>{% endif %}
+  <p><a href="/jobs/{{ job_id }}/files/{{ p.audio }}" download>{% include "icons/download-simple.svg" %} Download {{ p.audio }}</a></p>
+  {{ copy_box("step-" ~ p.id, "Message to send with the audio", p.step, "Copy the message", 6) }}
+  {% if p.words %}<details hx-disable><summary>Show what is said in the audio check</summary><p>{{ p.words }}</p></details>{% endif %}
+  {% endif %}
+</section>
+{% endfor %}
+{% if zip_name %}<p><a href="/jobs/{{ job_id }}/files/{{ zip_name }}" download>{% include "icons/download-simple.svg" %} Download all texts as a ZIP file</a></p>{% endif %}
+{% if people|selectattr("audio", "none")|list %}
+<section aria-labelledby="audio-title">
+  <h2 id="audio-title">Audio for an AI chat (optional)</h2>
+  <p>Some AI chats can listen to audio and comment on pronunciation. Fluentfolio can cut each person's own answers into a short file, at most 9.5 minutes.</p>
+  <p class="notice">Your partner's voice can still be heard where the speakers were mixed up or you both spoke at once. Upload the file only if your partner agrees.</p>
+  <p class="actions"><button type="button" hx-post="/jobs/{{ job_id }}/export" hx-vals='{"audio": "yes"}' hx-target="#task">Make the audio file</button></p>
+</section>
+{% endif %}
+<div id="task" aria-live="polite">{% if task and task.running() %}{% with kind = task.kind, line = task.last_line() %}{% include "partials/task.html" %}{% endwith %}{% endif %}
+{% if result and not result[0] %}{% for line in result[1] %}<p>{{ line }}</p>{% endfor %}{% endif %}</div>
+{% endblock %}

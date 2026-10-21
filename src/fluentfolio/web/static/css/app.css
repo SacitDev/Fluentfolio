@@ -1,0 +1,1070 @@
+/* The app's look, from the tokens in tokens.css only. One column, native controls, plain tables on calm
+   panels. Colour marks evidence and status; the accent only marks where you are and the main action. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--ground);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: var(--fs-base);
+  line-height: var(--lh-body);
+  accent-color: var(--ink);
+  scrollbar-color: var(--border-strong) var(--ground);
+}
+
+body {
+  margin: 0;
+}
+
+::selection {
+  background: var(--mark);
+  color: var(--text);
+}
+
+:focus-visible {
+  outline: calc(var(--s1) / 2) solid var(--focus);
+  outline-offset: calc(var(--s1) / 2);
+}
+
+/* Motion: only in answer to the user. An answer put in place fades in; reduced motion turns it off.
+   Known limit: no cross-fade between pages; browsers skip it for pages sent with no-store, which keeps a
+   learner's transcript out of the browser's disk cache. */
+#main > *,
+[aria-live] > *,
+#token {
+  transition: opacity var(--dur) var(--ease);
+}
+
+/* A long action's line polls every 2 s and replaces itself; it does not fade, or it would blink. */
+#main > .htmx-added,
+[aria-live] > .htmx-added:not(.task),
+#token.htmx-added {
+  opacity: 0;
+}
+
+/* Layout */
+
+.skip {
+  position: absolute;
+  left: var(--s4);
+  top: calc(-1 * var(--s8));
+  padding: var(--s2) var(--s3);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.skip:focus {
+  top: var(--s2);
+}
+
+header.site {
+  background: var(--surface);
+  border-bottom: thin solid var(--border);
+}
+
+header.site nav,
+main,
+footer.site {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding-left: var(--s4);
+  padding-right: var(--s4);
+}
+
+header.site nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  column-gap: var(--s5);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--header-h);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+header.site ul {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+header.site li {
+  display: flex;
+}
+
+header.site li:last-child {
+  margin-left: auto;
+}
+
+/* The header's links and Quit: quiet until hovered; the current page is bold and marked from below. */
+header.site li > a,
+header.site li > button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  min-height: var(--header-h);
+  padding: 0 var(--s3);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-2);
+  text-decoration: none;
+  transition: color var(--dur) var(--ease), background-color var(--dur) var(--ease);
+}
+
+header.site li > a:hover,
+header.site li > button:hover {
+  background: var(--sunken);
+  color: var(--text);
+}
+
+header.site [aria-current="page"] {
+  color: var(--text);
+}
+
+[aria-current="page"] {
+  font-weight: 600;
+}
+
+/* The mark under the current page or tab */
+.mark {
+  position: absolute;
+  left: var(--s3);
+  right: var(--s3);
+  bottom: -1px;
+  block-size: calc(var(--s1) * .75);
+  border-radius: var(--r-sm) var(--r-sm) 0 0;
+  background: var(--accent);
+}
+
+main {
+  padding-top: var(--s6);
+  padding-bottom: var(--s7);
+}
+
+footer.site {
+  padding-top: var(--s5);
+  padding-bottom: var(--s5);
+  border-top: thin solid var(--border);
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+}
+
+/* Type */
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  line-height: var(--lh-head);
+  font-weight: 600;
+}
+
+h1 {
+  font-size: var(--fs-xl);
+  margin-bottom: var(--s4);
+  overflow-wrap: anywhere;
+}
+
+h2 {
+  font-size: var(--fs-lg);
+  margin-top: var(--s7);
+  margin-bottom: var(--s3);
+}
+
+h3 {
+  font-size: var(--fs-md);
+  margin-top: var(--s6);
+  margin-bottom: var(--s2);
+}
+
+p,
+li {
+  max-width: var(--measure);
+}
+
+p {
+  margin: 0 0 var(--s3);
+}
+
+a {
+  color: var(--text);
+  text-decoration-color: var(--border-strong);
+  text-underline-offset: .2em;
+  transition: text-decoration-color var(--dur) var(--ease);
+}
+
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+.help,
+.code,
+.result {
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+}
+
+/* A folder path in the UI font: it has no spaces to break at, so it breaks anywhere */
+.path {
+  overflow-wrap: anywhere;
+}
+
+.icon {
+  inline-size: var(--s4);
+  block-size: var(--s4);
+  flex: none;
+}
+
+/* Page head: the title, one line about it, and for an analysis its tabs */
+
+.page-head .meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s2);
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+  margin: var(--s5) 0 var(--s6);
+  border-bottom: thin solid var(--border);
+}
+
+/* Each tab keeps the width of its bold label, so the row does not shift when the current tab changes. */
+.tabs a {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--s7);
+  padding: 0 var(--s3);
+  border-radius: var(--r-sm) var(--r-sm) 0 0;
+  color: var(--text-2);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--dur) var(--ease), background-color var(--dur) var(--ease);
+}
+
+.tabs a::before {
+  content: attr(data-label);
+  block-size: 0;
+  overflow: hidden;
+  visibility: hidden;
+  font-weight: 600;
+}
+
+.tabs a:hover {
+  background: var(--accent-bg);
+  color: var(--text);
+}
+
+.tabs a[aria-current="page"] {
+  color: var(--text);
+}
+
+/* Panels: tables, the transcript, the strip and form groups sit on a sheet of surface. */
+.panel,
+.table-wrap,
+.strip,
+.transcript,
+.stages,
+fieldset {
+  background: var(--surface);
+  border: thin solid var(--border);
+  border-radius: var(--r-md);
+}
+
+.panel {
+  padding: var(--s4) var(--s5);
+  margin: var(--s5) 0;
+}
+
+.panel > h2:first-child,
+.error-card > :first-child {
+  margin-top: 0;
+}
+
+.panel > :last-child {
+  margin-bottom: 0;
+}
+
+/* A panel of rows that open, such as the groups of words to check */
+.panel.list {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.list > details {
+  margin: 0;
+  border-bottom: thin solid var(--border);
+}
+
+.list > details:last-child {
+  border-bottom: 0;
+}
+
+/* Controls */
+
+button,
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  min-height: calc(var(--s7) - var(--s1));
+  padding: 0 var(--s4);
+  border: thin solid var(--border-strong);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+button:hover,
+.button:hover {
+  background: var(--sunken);
+  border-color: var(--text-2);
+}
+
+button:active,
+.button:active {
+  background: var(--border);
+}
+
+.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+
+.primary:hover,
+.primary:active {
+  background: color-mix(in srgb, var(--accent) 85%, var(--text));
+  border-color: color-mix(in srgb, var(--accent) 85%, var(--text));
+}
+
+button.text {
+  padding: 0;
+  border-color: transparent;
+  background: transparent;
+  text-decoration: underline;
+}
+
+button.text:hover {
+  background: transparent;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: var(--s1);
+}
+
+textarea,
+input,
+select {
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: thin solid var(--border-strong);
+  border-radius: var(--r-sm);
+  transition: border-color var(--dur) var(--ease);
+}
+
+textarea:hover,
+input:hover,
+select:hover {
+  border-color: var(--text-2);
+}
+
+textarea {
+  display: block;
+  width: 100%;
+  padding: var(--s2) var(--s3);
+}
+
+/* The file field: the browser's own "choose a file" button, drawn like the app's other buttons */
+input[type="file"] {
+  max-width: 100%;
+  border: 0;
+  background: transparent;
+}
+
+input[type="file"]::file-selector-button {
+  min-height: calc(var(--s7) - var(--s1));
+  margin-right: var(--s3);
+  padding: 0 var(--s4);
+  border: thin solid var(--border-strong);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+  transition: background-color var(--dur) var(--ease);
+}
+
+input[type="file"]::file-selector-button:hover {
+  background: var(--sunken);
+}
+
+textarea.mono {
+  font-family: var(--font-mono);
+}
+
+details {
+  margin: var(--s4) 0;
+}
+
+summary {
+  padding: var(--s3) 0;
+  cursor: pointer;
+}
+
+summary:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--border-strong);
+  text-underline-offset: .2em;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s3);
+  margin-top: var(--s3);
+}
+
+/* htmx adds .htmx-request while a request runs; its own indicator styles are switched off. */
+.htmx-indicator {
+  display: none;
+}
+
+.htmx-request .htmx-indicator,
+.htmx-request.htmx-indicator {
+  display: inline;
+}
+
+[aria-busy="true"] {
+  cursor: progress;
+}
+
+/* Status tags: a word on a tint, for the state of a job, a step or a part; never for a measure. */
+.tag,
+.stages .word {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s1);
+  padding: 0 var(--s2);
+  border: thin solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--sunken);
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+.tag-ok,
+.stages .done .word {
+  border-color: transparent;
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+
+.tag-warn,
+.stages .gaps .word {
+  border-color: transparent;
+  background: var(--warn-bg);
+  color: var(--warn);
+}
+
+.tag-bad,
+.stages .failed .word {
+  border-color: transparent;
+  background: var(--bad-bg);
+  color: var(--bad);
+}
+
+.tag-run,
+.stages .running .word {
+  border-color: transparent;
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+/* The chosen recording: its name, then what the probe found, as label and value pairs */
+
+.upload .chosen {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+/* The file's details and the time estimates share a first-column width, so the two lists line up */
+.facts {
+  display: grid;
+  grid-template-columns: minmax(12ch, max-content) 1fr;
+  gap: var(--s1) var(--s4);
+  margin: 0;
+  font-size: var(--fs-sm);
+}
+
+/* Hidden inputs sit between the file's details and this line, so it is a later sibling, not the next one */
+.facts ~ .help {
+  margin-block-start: var(--s4);
+}
+
+.facts div {
+  display: contents;
+}
+
+.facts dt {
+  color: var(--text-2);
+}
+
+.facts dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+progress {
+  inline-size: 100%;
+  max-inline-size: var(--measure);
+  accent-color: var(--accent);
+}
+
+/* Error card */
+
+.error-card {
+  max-width: var(--measure);
+  padding: var(--s5);
+  border: thin solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface);
+}
+
+/* In place, the card sits in a form that has its own frame and primary button */
+.error-card.in-place {
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+.error-card .code {
+  margin: var(--s4) 0 0;
+}
+
+/* System check: each result word stays beside its icon */
+td[class^="level-"] {
+  white-space: nowrap;
+}
+
+/* Pages */
+
+.meta,
+.times,
+.ends {
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.notice {
+  max-width: var(--measure);
+  padding: var(--s3) var(--s4);
+  border-radius: var(--r-md);
+  background: var(--warn-bg);
+}
+
+.notice > p:first-child {
+  display: flex;
+  gap: var(--s2);
+}
+
+.notice .icon {
+  margin-top: var(--s1);
+  color: var(--warn);
+}
+
+.notice + .notice {
+  margin-top: var(--s3);
+}
+
+.notice > h2:first-child {
+  margin-top: 0;
+}
+
+section.notice {
+  margin-bottom: var(--s5);
+}
+
+.disclaimer {
+  display: flex;
+  gap: var(--s3);
+  max-width: var(--measure);
+  margin-bottom: var(--s5);
+  color: var(--text-2);
+}
+
+.disclaimer .icon {
+  margin-top: var(--s1);
+}
+
+.disclaimer p {
+  margin-bottom: var(--s1);
+}
+
+fieldset {
+  margin: 0 0 var(--s4);
+  padding: var(--s3) var(--s5) var(--s4);
+}
+
+fieldset.choices {
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+
+legend {
+  padding: 0 var(--s2);
+  margin-left: calc(-1 * var(--s2));
+  font-weight: 600;
+}
+
+input[type="number"],
+input:not([type]),
+input[type="password"],
+input[type="text"],
+select {
+  min-height: calc(var(--s7) - var(--s1));
+  padding: 0 var(--s3);
+  margin-bottom: var(--s3);
+}
+
+/* Short fields that belong together, such as the three Part times, side by side when they fit */
+.fields {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--s5);
+}
+
+.fields input {
+  inline-size: calc(var(--s8) * 2);
+}
+
+label.choice {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  min-height: calc(var(--s7) - var(--s1));
+  margin: 0;
+  font-weight: 400;
+}
+
+label.choice input,
+.option input {
+  inline-size: var(--s4);
+  block-size: var(--s4);
+  flex: none;
+}
+
+/* A choice that matters, such as the mode: the whole box is the label, and the chosen box is tinted. */
+.option {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--s3);
+  max-width: var(--measure);
+  margin: 0 0 var(--s2);
+  padding: var(--s3) var(--s4);
+  border: thin solid var(--border-strong);
+  border-radius: var(--r-md);
+  font-weight: 400;
+  cursor: pointer;
+  transition: border-color var(--dur) var(--ease), background-color var(--dur) var(--ease);
+}
+
+.option input {
+  grid-row: span 2;
+  margin: var(--s1) 0 0;
+}
+
+.option .title {
+  font-weight: 600;
+}
+
+.option:hover,
+.option:has(:checked) {
+  border-color: var(--accent);
+}
+
+.option:has(:checked) {
+  background: var(--accent-bg);
+}
+
+/* Each mode's small picture of who speaks when, in the people's colours of the timeline strip. */
+.option .diagram {
+  grid-column: 2;
+  inline-size: calc(var(--s8) * 3);
+  max-inline-size: 100%;
+  block-size: var(--s5);
+  margin-block-start: var(--s2);
+}
+
+.diagram rect {
+  fill: var(--voice);
+}
+
+.diagram .read {
+  fill: var(--border-strong);
+}
+
+/* The New analysis form shows the questions that fit the mode and layout chosen, and none before a mode. */
+.new .second,
+.new .swap,
+.new .two-people {
+  display: none;
+}
+
+.new:has([name="layout"][value="two-files"]:checked) .second,
+.new:has([name="mode"][value="role-swap"]:checked) .swap,
+.new:has([name="mode"][value="interview"]:checked) .two-people,
+.new:has([name="mode"][value="role-swap"]:checked) .two-people {
+  display: block;
+}
+
+/* The review form's tracks: whose each is, a short preview and its first words. */
+.tracks {
+  padding: 0;
+  list-style: none;
+}
+
+.tracks li {
+  margin-block-end: var(--s3);
+}
+
+.tracks .title {
+  margin-inline-end: var(--s2);
+  font-weight: 600;
+}
+
+.tracks p {
+  max-width: var(--measure);
+  margin: var(--s1) 0 0;
+}
+
+/* Numbered steps where the order is real: first run and Help */
+ol.steps {
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+/* The number sits beside the step, not in a grid cell, so a link inside a step stays in its sentence */
+ol.steps li {
+  position: relative;
+  min-block-size: var(--s6);
+  margin-bottom: var(--s3);
+  padding-inline-start: calc(var(--s6) + var(--s3));
+  counter-increment: step;
+}
+
+ol.steps li::before {
+  content: counter(step);
+  position: absolute;
+  inset-block-start: calc((1lh - var(--s6)) / 2);
+  inset-inline-start: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--s6);
+  block-size: var(--s6);
+  border-radius: var(--r-sm);
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  margin-bottom: var(--s4);
+}
+
+table {
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+}
+
+.table-wrap table {
+  width: 100%;
+}
+
+/* On a narrow window the table scrolls sideways rather than squeeze its longest column into a strip,
+   and a line above it says so */
+th.how {
+  min-inline-size: 28ch;
+}
+
+.help.narrow {
+  display: none;
+}
+
+@media (max-width: 60rem) {
+  .help.narrow {
+    display: block;
+  }
+}
+
+th,
+td {
+  padding: var(--s2) var(--s3);
+  border-bottom: thin solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.table-wrap :is(th, td):first-child {
+  padding-left: var(--s4);
+}
+
+.table-wrap :is(th, td):last-child {
+  padding-right: var(--s4);
+}
+
+.table-wrap tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+thead th {
+  border-bottom-color: var(--border-strong);
+  background: var(--sunken);
+  color: var(--text-2);
+}
+
+.table-wrap thead th:first-child {
+  border-top-left-radius: var(--r-md);
+}
+
+.table-wrap thead th:last-child {
+  border-top-right-radius: var(--r-md);
+}
+
+tbody tr {
+  transition: background-color var(--dur) var(--ease);
+}
+
+tbody tr:hover {
+  background: var(--sunken);
+}
+
+/* A heading row that names the group of parts below it */
+tbody th[colspan] {
+  padding-top: var(--s4);
+  color: var(--text-2);
+}
+
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.when {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Reliability: the word, then a neutral bar of one, two or three steps, drawn by the width of its left edge */
+.rel {
+  white-space: nowrap;
+}
+
+.rel::after {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: var(--s2);
+  inline-size: calc(var(--s5) + var(--s1) / 2);
+  block-size: var(--s2);
+  border: thin solid var(--border-strong);
+}
+
+.rel-low::after {
+  border-left: var(--s2) solid var(--text-2);
+}
+
+.rel-medium::after {
+  border-left: var(--s4) solid var(--text-2);
+}
+
+.rel-high::after {
+  border-left: var(--s5) solid var(--text-2);
+}
+
+/* Progress: one row per step, its state as a tag */
+.stages {
+  max-width: var(--measure);
+  margin: 0 0 var(--s3);
+  padding: 0;
+  list-style: none;
+}
+
+.stages li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s3);
+  max-width: none;
+  padding: var(--s2) var(--s4);
+  border-bottom: thin solid var(--border);
+}
+
+.stages li:last-child {
+  border-bottom: 0;
+}
+
+.stages .running {
+  font-weight: 600;
+}
+
+.now {
+  font-size: var(--fs-md);
+  font-weight: 600;
+}
+
+audio {
+  inline-size: 100%;
+  max-inline-size: var(--measure);
+  margin: var(--s4) 0 var(--s2);
+}
+
+.transcript {
+  max-width: calc(var(--measure) + var(--s7));
+  padding: var(--s4) var(--s5);
+  list-style: none;
+  font-size: var(--fs-md);
+}
+
+.transcript li {
+  padding: var(--s3) 0;
+  border-bottom: thin solid var(--border);
+}
+
+.transcript li:last-child {
+  border-bottom: 0;
+}
+
+.transcript p {
+  margin: var(--s1) 0 0;
+}
+
+button.time {
+  min-height: calc(var(--s7) - var(--s1));
+  padding: 0 var(--s2);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Each person's colour, on their name in the transcript and their bars on the strip; the words say it too. */
+.spk-1 {
+  --voice: var(--spk-1);
+}
+
+.spk-2 {
+  --voice: var(--spk-2);
+}
+
+.who {
+  font-weight: 600;
+  border-bottom: calc(var(--s1) / 2) solid var(--voice, var(--border-strong));
+}
+
+mark {
+  background: var(--mark);
+  color: var(--text);
+  text-decoration: underline dotted;
+}
+
+.aside {
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+}
+
+.pointers {
+  padding-left: 0;
+  list-style: none;
+}
+
+.pointers li {
+  padding: var(--s1) 0;
+}
+
+.terms {
+  white-space: pre-line;
+}
+
+/* The timeline strip: shapes from Python, in viewBox units of 0.1 s; every word is HTML beside it. */
+.strip {
+  margin: var(--s5) 0;
+  padding: var(--s4) var(--s5);
+}
+
+.lanes {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--s1) var(--s3);
+  align-items: center;
+  font-size: var(--fs-sm);
+}
+
+.lane {
+  inline-size: 100%;
+  block-size: var(--s4);
+  background: var(--sunken);
+}
+
+.lane rect {
+  fill: var(--voice, var(--border-strong)); /* questions read aloud have no person's colour */
+}
+
+.lane rect.part {
+  fill: none;
+  stroke: var(--border-strong);
+  vector-effect: non-scaling-stroke;
+}
+
+.lane line.pause {
+  stroke: var(--pause);
+  vector-effect: non-scaling-stroke;
+}
+
+.ends {
+  display: flex;
+  justify-content: space-between;
+  max-width: none;
+  margin: 0;
+}

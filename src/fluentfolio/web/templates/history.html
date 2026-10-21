@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}History{% endblock %}
+{% block main %}
+<h1>History</h1>
+<div id="action-result" aria-live="polite">{% if left %}<section class="notice" role="status" aria-labelledby="left-title"><h2 id="left-title">{{ left.title }}</h2><p>{{ left.message }} {{ left.hint }}</p></section>{% endif %}</div>
+{% if rows %}
+<div class="table-wrap" tabindex="0" role="region" aria-label="Analyses">
+  <table>
+    <thead><tr><th scope="col">Recording</th><th scope="col">Started</th><th scope="col">Mode</th><th scope="col">State</th></tr></thead>
+    <tbody>{% for id, title, when, mode, state, tone in rows %}<tr><td hx-disable><a href="/jobs/{{ id }}">{{ title }}</a></td><td class="when">{{ when }}</td><td>{{ mode }}</td><td><span class="tag{% if tone %} tag-{{ tone }}{% endif %}">{{ state }}</span></td></tr>
+    {% endfor %}</tbody>
+  </table>
+</div>
+{% else %}
+<p>No analyses yet. Start with a recording of a practice test.</p>
+<p class="actions"><a class="button primary" href="/">Start analysis</a></p>
+{% endif %}
+<section aria-labelledby="delete-title">
+  <h2 id="delete-title">Delete all my data</h2>
+  <p>This deletes every analysis, the temporary files, the logs and your licence consent. The downloaded parts, your Hugging Face token and your settings stay; each has its own place to remove it.</p>
+  <p>Deleting skips the Recycle Bin. On SSDs and in synced folders it is not secure erasure.</p>
+  {% if synced %}<p class="notice">Your data folder is inside OneDrive or Dropbox, so copies of it may also be kept online.</p>{% endif %}
+  <details>
+    <summary>Delete all my data</summary>
+    <p>Texts and files you saved elsewhere, such as downloaded exports, are outside Fluentfolio's reach and stay.</p>
+    <p class="actions"><button type="button" hx-post="/data/delete-all" hx-target="#action-result">{% include "icons/trash.svg" %} Delete all {{ rows|length }} {{ "analysis" if rows|length == 1 else "analyses" }} and the logs</button></p>
+  </details>
+</section>
+{% endblock %}

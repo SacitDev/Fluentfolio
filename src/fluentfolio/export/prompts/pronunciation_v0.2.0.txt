@@ -1,0 +1,5 @@
+=== FLUENTFOLIO AUDIO STEP v0.2.0 | export {EXPORT_ID} ===
+The attached audio file {AUDIO_FILE} belongs to Fluentfolio export {EXPORT_ID}. It holds the candidate only, {AUDIO_DURATION} in total.
+Follow the Fluentfolio grading prompt v0.2.0 at the top of for_ai.txt. If for_ai.txt is not in this chat, write only: "Please paste or upload for_ai.txt first, then send this message with the audio again."
+Do STEP 0 again for this audio. {AUDIO_CHECK}
+Then write the whole report again as one Markdown document, in the same order: estimate Pronunciation again, now from what you hear, rewrite the pronunciation lesson from it, and update the overall estimate. Keep the FC, LR and GRA bands of your earlier report.

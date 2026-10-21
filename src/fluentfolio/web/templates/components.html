@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}{% if first %}Set up Fluentfolio{% else %}Components{% endif %}{% endblock %}
+{% block main %}
+<h1>{% if first %}Set up Fluentfolio{% else %}Components{% endif %}</h1>
+{% if first %}
+<p>Fluentfolio needs a few parts on this computer before it can analyse a recording. Three steps:</p>
+<ol class="steps">
+  <li>Install the parts below. Ticked parts are downloaded and checked.</li>
+  <li>Run the check further down this page. It takes a few minutes.</li>
+  <li>Start your first analysis.</li>
+</ol>
+<p>You can change the parts later under Components.</p>
+{% endif %}
+{# hx-disinherit: the totals request inside the form must not take the install's busy line or button. #}
+<form id="components" hx-post="/components/install" hx-target="#install-status" hx-indicator="#install-busy" hx-disabled-elt="find button[type=submit]" hx-disinherit="*">
+  <div class="table-wrap" tabindex="0" role="region" aria-label="Parts" hx-get="/components/totals" hx-trigger="change" hx-include="#components" hx-target="#totals">
+    <table>
+      <thead><tr><th scope="col">Install</th><th scope="col">Part</th><th scope="col">Status</th><th scope="col" class="num">Download</th><th scope="col">Licence</th></tr></thead>
+      {% for title, found in groups %}<tbody>
+      <tr><th colspan="5" scope="rowgroup">{{ title }}</th></tr>
+      {% for r in found %}{% set open = r.status in installable or r.status == "needs-consent" %}<tr>
+        <td><input type="checkbox" id="part-{{ r.id }}" name="part" value="{{ r.id }}"{% if (open and r.id not in optin) or r.status == "ready" %} checked{% endif %}{% if not open %} disabled{% endif %}></td>
+        <td><label for="part-{{ r.id }}">{{ r.title }}</label>{% if notes[r.id] %}<p class="help">{{ notes[r.id] }}</p>{% endif %}</td>
+        <td><span class="tag{% if tones[r.status] %} tag-{{ tones[r.status] }}{% endif %}">{{ words[r.status] }}</span>{% if r.reason %}<p class="help">{{ r.reason|upfirst }}.</p>{% endif %}{% if r.status == "needs-token" %}<p><a href="/token">Add your token</a></p>{% endif %}</td>
+        <td class="num">{% if r.size_bytes %}{{ size_text(r.size_bytes) }}{% endif %}</td>
+        <td>{{ licences[r.licence_class] }}</td>
+      </tr>{% endfor %}
+      </tbody>{% endfor %}
+    </table>
+  </div>
+  <p id="totals" class="result" role="status">{% include "partials/totals.html" %}</p>
+  {% for r in rows if r.status == "needs-consent" %}
+  <fieldset>
+    <legend>Licence of {{ r.title }}</legend>
+    <details><summary>Read the licence</summary><p class="terms">{{ terms }}</p></details>
+    <label class="choice"><input type="checkbox" name="licence.{{ r.id }}" value="yes"> I have read the licence of {{ r.title }} and accept it for my own non-commercial use.</label>
+  </fieldset>
+  {% endfor %}
+  <p class="actions"><button type="submit" class="primary">{% include "icons/download-simple.svg" %} Install selected</button></p>
+</form>
+{# Outside the form: htmx hands a form's target and busy line down to the progress line that polls. #}
+<p id="install-busy" class="htmx-indicator" role="status">Starting the install...</p>
+<div id="install-status" aria-live="polite">
+  {% if task and task.kind == "install" %}{% with kind = task.kind, line = task.last_line(), share = task.share() %}{% include "partials/task.html" %}{% endwith %}
+  {% elif "install" in results %}{% set ok, lines = results["install"] %}<div class="outcome">
+    <h2>Last install: {{ "done" if ok else "not everything worked" }}</h2>
+    <ul>{% for line in lines %}<li>{{ line }}</li>{% endfor %}</ul>
+  </div>{% endif %}
+</div>
+<section aria-labelledby="check-title">
+  <h2 id="check-title">Check that it works</h2>
+  <p>The check runs a short bundled recording through every part in use and compares the results with known values. It takes a few minutes.</p>
+  {% if selftest %}<p>The last check {{ "passed" if selftest.passed else "did not pass" }}.</p>{% endif %}
+  <p class="actions"><button type="button" hx-post="/selftest" hx-target="#selftest-status" hx-indicator="#selftest-busy" hx-disabled-elt="this">Run the check</button>{% if first and selftest and selftest.passed %} <a class="button" href="/">Start analysis</a>{% endif %}</p>
+  <p id="selftest-busy" class="htmx-indicator" role="status">Starting the check...</p>
+  <div id="selftest-status" aria-live="polite">
+    {% if task and task.kind == "selftest" %}{% with kind = task.kind, line = task.last_line() %}{% include "partials/task.html" %}{% endwith %}
+    {% elif "selftest" in results %}{% set ok, lines = results["selftest"] %}<div class="outcome">
+      <h3>Last check: {{ "done" if ok else "not everything worked" }}</h3>
+      <ul>{% for line in lines %}<li>{{ line }}</li>{% endfor %}</ul>
+    </div>{% endif %}
+  </div>
+</section>
+<section aria-labelledby="token-title">
+  <h2 id="token-title">Hugging Face token (optional)</h2>
+  <p>The better speaker separation, pyannote, needs your own free Hugging Face token. Without one, Fluentfolio uses sherpa-onnx, and solo recordings need neither.</p>
+  <p><a href="/token">Add your token</a></p>
+</section>
+{% if removable %}
+<section aria-labelledby="remove-title">
+  <h2 id="remove-title">Remove a part</h2>
+  <form hx-post="/components/remove" hx-target="#remove-status" hx-indicator="#remove-busy" hx-disabled-elt="find button[type=submit]">
+    <label for="remove">Part</label>
+    <p class="help" id="remove-help">Its files are deleted. You can install it again at any time.</p>
+    <select id="remove" name="part" aria-describedby="remove-help">{% for r in removable %}<option value="{{ r.id }}">{{ r.title }}</option>{% endfor %}</select>
+    <p class="actions"><button type="submit">{% include "icons/trash.svg" %} Delete its files</button></p>
+    <p id="remove-busy" class="htmx-indicator" role="status">Deleting its files...</p>
+    <div id="remove-status" aria-live="polite"></div>
+  </form>
+</section>
+{% endif %}
+<details>
+  <summary>More details</summary>
+  <p>The command line, for scripts and AI agents: <span class="path">{{ command|path_text if command else "not found next to this Python" }}</span></p>
+  <p><a href="/doctor">Run the system check</a></p>
+</details>
+{% endblock %}

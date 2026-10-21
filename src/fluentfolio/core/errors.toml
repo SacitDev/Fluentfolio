@@ -1,0 +1,823 @@
+# Every error and warning Fluentfolio shows. A code is added only when the code base first raises it.
+# category: input | setup | needs_user | busy | stage | internal (decides the exit code); W_ codes are warnings.
+
+[E_INTERNAL]
+category = "internal"
+severity = "error"
+title = "Fluentfolio stopped on an error it did not expect"
+message = "Fluentfolio hit an error it did not expect. Your recordings and results are kept."
+hint = "fluentfolio doctor --report report.txt"
+retryable = true
+doc = "docs/troubleshooting.md#e_internal"
+
+[E_USAGE]
+category = "input"
+severity = "error"
+title = "The command was not understood"
+message = "The command has an unknown option, a missing argument or a value that is not allowed."
+hint = "fluentfolio COMMAND --help"
+retryable = false
+doc = "docs/troubleshooting.md#e_usage"
+exit = 2
+
+[E_BUSY]
+category = "busy"
+severity = "error"
+title = "Another job is running"
+message = "Fluentfolio runs one analysis, download or folder move at a time, and one is running now."
+hint = "Wait for it to finish, or cancel it with fluentfolio cancel JOB."
+retryable = true
+doc = "docs/troubleshooting.md#e_busy"
+
+[E_DELETE_INCOMPLETE]
+category = "busy"
+severity = "error"
+title = "Some files were not deleted"
+message = "Another program was using some files, so they were not deleted. The analysis they belong to stays in History, so you can delete it again."
+hint = "Close programs that may use these files, such as a media player, then delete again."
+retryable = true
+doc = "docs/troubleshooting.md#e_delete_incomplete"
+
+[E_JOB_NOT_FOUND]
+category = "input"
+severity = "error"
+title = "No such job"
+message = "There is no job with this ID in your data folder."
+hint = "fluentfolio jobs list"
+retryable = false
+doc = "docs/troubleshooting.md#e_job_not_found"
+
+[E_PAGE_NOT_FOUND]
+category = "input"
+severity = "error"
+title = "Page not found"
+message = "Fluentfolio has no page at this address. A link may be old, or an analysis may have been deleted."
+hint = "Open History to see the analyses on this computer."
+retryable = false
+doc = "docs/troubleshooting.md#e_page_not_found"
+
+[E_JOB_NOT_FINISHED]
+category = "input"
+severity = "error"
+title = "The job has no results yet"
+message = "This job has not finished, so it has no results to export or check yet."
+hint = "Wait until the analysis finishes, or resume it, then try again."
+retryable = true
+doc = "docs/troubleshooting.md#e_job_not_finished"
+
+[E_INPUT_UNSUPPORTED]
+category = "input"
+severity = "error"
+title = "This file type cannot be used"
+message = "Fluentfolio reads WAV, MP3, MP4, M4A, MOV, WebM, MKV, Ogg, Opus and FLAC recordings. This file is none of these."
+hint = "Save or export the recording as one of these types, then try again."
+retryable = false
+doc = "docs/troubleshooting.md#e_input_unsupported"
+
+[E_INPUT_DAMAGED]
+category = "input"
+severity = "error"
+title = "The recording could not be read"
+message = "The file starts like a recording, but it is damaged or cut short."
+hint = "Use another copy of the recording, or export it again from the app that made it."
+retryable = false
+doc = "docs/troubleshooting.md#e_input_damaged"
+
+[E_INPUT_UNREADABLE]
+category = "input"
+severity = "error"
+title = "The file could not be opened"
+message = "Fluentfolio could not open the file. Another program may have it open, or it may not be yours to read."
+hint = "Close the program that recorded or opened the file, then try again. Or copy the file and use the copy."
+retryable = false
+doc = "docs/troubleshooting.md#e_input_unreadable"
+
+[E_INPUT_NO_AUDIO]
+category = "input"
+severity = "error"
+title = "The file has no sound"
+message = "The file has no audio track, so there is nothing to analyse."
+hint = "Choose the file that holds the recorded sound."
+retryable = false
+doc = "docs/troubleshooting.md#e_input_no_audio"
+
+[E_INPUT_TOO_SHORT]
+category = "input"
+severity = "error"
+title = "The recording is too short"
+message = "The recording is shorter than the shortest length set in Settings (10 seconds unless you changed it)."
+hint = "Record a longer answer, then try again."
+retryable = false
+doc = "docs/troubleshooting.md#e_input_too_short"
+
+[E_INPUT_TOO_LONG]
+category = "input"
+severity = "error"
+title = "The recording is too long"
+message = "The recording is longer than the longest length set in Settings (180 minutes unless you changed it)."
+hint = "Cut the recording into parts, or raise the limit in Settings."
+retryable = false
+doc = "docs/troubleshooting.md#e_input_too_long"
+
+[E_INPUT_TOO_LARGE]
+category = "input"
+severity = "error"
+title = "The file is too large"
+message = "The file is larger than the largest size set in Settings (2 GB unless you changed it)."
+hint = "Export the recording as audio only, or raise the limit in Settings."
+retryable = false
+doc = "docs/troubleshooting.md#e_input_too_large"
+
+[E_INPUT_SILENT]
+category = "input"
+severity = "error"
+title = "No speech found"
+message = "Fluentfolio found no speech in the recording: only silence, noise, music or a steady tone."
+hint = "Check that the microphone was on, and that you chose the right file."
+retryable = false
+doc = "docs/troubleshooting.md#e_input_silent"
+
+[E_CONFIRM_LONG]
+category = "needs_user"
+severity = "error"
+title = "A long recording needs your confirmation"
+message = "The recording is longer than 60 minutes (or the length set in Settings), so the analysis will take a long time."
+hint = "Confirm to go on. On the command line, add --confirm-long. Over 90 minutes (or the length set in Settings), --light-run instead gives a faster run with the slowest steps off."
+retryable = false
+doc = "docs/troubleshooting.md#e_confirm_long"
+
+[E_CONSENT_REQUIRED]
+category = "needs_user"
+severity = "error"
+title = "The other person's agreement is needed"
+message = "A recording of two people is analysed only when the other person agreed to be recorded and analysed on this computer."
+hint = "Ask the other person. If they agreed, add --partner-consent, or tick the box in the app."
+retryable = false
+doc = "docs/troubleshooting.md#e_consent_required"
+
+[E_RESUME_OTHER_VERSION]
+category = "needs_user"
+severity = "error"
+title = "Made by another version"
+message = "This job was made by another version of Fluentfolio, so it cannot be continued."
+hint = "Analyse the same recording again as a new job: fluentfolio analyze FILE --mode MODE"
+retryable = false
+doc = "docs/troubleshooting.md#e_resume_other_version"
+
+[E_PATH_RULE]
+category = "setup"
+severity = "error"
+title = "This folder cannot be used"
+message = "Some tools fail in this folder. It must be on a local disk, outside OneDrive, under 60 characters long, with no spaces and no letters outside A to Z."
+hint = "Choose a folder such as C:\\Fluentfolio."
+retryable = false
+doc = "docs/troubleshooting.md#e_path_rule"
+
+[E_MOVE_FAILED]
+category = "setup"
+severity = "error"
+title = "The folder was not moved"
+message = "The new folder must be given as a full path, be empty and lie outside the old one, and the copy there must match the old folder. A data folder must also lie outside the app folder, and the data and models folders outside each other. A folder that holds another Fluentfolio folder is not moved. One of these did not hold, so the old folder is still in use."
+hint = "Type the full path of a new or empty folder, for example on another drive, then move again. If the folder holds another Fluentfolio folder, move that one out first."
+retryable = true
+doc = "docs/troubleshooting.md#e_move_failed"
+
+[E_HOME_SET_BY_ENV]
+category = "needs_user"
+severity = "error"
+title = "The data folder is set outside Fluentfolio"
+message = "The FLUENTFOLIO_HOME variable chooses the data folder, so Fluentfolio cannot move it."
+hint = "Move the folder yourself and change FLUENTFOLIO_HOME, or remove the variable and move the folder again."
+retryable = false
+doc = "docs/troubleshooting.md#e_home_set_by_env"
+
+[E_DISK_FULL]
+category = "setup"
+severity = "error"
+title = "The disk is full"
+message = "There is not enough free space to save the result. Nothing half-written was kept."
+hint = "Free some space on this disk, then run the job again."
+retryable = true
+doc = "docs/troubleshooting.md#e_disk_full"
+
+[E_COMPONENT_UNAVAILABLE]
+category = "setup"
+severity = "error"
+title = "A part of Fluentfolio is not available"
+message = "A step needs a component that is not installed or does not work on this computer."
+hint = "fluentfolio components list"
+retryable = false
+doc = "docs/troubleshooting.md#e_component_unavailable"
+
+[E_OPENSMILE_CONSENT_MISSING]
+category = "needs_user"
+severity = "error"
+title = "openSMILE needs your consent first"
+message = "openSMILE's licence allows non-commercial use only, so it runs only after you accept that licence yourself. Its loudness values are missing until then; nothing else changes."
+hint = "Tick openSMILE's licence box on the Components page, or run fluentfolio components consent opensmile in a terminal."
+retryable = false
+doc = "docs/troubleshooting.md#e_opensmile_consent_missing"
+
+[E_DOWNLOAD_UNSAFE]
+category = "setup"
+severity = "error"
+title = "A download was refused"
+message = "A download was sent to an address without https, or a downloaded archive tried to write outside its folder or unpacks far larger than expected, so nothing was kept."
+hint = "Run fluentfolio doctor, then try the download again."
+retryable = true
+doc = "docs/troubleshooting.md#e_download_unsafe"
+
+[E_MODEL_MISSING]
+category = "setup"
+severity = "error"
+title = "A model is not downloaded"
+message = "This step needs a model that is not on this computer yet. Analysis never downloads anything by itself."
+hint = "fluentfolio components install --all"
+retryable = false
+doc = "docs/troubleshooting.md#e_model_missing"
+
+[E_HASH_MISMATCH]
+category = "setup"
+severity = "error"
+title = "A model file is damaged"
+message = "A model file does not match the copy Fluentfolio expects, so it is not used. A download that fails this check twice is deleted."
+hint = "fluentfolio components install --all"
+retryable = true
+doc = "docs/troubleshooting.md#e_hash_mismatch"
+
+[E_NETWORK]
+category = "setup"
+severity = "error"
+title = "The download did not work"
+message = "Fluentfolio could not reach the download site, or the site answered with an error. Nothing half-downloaded is used."
+hint = "Check your internet connection, then try again. A stopped download continues where it stopped."
+retryable = true
+doc = "docs/troubleshooting.md#e_network"
+
+[E_TLS_INTERCEPTED]
+category = "setup"
+severity = "error"
+title = "A secure connection was blocked"
+message = "The download site's security certificate was refused. A company proxy or an antivirus that checks secure connections usually causes this."
+hint = "Try another network, or ask your administrator to allow huggingface.co and github.com."
+retryable = true
+doc = "docs/troubleshooting.md#e_tls_intercepted"
+
+[E_TOKEN_MISSING]
+category = "needs_user"
+severity = "error"
+title = "No Hugging Face sign-in"
+message = "This model needs your own free Hugging Face account and a read token. Solo mode and the other speaker separation work without it."
+hint = "fluentfolio token set"
+retryable = false
+doc = "docs/troubleshooting.md#e_token_missing"
+
+[E_TOKEN_INVALID]
+category = "needs_user"
+severity = "error"
+title = "The Hugging Face token was refused"
+message = "Hugging Face did not accept the saved token. It may have been deleted or mistyped."
+hint = "Create a new read token on huggingface.co, then run fluentfolio token set."
+retryable = false
+doc = "docs/troubleshooting.md#e_token_invalid"
+
+[E_HF_TERMS_NOT_ACCEPTED]
+category = "needs_user"
+severity = "error"
+title = "Model terms not accepted"
+message = "Your Hugging Face account has not accepted the pyannote model terms."
+hint = "Open the model page, accept its terms, then run fluentfolio token status."
+retryable = false
+doc = "docs/troubleshooting.md#e_hf_terms_not_accepted"
+
+[E_STAGE_CRASHED]
+category = "stage"
+severity = "error"
+title = "A step stopped unexpectedly"
+message = "One step of the analysis stopped without a result."
+hint = "Run the job again. If it stops again, fluentfolio doctor --report report.txt makes a report you can share."
+retryable = true
+doc = "docs/troubleshooting.md#e_stage_crashed"
+
+[E_STAGE_TIMEOUT]
+category = "stage"
+severity = "error"
+title = "A step took too long"
+message = "One step made no progress for too long, or ran far longer than expected, so it was stopped."
+hint = "Run the job again; on a slow computer, choose a lighter speech model in Settings."
+retryable = true
+doc = "docs/troubleshooting.md#e_stage_timeout"
+
+[E_GPU_OOM]
+category = "stage"
+severity = "error"
+title = "The graphics card ran out of memory"
+message = "The graphics card did not have enough memory for this step, and the step also failed on the processor."
+hint = "Close other programs that use the graphics card, or set Device to CPU in Settings."
+retryable = true
+doc = "docs/troubleshooting.md#e_gpu_oom"
+
+[E_CUDA_RUNTIME]
+category = "stage"
+severity = "error"
+title = "The graphics card failed"
+message = "The graphics card driver reported an error, and the step also failed on the processor."
+hint = "Update the NVIDIA driver, or set Device to CPU in Settings."
+retryable = true
+doc = "docs/troubleshooting.md#e_cuda_runtime"
+
+[E_GPU_UNAVAILABLE]
+category = "setup"
+severity = "error"
+title = "No graphics card to use"
+message = "Device is set to GPU, but this step found no graphics card it can use."
+hint = "Set Device to Auto or CPU in Settings; Auto says why it does not use the graphics card."
+retryable = false
+doc = "docs/troubleshooting.md#e_gpu_unavailable"
+
+[E_RAM_OOM]
+category = "stage"
+severity = "error"
+title = "The computer ran out of memory"
+message = "This step needed more memory than the computer had free."
+hint = "Close other programs, or use a lighter model."
+retryable = true
+doc = "docs/troubleshooting.md#e_ram_oom"
+
+[E_JOB_FAILED]
+category = "stage"
+severity = "error"
+title = "The analysis failed"
+message = "A step that every analysis needs did not finish, so there are no results."
+hint = "Open the job to see which step failed and why."
+retryable = true
+doc = "docs/troubleshooting.md#e_job_failed"
+
+[E_JOB_CANCELLED]
+category = "stage"
+severity = "error"
+title = "The analysis was cancelled"
+message = "The analysis was stopped at your request. Finished steps are kept."
+hint = "Run it again from its first unfinished step: fluentfolio resume JOB"
+retryable = true
+doc = "docs/troubleshooting.md#e_job_cancelled"
+
+[E_JOB_INTERRUPTED]
+category = "stage"
+severity = "error"
+title = "The job was interrupted"
+message = "Fluentfolio was closed, or the computer stopped, while this job ran. Finished steps are kept."
+hint = "Run it again from its first unfinished step: fluentfolio resume JOB"
+retryable = true
+doc = "docs/troubleshooting.md#e_job_interrupted"
+
+[E_INTERRUPTED]
+category = "stage"
+severity = "error"
+title = "Stopped"
+message = "Fluentfolio was stopped with Ctrl+C or by the system. Finished steps are kept."
+hint = "Run the job again from its first unfinished step: fluentfolio resume JOB"
+retryable = true
+doc = "docs/troubleshooting.md#e_interrupted"
+exit = 130
+
+[W_INPUT_SHORT]
+severity = "warning"
+title = "A short recording"
+message = "The recording is under 60 seconds (or the length set in Settings), which is too short for reliable evidence."
+hint = "For a fuller picture, record a longer answer."
+doc = "docs/troubleshooting.md#w_input_short"
+
+[W_SETTINGS_UNKNOWN_KEY]
+severity = "warning"
+title = "Unknown setting ignored"
+message = "settings.toml has a setting Fluentfolio does not know; it was ignored."
+hint = "Restore defaults in Settings, or remove the line from settings.toml."
+doc = "docs/troubleshooting.md#w_settings_unknown_key"
+
+[W_SETTINGS_INVALID]
+severity = "warning"
+title = "A setting was reset"
+message = "A value in settings.toml is not allowed, so its default is used."
+hint = "Open Settings and choose the value again."
+doc = "docs/troubleshooting.md#w_settings_invalid"
+
+[W_SETTINGS_UNREADABLE]
+severity = "warning"
+title = "Settings could not be read"
+message = "settings.toml could not be read, so it was kept as a backup and the defaults are used."
+hint = "Open Settings to choose your settings again."
+doc = "docs/troubleshooting.md#w_settings_unreadable"
+
+[W_SETTINGS_NEWER]
+severity = "warning"
+title = "Settings from a newer version"
+message = "settings.toml was written by a newer version of Fluentfolio. It is used read-only and never reset."
+hint = "Update Fluentfolio to change these settings."
+doc = "docs/troubleshooting.md#w_settings_newer"
+
+[W_CPU_FALLBACK]
+severity = "warning"
+title = "A step ran on the processor"
+message = "A step failed on the graphics card and ran again on the processor; its results are shown as usual."
+hint = "If this happens often, set Device to CPU in Settings."
+doc = "docs/troubleshooting.md#w_cpu_fallback"
+
+[E_INPUT_TRACKS]
+category = "input"
+severity = "error"
+title = "One track per person was not found"
+message = "The per-track layout needs a stereo recording or two audio tracks, one for each person. This file has neither."
+hint = "Choose the mixed layout, or export the recording with one track per person."
+retryable = false
+doc = "docs/troubleshooting.md#e_input_tracks"
+
+[E_INPUT_LAYOUT]
+category = "input"
+severity = "error"
+title = "The layout does not fit"
+message = "The capture layout does not fit the mode or the files given."
+hint = "Use mixed for one file, per-track for a file with one track per person, or two-files with two files."
+retryable = false
+doc = "docs/troubleshooting.md#e_input_layout"
+
+[W_TRACK_LENGTHS]
+severity = "warning"
+title = "The two files differ in length"
+message = "After the offset, the two files differ in length by more than 2 seconds, so they may not start together."
+hint = "Check the offset between the two files, then run the analysis again."
+doc = "docs/troubleshooting.md#w_track_lengths"
+
+[W_TRACK_BLEED]
+severity = "warning"
+title = "The tracks hear each other"
+message = "Each voice is loud on both tracks, so the tracks cannot tell the two people apart well."
+hint = "Try the mixed layout, which tells voices apart by how they sound."
+doc = "docs/troubleshooting.md#w_track_bleed"
+
+[W_BACKGROUND_MUSIC]
+severity = "warning"
+title = "Background music (a heuristic check)"
+message = "A heuristic check heard what may be music under the speech. Words heard over it are marked unsure and left out of the words to check, the rare words and the pitch and voice measures."
+hint = "Record again without music playing in the background."
+doc = "docs/troubleshooting.md#w_background_music"
+
+[W_ONE_VOICE]
+severity = "warning"
+title = "Only one voice was found"
+message = "This mode expects two people, but only one voice was found, so roles are not given."
+hint = "Check the mode. A recording of one person is a solo recording."
+doc = "docs/troubleshooting.md#w_one_voice"
+
+[W_THIRD_VOICE]
+severity = "warning"
+title = "A third voice was found"
+message = "Three voices each speak for a noticeable time. The third may be a real person or one voice split in two."
+hint = "Check who speaks when in the results, and mark the third voice if it is not a person in the test."
+doc = "docs/troubleshooting.md#w_third_voice"
+
+[W_OTHER_VOICE]
+severity = "warning"
+title = "A brief other voice"
+message = "A voice that speaks for under 5 percent of the time was heard. It is left out of the evidence."
+hint = "No action is needed unless that voice is one of the two people."
+doc = "docs/troubleshooting.md#w_other_voice"
+
+[W_SIMILAR_VOICES]
+severity = "warning"
+title = "The voices sound similar"
+message = "The two voices sound similar. Please check the swap points."
+hint = "Look at who speaks when in the results, and correct a role if it is wrong."
+doc = "docs/troubleshooting.md#w_similar_voices"
+
+[W_SECOND_VOICE_SOLO]
+severity = "warning"
+title = "A second voice in a solo recording"
+message = "Another voice speaks for more than 5 percent of this solo recording. All speech still counts as yours."
+hint = "If someone asked you the questions, analyse the recording in interview mode."
+doc = "docs/troubleshooting.md#w_second_voice_solo"
+
+[W_SPEAKERS_FALLBACK]
+severity = "warning"
+title = "Speakers were told apart without pyannote"
+message = "pyannote could not run, so the speaker separation that needs no account was used. Roles are at most medium confidence."
+hint = "fluentfolio doctor"
+doc = "docs/troubleshooting.md#w_speakers_fallback"
+
+[W_WORDS_MISSING]
+severity = "warning"
+title = "Some speech has no words"
+message = "The speech model gave few or no words for part of the speech, even when it read that part again in pieces."
+hint = "Check the transcript around the gap; measures there count fewer words than were spoken."
+doc = "docs/troubleshooting.md#w_words_missing"
+
+[W_ROLES_UNAVAILABLE]
+severity = "warning"
+title = "The candidate is not known"
+message = "Fluentfolio could not tell who asked and who answered, so no candidate measures were made. Roles are never guessed."
+hint = "Set the roles in the review form, or run again as solo."
+doc = "docs/troubleshooting.md#w_roles_unavailable"
+
+[W_FREQUENT_SWAPS]
+severity = "warning"
+title = "The roles seem to change often"
+message = "Who asks and who answers seems to change more often than the swap style you chose allows, so some changes were not taken."
+hint = "Check the swap times in the review form, or choose the swap style \"After each question\" (--swap-style per-question)."
+doc = "docs/troubleshooting.md#w_frequent_swaps"
+
+[W_ROLE_CHANGE]
+severity = "warning"
+title = "The roles seem to change"
+message = "In this interview the person asking and the person answering seem to swap for a while."
+hint = "If you took turns asking, analyse the recording again in role-swap mode."
+doc = "docs/troubleshooting.md#w_role_change"
+
+[E_INPUT_TEXT]
+category = "input"
+severity = "error"
+title = "This text cannot be used"
+message = "A question list or an AI chat's answer must be a .txt or .md file, and your own transcript a .txt, .md, .vtt or .srt file, each at most 2 MB and saved as UTF-8 or UTF-16 text. A question list or transcript pasted into the form can also be at most 2 MB. Word documents are not read."
+hint = "Save the text as a plain .txt file in UTF-8, then try again."
+retryable = false
+doc = "docs/troubleshooting.md#e_input_text"
+
+[E_INPUT_OPTION]
+category = "input"
+severity = "error"
+title = "This option does not fit"
+message = "An option or a name does not fit here: for example a swap style outside role-swap, a part name that does not exist, or a role-swap job without the person to check."
+hint = "Leave the option out or correct the name; fluentfolio components list shows the parts. For a role-swap job, add --candidate person1 or --candidate person2."
+retryable = false
+doc = "docs/troubleshooting.md#e_input_option"
+
+[E_OVERRIDES_INVALID]
+category = "input"
+severity = "error"
+title = "The saved corrections cannot be used"
+message = "The corrections saved from the review form for this job are not in the expected form."
+hint = "Open the review form again and save the corrections once more."
+retryable = false
+doc = "docs/troubleshooting.md#e_overrides_invalid"
+
+[E_REVIEW_INVALID]
+category = "input"
+severity = "error"
+title = "These corrections do not fit together"
+message = "Each time must be inside the recording, a Part must start before it ends, and Part 3 cannot start before Part 2 ends. Nothing was saved."
+hint = "Correct the times in the review form and save again."
+retryable = false
+doc = "docs/troubleshooting.md#e_review_invalid"
+
+[E_UPLOAD_GONE]
+category = "input"
+severity = "error"
+title = "Choose the recording again"
+message = "The recording you chose is no longer waiting on this computer, for example because Fluentfolio was started again."
+hint = "Choose the file again, then start the analysis."
+retryable = true
+doc = "docs/troubleshooting.md#e_upload_gone"
+
+[E_NO_RECORDING]
+category = "input"
+severity = "error"
+title = "Choose a recording first"
+message = "No recording was chosen, so there is nothing to analyse. With two files, choose one for each person."
+hint = "Choose the file, then start the analysis."
+retryable = true
+doc = "docs/troubleshooting.md#e_no_recording"
+
+[E_NO_MODE]
+category = "input"
+severity = "error"
+title = "Choose who speaks in the recording"
+message = "No mode was chosen, so Fluentfolio does not know who speaks in the recording. It never guesses this."
+hint = "Under Who speaks, choose Solo, Interview or Role swap, then start the analysis."
+retryable = true
+doc = "docs/troubleshooting.md#e_no_mode"
+
+[W_LIGHT_RUN]
+severity = "warning"
+title = "A light run"
+message = "The slowest optional steps were off for this recording: the MFA aligner, the phone model and openSMILE."
+hint = "For every measure, run the recording again without --light-run."
+doc = "docs/troubleshooting.md#w_light_run"
+
+[E_SELFTEST_FAILED]
+category = "setup"
+severity = "error"
+title = "A part failed the self-test"
+message = "At least one part gave a wrong result on the bundled test clip. Doctor and the components list name it."
+hint = "fluentfolio self-test"
+retryable = true
+doc = "docs/troubleshooting.md#e_selftest_failed"
+
+[W_NOT_INSTALLED]
+severity = "warning"
+title = "Not set up by the installer"
+message = "This copy of Fluentfolio was not set up by the installer, or by an installer of another version."
+hint = "Run the installer for a normal install, or Repair to bring it up to date."
+doc = "docs/troubleshooting.md#w_not_installed"
+
+[W_LOW_RAM]
+severity = "warning"
+title = "Little memory"
+message = "This computer has less than 12 GB of memory (an 8 GB computer, for example). Analyses work, but slowly; 16 GB is recommended."
+hint = "Close other programs while an analysis runs."
+doc = "docs/troubleshooting.md#w_low_ram"
+
+[W_FREE_RAM]
+severity = "warning"
+title = "Less free memory than a step needs"
+message = "A step of this analysis needs more memory than is free now, so the analysis may stop with an out-of-memory error."
+hint = "Close other programs before you start. A shorter recording needs less memory."
+doc = "docs/troubleshooting.md#w_free_ram"
+
+[W_DISK_LOW]
+severity = "warning"
+title = "Little free disk space"
+message = "Less than 5 GB is free on the drive of the data or the models folder."
+hint = "Free some space on that drive, or move the folder in Settings."
+doc = "docs/troubleshooting.md#w_disk_low"
+
+[W_GPU_NOT_USED]
+severity = "warning"
+title = "The graphics card is not used"
+message = "Auto runs every step on the processor. Doctor says why."
+hint = "A graphics card is optional; without one, analyses take longer."
+doc = "docs/troubleshooting.md#w_gpu_not_used"
+
+[W_TOKEN_FILE_PLACE]
+severity = "warning"
+title = "The token file is in a shared place"
+message = "The Hugging Face token file is inside the app folder, the data folder or a git working tree, where it may be copied or shared."
+hint = "Point HF_TOKEN_PATH somewhere private, or unset it."
+doc = "docs/troubleshooting.md#w_token_file_place"
+
+[W_NOT_OFFLINE]
+severity = "warning"
+title = "Not everything is downloaded yet"
+message = "A part that is switched on is not on this computer yet, so analyses run without it."
+hint = "fluentfolio components install --all"
+doc = "docs/troubleshooting.md#w_not_offline"
+
+[E_RUNNER_NOT_STARTED]
+category = "stage"
+severity = "error"
+title = "The background run did not start"
+message = "The job was created, but the run in the background did not start within 15 seconds. Some tools end the programs they start."
+hint = "Run the job in the foreground: fluentfolio resume JOB"
+retryable = true
+doc = "docs/troubleshooting.md#e_runner_not_started"
+
+[E_INSTALLER_NEEDED]
+category = "setup"
+severity = "error"
+title = "This part comes with the installer"
+message = "This part is a package inside the app itself, which only the installer may add or repair while Fluentfolio is closed."
+hint = "Close Fluentfolio and run the installer again (Repair); it adds this part."
+retryable = false
+doc = "docs/troubleshooting.md#e_installer_needed"
+
+[E_CONFIRM_NEEDED]
+category = "needs_user"
+severity = "error"
+title = "This step asks first"
+message = "This step downloads or deletes files, so it asks before it starts. There was no terminal to ask in, so nothing was changed."
+hint = "Run it in a terminal to answer the question, or add --yes."
+retryable = false
+doc = "docs/troubleshooting.md#e_confirm_needed"
+
+[E_SETTINGS_INVALID]
+category = "input"
+severity = "error"
+title = "This setting cannot take that value"
+message = "The setting does not exist, or it does not allow that value. Nothing was changed."
+hint = "Run fluentfolio settings show to see every setting and its value. Switches take true or false."
+retryable = false
+doc = "docs/troubleshooting.md#e_settings_invalid"
+
+[E_SETTINGS_READ_ONLY]
+category = "input"
+severity = "error"
+title = "Settings from a newer version"
+message = "settings.toml was written by a newer version of Fluentfolio, so this version does not change it."
+hint = "Update Fluentfolio to change these settings."
+retryable = false
+doc = "docs/troubleshooting.md#e_settings_read_only"
+
+# The installer scripts print these codes themselves; the rows give the same cause and fix to the docs.
+
+[E_NOT_SUPPORTED]
+category = "setup"
+severity = "error"
+title = "This computer is not supported"
+message = "Version 1 needs Windows 10 22H2 or later, or Windows 11, or Ubuntu 22.04 or 24.04, on a 64-bit Intel or AMD processor."
+hint = "Use a supported computer."
+retryable = false
+doc = "docs/troubleshooting.md#e_not_supported"
+
+[E_ELEVATED]
+category = "setup"
+severity = "error"
+title = "Started as administrator"
+message = "The installer was started as administrator (or with sudo). Fluentfolio installs for your user only."
+hint = "Start the installer again the normal way, without Run as administrator or sudo."
+retryable = false
+doc = "docs/troubleshooting.md#e_elevated"
+
+[E_SAC_ENFORCED]
+category = "setup"
+severity = "error"
+title = "Smart App Control blocks Fluentfolio"
+message = "Smart App Control is on. It blocks programs that Fluentfolio needs."
+hint = "Read this section of the guide, then decide whether to switch Smart App Control off."
+retryable = false
+doc = "docs/troubleshooting.md#e_sac_enforced"
+
+[W_SAC_EVALUATION]
+severity = "warning"
+title = "Smart App Control is in evaluation mode"
+message = "Smart App Control is watching this computer and may switch itself on later, and then block Fluentfolio."
+hint = "If Fluentfolio stops starting one day, read the Smart App Control section of the guide."
+doc = "docs/troubleshooting.md#w_sac_evaluation"
+
+[E_APP_RUNNING]
+category = "busy"
+severity = "error"
+title = "Fluentfolio is running"
+message = "The installer cannot change the program, and the uninstaller cannot remove it, while Fluentfolio is running."
+hint = "Close the Fluentfolio window (the one that says keep this window open), then run the installer or the uninstaller again."
+retryable = true
+doc = "docs/troubleshooting.md#e_app_running"
+
+[E_SOURCE]
+category = "setup"
+severity = "error"
+title = "No release found"
+message = "The installer did not find the Fluentfolio files next to it. The download was not fully extracted."
+hint = "Extract the whole release download, then start the installer inside the extracted folder."
+retryable = false
+doc = "docs/troubleshooting.md#e_source"
+
+[E_DISK_PREFLIGHT]
+category = "setup"
+severity = "error"
+title = "Not enough disk space to install"
+message = "The disk does not have the space the install needs. Nothing was downloaded."
+hint = "Free the space the message names, then run the installer again."
+retryable = true
+doc = "docs/troubleshooting.md#e_disk_preflight"
+
+[E_VCRUNTIME_MISSING]
+category = "setup"
+severity = "error"
+title = "The Visual C++ runtime is missing"
+message = "Windows lacks the Microsoft Visual C++ runtime, which Python and the speech tools need."
+hint = "Install Visual C++ Redistributable x64 from https://aka.ms/vs/17/release/vc_redist.x64.exe, then run the installer again."
+retryable = true
+doc = "docs/troubleshooting.md#e_vcruntime_missing"
+
+[E_FILE_BLOCKED]
+category = "setup"
+severity = "error"
+title = "A security program blocked a file"
+message = "A file of the install was blocked or removed right after it was written, most likely by a security program."
+hint = "Check your security program's list of blocked files, then run the installer again."
+retryable = true
+doc = "docs/troubleshooting.md#e_file_blocked"
+
+[E_INSTALL_FAILED]
+category = "setup"
+severity = "error"
+title = "An install step failed"
+message = "A step of the install failed for a reason the installer does not know. What was already done is kept."
+hint = "Run the installer again. If it fails again, send the install log with your question."
+retryable = true
+doc = "docs/troubleshooting.md#e_install_failed"
+
+[E_UPDATE_FAILED_OLD_KEPT]
+category = "setup"
+severity = "error"
+title = "The update failed; the old version is kept"
+message = "The new version failed before it replaced the old one. The old version is unchanged and still works."
+hint = "Start Fluentfolio as before. Try the update again later."
+retryable = true
+doc = "docs/troubleshooting.md#e_update_failed_old_kept"
+
+[E_NOT_INSTALLED]
+category = "setup"
+severity = "error"
+title = "Fluentfolio is not installed"
+message = "The uninstaller found no installed Fluentfolio for this user."
+hint = "Nothing needs to be removed."
+retryable = false
+doc = "docs/troubleshooting.md#e_not_installed"
+
+[E_UNINSTALL_FAILED]
+category = "setup"
+severity = "error"
+title = "The uninstall stopped"
+message = "The uninstaller stopped before it finished, for example at a file that another program has open. The message says how far it got."
+hint = "Do what the message says. If the program is still there, run the uninstaller again. Otherwise delete what is left of the app folder, and of any folder you said yes to deleting, in File Explorer."
+retryable = true
+doc = "docs/troubleshooting.md#e_uninstall_failed"

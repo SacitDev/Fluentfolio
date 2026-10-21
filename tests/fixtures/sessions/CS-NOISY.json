@@ -1,0 +1,6 @@
+{
+ "name": "CS-NOISY",
+ "base": "CS-INT",
+ "seed": 606,
+ "background": {"kind": "pink", "snr_db": 10}
+}

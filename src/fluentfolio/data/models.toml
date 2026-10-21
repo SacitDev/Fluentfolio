@@ -1,0 +1,419 @@
+# The one model catalogue. The installer, the app, Doctor, the Settings page and tools/notices.py read it.
+# Every download is pinned: a Hugging Face repository at a full commit, or an https URL, and each file has the
+# SHA-256 and size recorded when it was first downloaded. A file that does not match is never used.
+# install: download (a model file), venv (inside an installed package), venv-extra (a package added after
+# consent), env (the aligner's own environment), built-in (Fluentfolio's own code).
+schema = 1
+
+[[component]]
+id = "parakeet-tdt-0.6b-v2"
+title = "Parakeet TDT 0.6B v2"
+note = ""
+kind = "asr"
+licence = "CC-BY-4.0"
+licence_class = "cc-by"
+attribution = "NVIDIA Parakeet TDT 0.6B v2 (CC BY 4.0); ONNX conversion by istupakov"
+host = "huggingface.co"
+repo = "istupakov/parakeet-tdt-0.6b-v2-onnx"
+revision = "0bbb45a3365852604aef28b538a8f066f4ccaa85"
+engine = "onnx-asr"
+engine_model = "nemo-parakeet-tdt-0.6b-v2"
+device = "cpu"
+install = "download"
+default_on = true
+gated = false
+requires_consent = false
+needs = ["silero-vad"]
+stages = ["asr"]
+os = ["windows", "linux"]
+transcript_style = "verbatim-best-effort"
+file = [
+    { path = "config.json", sha256 = "666903c76b9798caf2c210afd4f6cd60b08a8dbf9800ec8d7a3bc0d2148ac466", size = 97 },
+    { path = "decoder_joint-model.int8.onnx", sha256 = "a449f49acd68979d418651dd2dcb737cc0f1bf0225e009e29ee326354edbf7d3", size = 8998286 },
+    { path = "encoder-model.int8.onnx", sha256 = "3e0581fda6ab843888b51e56d7ee78b6d5bc3237ec113af1f732d1d5286aa155", size = 652184014 },
+    { path = "vocab.txt", sha256 = "ec182b70dd42113aff6c5372c75cac58c952443eb22322f57bbd7f53977d497d", size = 9384 },
+]
+
+[[component]]
+id = "parakeet-tdt-0.6b-v3"
+title = "Parakeet TDT 0.6B v3"
+note = ""
+kind = "asr"
+licence = "CC-BY-4.0"
+licence_class = "cc-by"
+attribution = "NVIDIA Parakeet TDT 0.6B v3 (CC BY 4.0); ONNX conversion by istupakov"
+host = "huggingface.co"
+repo = "istupakov/parakeet-tdt-0.6b-v3-onnx"
+revision = "8f23f0c03c8761650bdb5b40aaf3e40d2c15f1ce"
+engine = "onnx-asr"
+engine_model = "nemo-parakeet-tdt-0.6b-v3"
+device = "cpu"
+install = "download"
+default_on = false
+gated = false
+requires_consent = false
+needs = ["silero-vad"]
+stages = ["asr"]
+os = ["windows", "linux"]
+transcript_style = "verbatim-best-effort"
+file = [
+    { path = "config.json", sha256 = "666903c76b9798caf2c210afd4f6cd60b08a8dbf9800ec8d7a3bc0d2148ac466", size = 97 },
+    { path = "decoder_joint-model.int8.onnx", sha256 = "eea7483ee3d1a30375daedc8ed83e3960c91b098812127a0d99d1c8977667a70", size = 18202004 },
+    { path = "encoder-model.int8.onnx", sha256 = "6139d2fa7e1b086097b277c7149725edbab89cc7c7ae64b23c741be4055aff09", size = 652183999 },
+    { path = "vocab.txt", sha256 = "d58544679ea4bc6ac563d1f545eb7d474bd6cfa467f0a6e2c1dc1c7d37e3c35d", size = 93939 },
+]
+
+[[component]]
+id = "canary-1b-v2"
+title = "Canary 1B v2"
+note = ""
+kind = "asr"
+licence = "CC-BY-4.0"
+licence_class = "cc-by"
+attribution = "NVIDIA Canary-1B-v2 (CC BY 4.0); ONNX conversion by istupakov"
+host = "huggingface.co"
+repo = "istupakov/canary-1b-v2-onnx"
+revision = "5ebc1520cef7b6b318b3526ad17adbfe00bc1bfc"
+engine = "onnx-asr"
+engine_model = "nemo-canary-1b-v2"
+device = "cpu"
+install = "download"
+default_on = false
+gated = false
+requires_consent = false
+needs = ["silero-vad", "ctc-aligner"]  # it gives no word times, so the CTC aligner adds them
+stages = ["asr", "asr_times"]
+os = ["windows", "linux"]
+transcript_style = "smoothed"  # the cautious value: the speech-model comparison decided nothing for it
+offered = false  # the speech-model comparison did not add it, so only eval/ downloads and runs it
+file = [
+    { path = "config.json", sha256 = "f90ace8e35326dcd47c7330b230644fa0835083ed1e89e2f59aa08ba10d74f54", size = 68 },
+    { path = "decoder-model.int8.onnx", sha256 = "52d83aa7aad41fbbe4f9dfcd341d784735a6eb4c6eb0d3290fc27a0d8ac39abf", size = 170040374 },
+    { path = "encoder-model.int8.onnx", sha256 = "6d96e9945898e5ace48f4efecd459ca1df81859730be27b8af6b197639403ee1", size = 859078138 },
+    { path = "vocab.txt", sha256 = "2c9efe6104fd29522ea27ce0e3aef5d37c690af4e5a4232e643e23ca403ffea3", size = 208022 },
+]
+
+[[component]]
+id = "whisper-large-v3-turbo"
+title = "Whisper large-v3-turbo"
+note = "not for grammar evidence"
+kind = "asr"
+licence = "MIT"
+licence_class = "permissive"
+attribution = "Whisper large-v3-turbo by OpenAI (MIT); CTranslate2 conversion by Mobius Labs"
+host = "huggingface.co"
+repo = "mobiuslabsgmbh/faster-whisper-large-v3-turbo"
+revision = "0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf"
+engine = "faster-whisper"
+engine_model = "large-v3-turbo"
+device = "cpu+gpu"
+install = "download"
+default_on = false
+gated = false
+requires_consent = false
+needs = ["silero-vad"]
+stages = ["asr"]
+os = ["windows", "linux"]
+transcript_style = "smoothed"
+file = [
+    { path = "config.json", sha256 = "b0253ea6c0d3bea6b1e19e91a02acfd3b53f4467362efcb5a3e6b16c9b3a9b7e", size = 2263 },
+    { path = "model.bin", sha256 = "e76620f83d5f5b69efd3d87e3dc180c1bd21df9fbebacfd4335e5e1efcc018da", size = 1617884929 },
+    { path = "preprocessor_config.json", sha256 = "7ccc62c6f2765af1f3b46c00c9b5894426835a05021c8b9c01eecb6dfb542711", size = 340 },
+    { path = "tokenizer.json", sha256 = "297b13372ac43916285644fb9687add3cc62ee2a1adb60da3dc25cc94c1871fd", size = 2710337 },
+    { path = "vocabulary.json", sha256 = "c69260f2ab26d659b7c398f9a2b2b48ed0df16c3b47d7326782fd9cba71690c1", size = 1068114 },
+]
+
+[[component]]
+id = "whisper-tiny"
+title = "Whisper tiny (language check)"
+note = ""
+kind = "language"
+licence = "MIT"
+licence_class = "permissive"
+attribution = "Whisper tiny by OpenAI (MIT); CTranslate2 conversion by Systran"
+host = "huggingface.co"
+repo = "Systran/faster-whisper-tiny"
+revision = "d90ca5fe260221311c53c58e660288d3deb8d356"
+device = "cpu"
+install = "download"
+default_on = true
+gated = false
+requires_consent = false
+needs = ["silero-vad"]
+stages = ["language"]
+os = ["windows", "linux"]
+file = [
+    { path = "config.json", sha256 = "a73a28cdfe1c43ccc7202fa333d1f89c202477271407ae9a7f19afa52039cac8", size = 2249 },
+    { path = "model.bin", sha256 = "dcb76c6586fc06cbdac6dd21f14cfd129cc4cdd9dce19bf4ffa62e59cbe6e6d1", size = 75538270 },
+    { path = "tokenizer.json", sha256 = "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab", size = 2203239 },
+    { path = "vocabulary.txt", sha256 = "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913", size = 459861 },
+]
+
+[[component]]
+id = "silero-vad"
+title = "Silero VAD v6"
+note = ""
+kind = "vad"
+licence = "MIT"
+licence_class = "permissive"
+attribution = "Silero VAD v6 by the Silero team (MIT), the copy inside the faster-whisper package"
+host = "pypi"
+package = "faster_whisper"
+device = "cpu"
+install = "venv"
+default_on = true
+gated = false
+requires_consent = false
+needs = []
+stages = ["vad"]
+os = ["windows", "linux"]
+file = [
+    { path = "assets/silero_vad_v6.onnx", sha256 = "4cbf549b8326f60f80f2536d9eefeb450a9abe83365a098031c89719f1be17d2", size = 1245151 },
+]
+
+[[component]]
+id = "pyannote-community-1"
+title = "pyannote community-1 speaker separation"
+note = "needs your own Hugging Face account"
+kind = "diarizer"
+licence = "CC-BY-4.0"
+licence_class = "cc-by"
+attribution = "pyannote speaker-diarization-community-1 by pyannoteAI (CC BY 4.0)"
+host = "huggingface.co"
+repo = "pyannote/speaker-diarization-community-1"
+revision = "3533c8cf8e369892e6b79ff1bf80f7b0286a54ee"
+device = "cpu+gpu"
+install = "download"
+default_on = true
+gated = true
+requires_consent = false
+needs = []
+stages = ["speakers"]
+os = ["windows", "linux"]
+file = [
+    { path = "config.yaml", sha256 = "5ce2bfa9a938dc132cec1172592d65173cbb8f444ea1e4133f10f9391de155be", size = 444 },
+    { path = "embedding/pytorch_model.bin", sha256 = "6f10ff60898a1d185fa22e1d11e0bfa8a92efec811f11bca48cb8cafebefd929", size = 26646242 },
+    { path = "plda/plda.npz", sha256 = "9b77bcd840692710dd3496f62ecfeed8d8e5f002fd991b785079b244eab7d255", size = 133852 },
+    { path = "plda/xvec_transform.npz", sha256 = "325f1ce8e48f7e55e9c8aa47e05d2766b7c48c4b25b8de8dd751e7a4cc5fbe8f", size = 134376 },
+    { path = "segmentation/pytorch_model.bin", sha256 = "7ad24338d844fb95985486eb1a464e32d229f6d7a03c9abe60f978bacf3f816e", size = 5906507 },
+]
+
+[[component]]
+id = "sherpa-onnx-diarizer"
+title = "sherpa-onnx speaker separation (no account)"
+note = ""
+kind = "diarizer"
+licence = "MIT AND CC-BY-4.0"
+licence_class = "cc-by"
+attribution = "pyannote segmentation 3.0 (MIT) and WeSpeaker ResNet34-LM (CC BY 4.0), ONNX exports from the k2-fsa sherpa-onnx project"
+host = "github.com"
+device = "cpu"
+install = "download"
+default_on = true
+gated = false
+requires_consent = false
+needs = []
+stages = ["speakers"]
+os = ["windows", "linux"]
+file = [
+    { path = "sherpa-onnx-pyannote-segmentation-3-0.tar.bz2", url = "https://github.com/k2-fsa/sherpa-onnx/releases/download/speaker-segmentation-models/sherpa-onnx-pyannote-segmentation-3-0.tar.bz2", sha256 = "24615ee884c897d9d2ba09bb4d30da6bb1b15e685065962db5b02e76e4996488", size = 6958444, unpacked_size = 7566812 },
+    # "recongition" is the upstream spelling of the release tag.
+    { path = "wespeaker_en_voxceleb_resnet34_LM.onnx", url = "https://github.com/k2-fsa/sherpa-onnx/releases/download/speaker-recongition-models/wespeaker_en_voxceleb_resnet34_LM.onnx", sha256 = "e9848563da86f263117134dfd7ad63c92355b37de492b55e325400c9d9c39012", size = 26530550 },
+]
+
+[[component]]
+id = "mfa"
+title = "Montreal Forced Aligner"
+note = "experimental: it did not pass its word-timing check on Windows or Linux"
+kind = "aligner"
+licence = "MIT AND CC-BY-4.0 AND BSD-3-Clause"
+licence_class = "cc-by"
+attribution = "Montreal Forced Aligner 3.4.3 (MIT); english_us_arpa acoustic model and dictionary v3.0.0 and G2P model v2.0.0a (CC BY 4.0); micromamba 2.9.0 (BSD-3-Clause)"
+host = "conda-forge"
+device = "cpu"
+install = "env"
+default_on = true
+experimental_on = ["windows", "linux"]
+gated = false
+requires_consent = false
+needs = []
+stages = ["alignment"]
+os = ["windows", "linux"]
+file = [
+    { path = "micromamba.exe", url = "https://github.com/mamba-org/micromamba-releases/releases/download/2.9.0-0/micromamba-win-64", sha256 = "a6d804394b2418991c4e29562853eaace2f2ce9d9da661a98e74e02e8dbb44b0", size = 11454464, os = "windows" },
+    { path = "micromamba", url = "https://github.com/mamba-org/micromamba-releases/releases/download/2.9.0-0/micromamba-linux-64", sha256 = "366cd9cd8be14df1ab8ed50352a82111082a36686b2d389fdb79a92c3fafb3e3", size = 18292808, os = "linux" },
+    { path = "english_us_arpa_acoustic.zip", url = "https://github.com/MontrealCorpusTools/mfa-models/releases/download/acoustic-english_us_arpa-v3.0.0/english_us_arpa.zip", sha256 = "d35ce271ded357d833d2f4b8d1041dc3748b9538567ba13f2c697f4e4126711b", size = 91928208 },
+    { path = "english_us_arpa.dict", url = "https://github.com/MontrealCorpusTools/mfa-models/releases/download/dictionary-english_us_arpa-v3.0.0/english_us_arpa.dict", sha256 = "e8c6c7b036ae2b7c78d2768b8dc6b1f9359175b842956d00b48c53c9c332e6b0", size = 7186498 },
+    { path = "english_us_arpa_g2p.zip", url = "https://github.com/MontrealCorpusTools/mfa-models/releases/download/g2p-english_us_arpa-v2.0.0a/english_us_arpa.zip", sha256 = "0ef6a3b288dc0a91a267f98bf556a45bbfeae198e578398e92ac603a61ad46e5", size = 11094999 },
+]
+
+[[component]]
+id = "ctc-aligner"
+title = "CTC aligner"
+note = ""
+kind = "aligner"
+licence = "MIT"
+licence_class = "permissive"
+attribution = "Fluentfolio's own CTC aligner (MIT)"
+host = "built-in"
+device = "cpu"
+install = "built-in"
+default_on = true
+gated = false
+requires_consent = false
+needs = ["phone-model", "espeak-ng"]
+stages = ["asr_times", "phones", "alignment"]
+os = ["windows", "linux"]
+file = []
+
+[[component]]
+id = "phone-model"
+title = "Phone recogniser (wav2vec2 XLSR-53 eSpeak)"
+note = ""
+kind = "phones"
+licence = "Apache-2.0"
+licence_class = "permissive"
+attribution = "facebook/wav2vec2-xlsr-53-espeak-cv-ft (Apache-2.0); ONNX conversion by qnighy"
+host = "huggingface.co"
+repo = "qnighy/wav2vec2-xlsr-53-espeak-cv-ft-ONNX"
+revision = "d2987af7ae07d53eafee15dc7190479062faa1e8"
+device = "cpu"
+install = "download"
+default_on = true
+gated = false
+requires_consent = false
+needs = ["espeak-ng"]
+stages = ["asr_times", "phones"]
+os = ["windows", "linux"]
+file = [
+    { path = "config.json", sha256 = "8baff98019cdea8c3555b0d7adbcc199e1d265396dad1e7865474f16a582049c", size = 2277 },
+    { path = "onnx/model.onnx", sha256 = "e36d613ec49b7c158ab7a53de315e5e142e78284ae4353d23e073261d76de48e", size = 1263763411 },
+    { path = "preprocessor_config.json", sha256 = "a2254a5b58f72cd4de3632f8eee64f3f098b7c1402128d2f419e7d00ae13e335", size = 212 },
+    { path = "vocab.json", sha256 = "d732ab2456c0c017930001dc9af0b41b3b93d25b2eb9740bf9d925508d7d87d0", size = 4637 },
+]
+
+[[component]]
+id = "espeak-ng"
+title = "eSpeak NG (dictionary pronunciations)"
+note = ""
+kind = "phones"
+licence = "GPL-3.0-or-later"
+licence_class = "gpl"
+attribution = "eSpeak NG (GPL-3.0-or-later), through the espeakng-loader and phonemizer packages"
+host = "pypi"
+package = "espeakng_loader"
+device = "cpu"
+install = "venv"
+default_on = true
+gated = false
+requires_consent = false
+needs = []
+stages = ["asr_times", "phones"]
+os = ["windows", "linux"]
+file = []
+
+[[component]]
+id = "pronunciation-dictionary"
+title = "Pronunciation dictionary (US English, from the MFA models)"
+note = ""
+kind = "phones"
+licence = "CC-BY-4.0"
+licence_class = "cc-by"
+attribution = "english_us_arpa dictionary v3.0.0 from the Montreal Forced Aligner models (CC BY 4.0)"
+host = "github.com"
+device = "cpu"
+install = "download"
+default_on = true
+gated = false
+requires_consent = false
+needs = []
+stages = ["phones"]
+os = ["windows", "linux"]
+file = [
+    { path = "english_us_arpa.dict", url = "https://github.com/MontrealCorpusTools/mfa-models/releases/download/dictionary-english_us_arpa-v3.0.0/english_us_arpa.dict", sha256 = "e8c6c7b036ae2b7c78d2768b8dc6b1f9359175b842956d00b48c53c9c332e6b0", size = 7186498 },
+]
+
+[[component]]
+id = "praat"
+title = "Praat (pitch and voice)"
+note = ""
+kind = "acoustic"
+licence = "GPL-3.0-or-later"
+licence_class = "gpl"
+attribution = "Praat by Paul Boersma and David Weenink, through Parselmouth (GPL-3.0-or-later)"
+host = "pypi"
+package = "parselmouth"
+device = "cpu"
+install = "venv"
+default_on = true
+gated = false
+requires_consent = false
+needs = []
+stages = ["praat"]
+os = ["windows", "linux"]
+file = []
+
+[[component]]
+id = "swiftf0"
+title = "SwiftF0 (pitch)"
+note = ""
+kind = "acoustic"
+licence = "MIT"
+licence_class = "permissive"
+attribution = "SwiftF0 (MIT), the model inside the swift-f0 package"
+host = "pypi"
+package = "swift_f0"
+device = "cpu"
+install = "venv"
+default_on = true
+gated = false
+requires_consent = false
+needs = []
+stages = ["swiftf0"]
+os = ["windows", "linux"]
+file = [
+    { path = "model.onnx", sha256 = "6385e8c2ebc3872e82c9ff5946228de44cd3be77a750ea53698b7dbfe94b0a22", size = 135090 },
+]
+
+[[component]]
+id = "opensmile"
+title = "openSMILE (loudness and pitch)"
+note = "research licence: non-commercial use only"
+kind = "acoustic"
+licence = "LicenseRef-openSMILE-Research"
+licence_class = "nc"
+attribution = "openSMILE by audEERING, under its research licence (non-commercial use only)"
+host = "pypi"
+package = "opensmile"
+device = "cpu"
+install = "venv-extra"
+default_on = true
+gated = false
+requires_consent = true
+needs = []
+stages = ["opensmile"]
+os = ["windows", "linux"]
+file = []
+
+[[component]]
+id = "spacy-en-core-web-sm"
+title = "spaCy English model (grammar pointers)"
+note = ""
+kind = "nlp"
+licence = "MIT"
+licence_class = "permissive"
+attribution = "spaCy en_core_web_sm by Explosion (MIT)"
+host = "huggingface.co"
+repo = "spacy/en_core_web_sm"
+revision = "8fb6f8155286360bf5486fe399e2738d1df7ded2"
+device = "cpu"
+install = "download"
+default_on = true
+gated = false
+requires_consent = false
+needs = []
+stages = ["nlp"]
+os = ["windows", "linux"]
+file = [
+    { path = "en_core_web_sm-any-py3-none-any.whl", sha256 = "86cc141f63942d4b2c5fcee06630fd6f904788d2f0ab005cce45aadb8fb73889", size = 12803381, unpacked_size = 15251692 },
+]

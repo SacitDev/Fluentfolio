@@ -1,0 +1,26 @@
+# Phrases that start a request to speak, as a speaking test asks for an answer without a question.
+# Written for Fluentfolio. One phrase per line, lower case; lines starting with # are comments.
+# A sentence that starts with one of these is a prompt.
+describe
+tell me
+you should say
+talk about
+let's talk about
+let us talk about
+i'd like you to
+i would like you to
+i'd like to ask
+i'm going to ask
+i am going to ask
+i'm going to give you
+i am going to give you
+now let's
+now i'd like
+now we'll
+please
+explain
+give me
+think about
+you can start
+you may start
+start speaking

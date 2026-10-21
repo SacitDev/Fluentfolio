@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% block title %}{{ name }}{% if view == "results" and tab != "overview" %} - {{ tab_names[tab] }}{% endif %}{% endblock %}
+{% macro player() %}
+<audio id="player" controls preload="metadata" src="/jobs/{{ job_id }}/audio">Your browser cannot play this recording.</audio>
+<p class="help">Space plays or pauses and the arrow keys move 5 seconds, when the focus is not in a field. Each time button plays from that time.</p>
+{% endmacro %}
+{% block main %}
+{% include "partials/job_head.html" %}
+<div id="action-result" aria-live="polite"></div>
+{% if view == "progress" %}
+<section id="progress" data-events="/jobs/{{ job_id }}/events" aria-labelledby="progress-title">
+  <h2 id="progress-title">Progress</h2>
+  <p class="now" role="status" data-now>{{ now }}</p>
+  <div data-progress>{% include "partials/progress.html" %}</div>
+  <p class="actions"><button type="button" hx-post="/jobs/{{ job_id }}/cancel" hx-target="#cancel-result">{% include "icons/stop-circle.svg" %} Cancel analysis</button> <span id="cancel-result" class="result" role="status"></span></p>
+  <p class="help">You can close this page: the analysis keeps running. Quit or closing the Fluentfolio window stops it, and Run again then goes on from the first step that did not finish.</p>
+  <p class="help">Your computer will stay awake until the analysis ends. Keep the lid open.</p>
+</section>
+{% elif view == "stopped" %}
+<section aria-labelledby="stopped-title">
+  <h2 id="stopped-title">{{ state }}</h2>
+  {% if problem %}<p>{{ problem.message }}</p>{% endif %}
+  {% if half_deleted %}
+  <p>{{ problem.hint }}</p>
+  {% else %}
+  <p>Run again goes on from the first step that did not finish, and runs the steps after it again.</p>
+  <p class="actions"><button type="button" class="primary" hx-post="/jobs/{{ job_id }}/resume" hx-target="#action-result">{% include "icons/arrow-clockwise.svg" %} Run again</button></p>
+  {% endif %}
+</section>
+{% elif tab == "overview" %}
+{% if notes %}
+<section aria-labelledby="notes-title">
+  <h2 id="notes-title">Check these results</h2>
+  {% for n in notes %}
+  <div class="notice">
+    <p>{% include "icons/warning.svg" %} <span>{{ n.text }}</span></p>
+    {% if n.mode %}
+    <form id="form" hx-post="/jobs/{{ job_id }}/rerun" hx-target="#action-result">
+      <input type="hidden" name="mode" value="{{ n.mode }}">
+      <p class="help">{{ n.offer }}</p>
+      {% if n.consent %}<label class="choice"><input type="checkbox" name="consent" value="yes"> The other person agreed to be recorded and analysed on this computer.</label>{% endif %}
+      <p class="actions"><button type="submit">{% include "icons/arrow-clockwise.svg" %} Analyse again in {{ modes[n.mode]|lower }} mode</button></p>
+    </form>
+    {% endif %}
+  </div>
+  {% endfor %}
+</section>
+{% endif %}
+<section class="panel" aria-labelledby="next-title">
+  <h2 id="next-title">Next: paste the evidence into your AI chat</h2>
+  <p>Copy for AI gives you one text with the grading prompt and what Fluentfolio measured in this recording.</p>
+  <p class="actions"><a class="button primary" href="/jobs/{{ job_id }}/export">Open Copy for AI</a></p>
+</section>
+{% if strip %}
+<section aria-labelledby="strip-title">
+  <h2 id="strip-title">The whole recording</h2>
+  {% include "partials/timeline.html" %}
+</section>
+{% endif %}
+{% if evidence.limitations %}
+<section aria-labelledby="limits-title">
+  <h2 id="limits-title">Limits of this analysis</h2>
+  <ul>{% for item in evidence.limitations %}<li>{{ item }}</li>{% endfor %}</ul>
+</section>
+{% endif %}
+{% if review %}
+<details id="review"{% if review_open %} open{% endif %}>
+  <summary>Correct who spoke or where the Parts start</summary>
+  <form hx-post="/jobs/{{ job_id }}/review" hx-target="#review-result">
+    <p class="help">Write times as minutes and seconds, such as 4:31. Saving analyses the recording again with your corrections.</p>
+    {% if tracks %}
+    <fieldset>
+      <legend>Whose track is whose</legend>
+      {{ player() }}
+      <ul class="tracks" hx-disable>
+        {% for t in tracks %}<li><span class="title">Track {{ t.number }}: {{ t.who }}</span>
+          {% if t.start_ms is not none %}<button type="button" class="time" data-seek="{{ t.start_ms }}" data-length="5000">Play 5 s from {{ t.start_ms|clock }}</button>
+          <p>{{ t.words }}</p>{% else %}<p>No words were found on this track.</p>{% endif %}</li>
+        {% endfor %}
+      </ul>
+      {% if tracks|length == 2 and tracks[0].person and tracks[1].person %}
+      {% if evidence.manifest.mode == "role-swap" %}<p class="help" id="tracks-help">Person 1 is the one who answered first.</p>{% endif %}
+      <label class="choice"><input type="radio" name="tracks" value="as-shown" checked{% if evidence.manifest.mode == "role-swap" %} aria-describedby="tracks-help"{% endif %}> Track 1 is {{ tracks[0].who }} and track 2 is {{ tracks[1].who }}</label>
+      <label class="choice"><input type="radio" name="tracks" value="swap"{% if evidence.manifest.mode == "role-swap" %} aria-describedby="tracks-help"{% endif %}> Track 1 is {{ tracks[1].who }} and track 2 is {{ tracks[0].who }}</label>
+      {% endif %}
+    </fieldset>
+    {% elif evidence.manifest.mode == "interview" %}<label class="choice"><input type="checkbox" name="swap_people" value="yes"> The person marked as asking was answering</label>{% endif %}
+    {% if evidence.manifest.mode == "role-swap" %}
+    <label for="swap-times">When the roles change</label>
+    <p class="help" id="swap-help">Times separated by commas.</p>
+    <input id="swap-times" name="swap_times" value="{% for c in evidence.candidates[:1] %}{% for t in c.roles.swap_times_ms %}{{ t|clock }}{% if not loop.last %}, {% endif %}{% endfor %}{% endfor %}" aria-describedby="swap-help">
+    {% endif %}
+    {% if evidence.manifest.mode != "solo" %}
+    <fieldset>
+      <legend>Voices</legend>
+      {% if one_voice or saved.get("one_voice") %}<label class="choice"><input type="checkbox" name="one_voice" value="candidate"{% if saved.get("one_voice") %} checked{% endif %}> The one voice found is the person answering the questions</label>{% endif %}
+      <p class="help">Tick a voice that is not one of the two people, such as a third person or a television.</p>
+      {% for id, text in voices %}<label class="choice"><input type="checkbox" name="other" value="{{ id }}"{% if id in saved.get("other_speakers", []) %} checked{% endif %}> {{ text }} is someone else</label>
+      {% endfor %}
+    </fieldset>
+    {% endif %}
+    {% for person, rows, headers in people %}{% set t = times[person.id] %}
+    <fieldset>
+      <legend>Parts{% if people|length > 1 %}: {{ person.label }}{% endif %}</legend>
+      <div class="fields">
+        {% for key, label, value in [("part2_start", "Part 2 starts", t[0]), ("part2_end", "Part 2 ends", t[1]), ("part3", "Part 3 starts", t[2])] %}
+        <div><label for="{{ person.id }}-{{ key }}">{{ label }}</label>
+        <input id="{{ person.id }}-{{ key }}" name="{{ person.id }}.{{ key }}" value="{{ value }}" inputmode="numeric"></div>
+        {% endfor %}
+      </div>
+    </fieldset>
+    {% endfor %}
+    <p class="actions"><button type="submit">Save and analyse again</button></p>
+  </form>
+  <div id="review-result" aria-live="polite"></div>
+</details>
+{% endif %}
+{% else %}
+{% if notes %}
+<div class="notice">
+  <p>{% include "icons/warning.svg" %} <span>Before you rely on these results, read the {{ "warning" if notes|length == 1 else notes|length ~ " warnings" }} on the <a href="/jobs/{{ job_id }}">Overview tab</a>.</span></p>
+</div>
+{% endif %}
+{% if tab == "measures" %}
+{% for person, rows, headers in people %}
+<section aria-labelledby="m-{{ person.id }}">
+  <h2 id="m-{{ person.id }}">Measures{% if people|length > 1 %}: {{ person.label }}{% endif %}</h2>
+  <p class="help narrow">The table scrolls sideways: Reliability and How measured are on the right.</p>
+  <div class="table-wrap" tabindex="0" role="region" aria-label="Table of measures{% if people|length > 1 %}: {{ person.label }}{% endif %}">
+    <table>
+      <thead><tr><th scope="col">Measure</th>{% for h in headers %}<th scope="col" class="num">{{ h }}</th>{% endfor %}<th scope="col">Reliability</th><th scope="col" class="how">How measured</th></tr></thead>
+      <tbody>{% for r in rows %}<tr><th scope="row">{{ r.name }}</th>{% for c in r.cells %}<td class="num">{{ c }}</td>{% endfor %}<td>{% if r.reliability %}<span class="rel rel-{{ r.reliability }}">{{ r.reliability|upfirst }}</span>{% else %}Not available{% endif %}</td><td>{{ r.how }}</td></tr>
+      {% endfor %}</tbody>
+    </table>
+  </div>
+</section>
+{% endfor %}
+<details>
+  <summary>More details: what each step did</summary>
+  <ul>{% for t in tools %}<li>{{ t }}</li>{% endfor %}</ul>
+</details>
+{% elif tab == "transcript" %}
+<section aria-labelledby="transcript-title">
+  <h2 id="transcript-title">Transcript</h2>
+  {{ player() }}
+  <p class="help">[?word] marks a word the speech model was unsure of; [non-English] marks speech in another language.</p>
+  <ol class="transcript" hx-disable>
+    {% for line in lines %}<li><button type="button" class="time" data-seek="{{ line.start_ms }}">{{ line.start_ms|clock }}</button>
+      <span class="who {{ line.voice }}">{{ line.who }}</span>{% if line.role %}, {{ line.role }}{% endif %}{% if line.part %}, {{ line.part }}{% endif %}
+      <p>{% for kind, piece in line.pieces %}{% if kind == "mark" %}<mark>{{ piece }}</mark>{% elif kind == "aside" %}<span class="aside">{{ piece }}</span>{% else %}{{ piece }}{% endif %}{% endfor %}</p></li>
+    {% endfor %}
+  </ol>
+</section>
+{% elif tab == "words" %}
+{{ player() }}
+{% for person, rows, headers in people %}
+<section aria-labelledby="w-{{ person.id }}">
+  <h2 id="w-{{ person.id }}">Words and patterns to check{% if people|length > 1 %}: {{ person.label }}{% endif %}</h2>
+  <p class="help">Candidates for you or your AI chat to look at, never a count of mistakes.</p>
+  <div class="panel list">
+  {% for p in pointers[person.id] %}
+  <details hx-disable>
+    <summary>{{ p.summary }}</summary>
+    {% if p.note %}<p class="help">{{ p.note }}</p>{% endif %}
+    {% if p["items"] %}<ul class="pointers">{% for i in p["items"] %}<li><button type="button" class="time" data-seek="{{ utterances[i.utterance_id] }}">{{ utterances[i.utterance_id]|clock }}</button> {{ i.text }}</li>{% endfor %}</ul>
+    {% elif p.empty %}<p>{{ p.empty }}</p>{% endif %}
+    {% if p.shown < p.total %}<p class="help">The first {{ p.shown }} of {{ p.total }} are shown.</p>{% endif %}
+  </details>
+  {% endfor %}
+  </div>
+</section>
+{% endfor %}
+{% endif %}
+{% endif %}
+{% if view == "stopped" or (view == "results" and tab == "overview") %}
+<details{% if view == "stopped" and half_deleted %} open{% endif %}>
+  <summary>Delete this analysis</summary>
+  <p>This deletes the copy of the recording, the results and the texts for an AI chat. Copies you saved elsewhere are not touched.</p>
+  <p>Deleting skips the Recycle Bin. On SSDs and in synced folders it is not secure erasure.</p>
+  <p class="actions"><button type="button" hx-post="/jobs/{{ job_id }}/delete" hx-target="#action-result">{% include "icons/trash.svg" %} Delete this analysis</button></p>
+</details>
+{% endif %}
+{% endblock %}

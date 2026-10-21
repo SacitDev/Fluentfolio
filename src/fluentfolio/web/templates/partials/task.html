@@ -1,0 +1,9 @@
+<div class="task" hx-get="/tasks/{{ kind }}" hx-trigger="every 2s" hx-swap="outerHTML">
+  {% set doing = {"install": "Installing", "selftest": "Running the check", "export": "Making the files"} %}
+  <p role="status">{% include "icons/hourglass.svg" %} {{ doing[kind] }}. This page shows the result when it ends.</p>
+  {# The bar and the line change every few seconds, so a screen reader is not told each change. #}
+  <div aria-live="off">
+    {% if share is number %}<progress max="100" value="{{ share }}" aria-label="Share of the download done">{{ share }}%</progress>{% endif %}
+    {% if line %}<p class="help" hx-disable>{{ line }}</p>{% endif %}
+  </div>
+</div>

@@ -1,0 +1,4241 @@
+{
+ "schema_version": "1.0.0",
+ "manifest": {
+  "export_id": "9984bb",
+  "job_id": "20261015-050418-72c8",
+  "tool_version": "0.1.0",
+  "prompt_version": "0.1.0",
+  "created_utc": "2026-10-15T05:05:06Z",
+  "python_assigns_band": false,
+  "stub": false,
+  "commit": "2b61da2a1b502cc7335015628a0cb692884c9544",
+  "mode": "solo",
+  "layout": "mixed",
+  "swap_style": null,
+  "asr": {
+   "model": "parakeet-tdt-0.6b-v2",
+   "revision": "0bbb45a3365852604aef28b538a8f066f4ccaa85",
+   "transcript_style": "verbatim-best-effort",
+   "filler_capture": "best_effort",
+   "punctuation": "machine",
+   "confidence_threshold": null
+  },
+  "unsure_word_share_pct": null,
+  "audio": {
+   "duration_ms": 189740,
+   "quality_class": "clean",
+   "snr_db": 41.9,
+   "clipping_pct": 0.0,
+   "music_warning": false
+  },
+  "device": {
+   "requested": "auto",
+   "resolved": "cpu",
+   "reason": "No step of this analysis uses the GPU."
+  },
+  "audio_export": {
+   "produced": true,
+   "candidate_only": true,
+   "duration_ms": 99300,
+   "partner_voice_included": false
+  },
+  "audio_check": [
+   {
+    "candidate": "candidate",
+    "orig_start_ms": 3544,
+    "orig_end_ms": 11544,
+    "audio_start_ms": 0,
+    "audio_end_ms": 7568
+   }
+  ],
+  "user_transcript": {
+   "status": "ingested",
+   "names_removed": true,
+   "word_match_pct": 98.0,
+   "differences_shown": 6,
+   "differences_total": 6
+  },
+  "tools": [
+   {
+    "id": "media",
+    "status": "ok",
+    "reason_code": null,
+    "reason": null,
+    "coverage": null,
+    "version": "18.1.0",
+    "ran": "pyav",
+    "fallback_for": null,
+    "device": "cpu",
+    "wall_ms": 1016,
+    "peak_ram_mb": 182,
+    "peak_vram_mb": null,
+    "licence_class": "gpl"
+   },
+   {
+    "id": "vad",
+    "status": "ok",
+    "reason_code": null,
+    "reason": null,
+    "coverage": null,
+    "version": "faster_whisper 1.2.1",
+    "ran": "silero-vad",
+    "fallback_for": null,
+    "device": "cpu",
+    "wall_ms": 828,
+    "peak_ram_mb": 176,
+    "peak_vram_mb": null,
+    "licence_class": "permissive"
+   },
+   {
+    "id": "language",
+    "status": "ok",
+    "reason_code": null,
+    "reason": null,
+    "coverage": null,
+    "version": "d90ca5fe260221311c53c58e660288d3deb8d356",
+    "ran": "whisper-tiny",
+    "fallback_for": null,
+    "device": "cpu",
+    "wall_ms": 2516,
+    "peak_ram_mb": 227,
+    "peak_vram_mb": null,
+    "licence_class": "permissive"
+   },
+   {
+    "id": "asr",
+    "status": "ok",
+    "reason_code": null,
+    "reason": null,
+    "coverage": null,
+    "version": "0bbb45a3365852604aef28b538a8f066f4ccaa85",
+    "ran": "parakeet-tdt-0.6b-v2",
+    "fallback_for": null,
+    "device": "cpu",
+    "wall_ms": 12500,
+    "peak_ram_mb": 1010,
+    "peak_vram_mb": null,
+    "licence_class": "cc-by"
+   },
+   {
+    "id": "speakers",
+    "status": "ok",
+    "reason_code": null,
+    "reason": null,
+    "coverage": null,
+    "version": "sherpa-onnx 1.13.8",
+    "ran": "sherpa-onnx-diarizer",
+    "fallback_for": null,
+    "device": "cpu",
+    "wall_ms": 15312,
+    "peak_ram_mb": 206,
+    "peak_vram_mb": null,
+    "licence_class": "cc-by"
+   },
+   {
+    "id": "words",
+    "status": "ok",
+    "reason_code": null,
+    "reason": null,
+    "coverage": null,
+    "version": "0.1.0",
+    "ran": "fluentfolio",
+    "fallback_for": null,
+    "device": "cpu",
+    "wall_ms": 32,
+    "peak_ram_mb": null,
+    "peak_vram_mb": null,
+    "licence_class": "permissive"
+   },
+   {
+    "id": "structure",
+    "status": "ok",
+    "reason_code": null,
+    "reason": null,
+    "coverage": null,
+    "version": "0.1.0",
+    "ran": "fluentfolio",
+    "fallback_for": null,
+    "device": "cpu",
+    "wall_ms": 46,
+    "peak_ram_mb": null,
+    "peak_vram_mb": null,
+    "licence_class": "permissive"
+   },
+   {
+    "id": "candidate_audio",
+    "status": "ok",
+    "reason_code": null,
+    "reason": null,
+    "coverage": null,
+    "version": "0.1.0",
+    "ran": "fluentfolio",
+    "fallback_for": null,
+    "device": "cpu",
+    "wall_ms": 390,
+    "peak_ram_mb": 56,
+    "peak_vram_mb": null,
+    "licence_class": "permissive"
+   },
+   {
+    "id": "ai_audio",
+    "status": "ok",
+    "reason_code": null,
+    "reason": null,
+    "coverage": null,
+    "version": "0.1.0",
+    "ran": "fluentfolio",
+    "fallback_for": null,
+    "device": "cpu",
+    "wall_ms": 1296,
+    "peak_ram_mb": 85,
+    "peak_vram_mb": null,
+    "licence_class": "permissive"
+   },
+   {
+    "id": "phones",
+    "status": "ok",
+    "reason_code": null,
+    "reason": null,
+    "coverage": null,
+    "version": "d2987af7ae07d53eafee15dc7190479062faa1e8",
+    "ran": "phone-model",
+    "fallback_for": null,
+    "device": "cpu",
+    "wall_ms": 8406,
+    "peak_ram_mb": 1959,
+    "peak_vram_mb": null,
+    "licence_class": "permissive"
+   },
+   {
+    "id": "alignment",
+    "status": "ok",
+    "reason_code": null,
+    "reason": "MFA is off; it is experimental on this system, where it did not pass its word-timing check",
+    "coverage": "0 of 7 utterances aligned by MFA; 7 by the CTC aligner (limited); 0 keep the speech model's times",
+    "version": "0.1.0",
+    "ran": "ctc-aligner",
+    "fallback_for": null,
+    "device": "cpu",
+    "wall_ms": 16,
+    "peak_ram_mb": null,
+    "peak_vram_mb": null,
+    "licence_class": "permissive"
+   },
+   {
+    "id": "praat",
+    "status": "ok",
+    "reason_code": null,
+    "reason": null,
+    "coverage": null,
+    "version": "Praat 6.1.38, parselmouth 0.4.7",
+    "ran": "praat",
+    "fallback_for": null,
+    "device": "cpu",
+    "wall_ms": 515,
+    "peak_ram_mb": 120,
+    "peak_vram_mb": null,
+    "licence_class": "gpl"
+   },
+   {
+    "id": "swiftf0",
+    "status": "ok",
+    "reason_code": null,
+    "reason": null,
+    "coverage": null,
+    "version": "swift-f0 0.3.0, onnxruntime 1.30.0",
+    "ran": "swiftf0",
+    "fallback_for": null,
+    "device": "cpu",
+    "wall_ms": 937,
+    "peak_ram_mb": 181,
+    "peak_vram_mb": null,
+    "licence_class": "permissive"
+   },
+   {
+    "id": "opensmile",
+    "status": "disabled",
+    "reason_code": "E_OPENSMILE_CONSENT_MISSING",
+    "reason": null,
+    "coverage": null,
+    "version": "did not run",
+    "ran": "opensmile",
+    "fallback_for": null,
+    "device": "cpu",
+    "wall_ms": 391,
+    "peak_ram_mb": 41,
+    "peak_vram_mb": null,
+    "licence_class": "nc"
+   },
+   {
+    "id": "nlp",
+    "status": "ok",
+    "reason_code": null,
+    "reason": null,
+    "coverage": null,
+    "version": "spaCy 3.8.16, en_core_web_sm 3.7.1",
+    "ran": "spacy-en-core-web-sm",
+    "fallback_for": null,
+    "device": "cpu",
+    "wall_ms": 3265,
+    "peak_ram_mb": 620,
+    "peak_vram_mb": null,
+    "licence_class": "permissive"
+   },
+   {
+    "id": "measures",
+    "status": "ok",
+    "reason_code": null,
+    "reason": null,
+    "coverage": null,
+    "version": "0.1.0",
+    "ran": "fluentfolio",
+    "fallback_for": null,
+    "device": "cpu",
+    "wall_ms": 281,
+    "peak_ram_mb": null,
+    "peak_vram_mb": null,
+    "licence_class": "permissive"
+   }
+  ],
+  "warnings": [],
+  "nc_component_used": false,
+  "overrides_applied": false
+ },
+ "speakers": [
+  {
+   "id": "S1",
+   "speech_ms": 100064,
+   "source": "single"
+  }
+ ],
+ "candidates": [
+  {
+   "id": "candidate",
+   "label": "the candidate",
+   "speaker": "S1",
+   "heard_questions_first": null,
+   "roles": {
+    "confidence": "high",
+    "method": "single",
+    "swap_times_ms": []
+   },
+   "parts": [
+    {
+     "part": 1,
+     "start_ms": 824,
+     "end_ms": 52520,
+     "source": "auto",
+     "confidence": "high"
+    },
+    {
+     "part": 2,
+     "start_ms": 54360,
+     "end_ms": 188736,
+     "source": "auto",
+     "confidence": "high"
+    }
+   ],
+   "speech_ms": 88800,
+   "part2": {
+    "prep_excluded_ms": 60104,
+    "long_turn_ms": 66216,
+    "ended_by": "stopped",
+    "examiner_prompts_n": 0
+   },
+   "answers": [
+    {
+     "id": "A01",
+     "question_id": "Q01",
+     "part": 1,
+     "start_ms": 3384,
+     "end_ms": 18344,
+     "word_count": 56,
+     "audio_ms": 0
+    },
+    {
+     "id": "A02",
+     "question_id": "Q02",
+     "part": 1,
+     "start_ms": 22184,
+     "end_ms": 34520,
+     "word_count": 38,
+     "audio_ms": 14076
+    },
+    {
+     "id": "A03",
+     "question_id": "Q03",
+     "part": 1,
+     "start_ms": 37240,
+     "end_ms": 52520,
+     "word_count": 50,
+     "audio_ms": 25260
+    },
+    {
+     "id": "A04",
+     "question_id": "Q04",
+     "part": 2,
+     "start_ms": 122520,
+     "end_ms": 188736,
+     "word_count": 209,
+     "audio_ms": 39656
+    }
+   ],
+   "utterances": [
+    {
+     "id": "U001",
+     "answer_id": "A01",
+     "start_ms": 3384,
+     "end_ms": 18344,
+     "text": "I [withheld for audio check] street from my window. [pause 0.3 s] My sister works in a bank near our flat. [pause 0.8 s] We moved there two years ago because it was cheaper."
+    },
+    {
+     "id": "U002",
+     "answer_id": "A02",
+     "start_ms": 22184,
+     "end_ms": 28424,
+     "text": "On Saturday morning I go to the market, with my mother. [pause 0.4 s] We buy fresh vegetables and some fruit for the week."
+    },
+    {
+     "id": "U003",
+     "answer_id": "A02",
+     "start_ms": 29560,
+     "end_ms": 34520,
+     "text": "[pause 1.1 s] In the evening I often meet my friends in a cafe. [pause 0.4 s] Sometimes we watch a film together"
+    },
+    {
+     "id": "U004",
+     "answer_id": "A03",
+     "start_ms": 37240,
+     "end_ms": 52520,
+     "text": "Yes I like cooking very much. [pause 0.4 s] My father taught me how to make simple dishes when I was a child. [pause 0.9 s] Now I cook dinner for my family two or three times a week. [pause 0.6 s] My favorite dish is a spicy chicken soup. [pause 0.4 s] It takes a long time but it is delicious."
+    },
+    {
+     "id": "U005",
+     "answer_id": "A04",
+     "start_ms": 122520,
+     "end_ms": 149400,
+     "text": "I would like to talk about a small lake near my hometown. [pause 0.4 s] It is about 30 minutes from my house by bus. [pause 0.4 s] I go there almost every month in the summer. [pause 0.7 s] Usually I go with my best friend from school. [pause 0.4 s] The lake is surrounded by tall trees, and green hills. [pause 1.2 s] The scenery is lovely in every season. [pause 0.4 s] The water stays quite chilly even in July. [pause 0.6 s] When we arrive, we usually take a stroll around the lake first. [pause 0.3 s] The path is quite narrow and very old."
+    },
+    {
+     "id": "U006",
+     "answer_id": "A04",
+     "start_ms": 150264,
+     "end_ms": 179544,
+     "text": "[pause 0.8 s] After that we sit on the grass and have a picnic. [pause 0.5 s] My friend always brings sandwiches and I bring some fruit. [pause 0.7 s] Sometimes we swim if the weather is warm enough. [pause 0.9 s] There is also a small wooden boat that you can rent for an hour. [pause 0.4 s] Last summer we saw a family of ducks on the water. [pause 0.9 s] I like this place for three reasons. [pause 0.3 s] First it is very quiet and peaceful. [pause 0.5 s] In the city there is always a lot of noise and traffic. [pause 0.7 s] Second it is cheap to get there. [pause 0.4 s] Finally it reminds me of my childhood."
+    },
+    {
+     "id": "U007",
+     "answer_id": "A04",
+     "start_ms": 180632,
+     "end_ms": 188552,
+     "text": "[pause 1.1 s] My grandparents took me there when I was a little girl. [pause 0.6 s] So for me it is a very special place. [pause 0.3 s] I hope I can visit it again next month."
+    }
+   ],
+   "measures": [
+    {
+     "id": "M01",
+     "name": "speaking time",
+     "unit": "s",
+     "scope": "all",
+     "value": 88.8,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "silero-vad",
+       "version": "faster_whisper 1.2.1",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": null,
+     "note": null
+    },
+    {
+     "id": "M04",
+     "name": "silent pauses of 0.25 s or more",
+     "unit": "per min",
+     "scope": "all",
+     "value": 17.6,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "silero-vad",
+       "version": "faster_whisper 1.2.1",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 32,
+     "note": null
+    },
+    {
+     "id": "M05",
+     "name": "mean silent pause",
+     "unit": "s",
+     "scope": "all",
+     "value": 0.6,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "silero-vad",
+       "version": "faster_whisper 1.2.1",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 32,
+     "note": null
+    },
+    {
+     "id": "M06",
+     "name": "pauses of 1 s or more",
+     "unit": "count",
+     "scope": "all",
+     "value": 3,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "silero-vad",
+       "version": "faster_whisper 1.2.1",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 3,
+     "note": null
+    },
+    {
+     "id": "M02",
+     "name": "speech rate",
+     "unit": "syll/s",
+     "scope": "all",
+     "value": 4.2,
+     "kind": "estimated",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "fluentfolio",
+       "version": "0.1.0",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 453,
+     "note": "words without letters (such as numbers) not counted: 1"
+    },
+    {
+     "id": "M03",
+     "name": "articulation rate",
+     "unit": "syll/s",
+     "scope": "all",
+     "value": 5.1,
+     "kind": "estimated",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "fluentfolio",
+       "version": "0.1.0",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 453,
+     "note": "words without letters (such as numbers) not counted: 1"
+    },
+    {
+     "id": "M08",
+     "name": "mean length of run",
+     "unit": "syll",
+     "scope": "all",
+     "value": 12.6,
+     "kind": "estimated",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "fluentfolio",
+       "version": "0.1.0",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 36,
+     "note": "words without letters (such as numbers) not counted: 1"
+    },
+    {
+     "id": "M09a",
+     "name": "response latency (median)",
+     "unit": "s",
+     "scope": "all",
+     "value": null,
+     "kind": "measured",
+     "reliability": "medium",
+     "missing": {
+      "code": "not_valid_in_mode",
+      "text": "Response latency is measured only when someone asks the questions."
+     },
+     "sources": [
+      {
+       "tool": "parakeet-tdt-0.6b-v2",
+       "version": "0bbb45a3365852604aef28b538a8f066f4ccaa85",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "cc-by",
+     "valid_in_mode": false,
+     "context_only": false,
+     "n": null,
+     "note": null
+    },
+    {
+     "id": "M09b",
+     "name": "answers after more than 10 s",
+     "unit": "count",
+     "scope": "all",
+     "value": null,
+     "kind": "measured",
+     "reliability": "medium",
+     "missing": {
+      "code": "not_valid_in_mode",
+      "text": "Response latency is measured only when someone asks the questions."
+     },
+     "sources": [
+      {
+       "tool": "parakeet-tdt-0.6b-v2",
+       "version": "0bbb45a3365852604aef28b538a8f066f4ccaa85",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "cc-by",
+     "valid_in_mode": false,
+     "context_only": false,
+     "n": null,
+     "note": null
+    },
+    {
+     "id": "M07",
+     "name": "pauses inside a clause",
+     "unit": "%",
+     "scope": "all",
+     "value": 0.0,
+     "kind": "estimated",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "spacy-en-core-web-sm",
+       "version": "spaCy 3.8.16, en_core_web_sm 3.7.1",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 32,
+     "note": null
+    },
+    {
+     "id": "M10",
+     "name": "filled pauses",
+     "unit": "per min",
+     "scope": "all",
+     "value": 0.0,
+     "kind": "estimated",
+     "reliability": "low",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "parakeet-tdt-0.6b-v2",
+       "version": "0bbb45a3365852604aef28b538a8f066f4ccaa85",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "cc-by",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 0,
+     "note": null
+    },
+    {
+     "id": "M18",
+     "name": "linking-word variety",
+     "unit": "ratio",
+     "scope": "all",
+     "value": 0.8,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "fluentfolio",
+       "version": "0.1.0",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 10,
+     "note": null
+    },
+    {
+     "id": "M16",
+     "name": "word variety (MATTR, 50-word windows)",
+     "unit": "ratio",
+     "scope": "all",
+     "value": 0.8,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "fluentfolio",
+       "version": "0.1.0",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 353,
+     "note": null
+    },
+    {
+     "id": "M17a",
+     "name": "content words outside the 2,000 most common",
+     "unit": "%",
+     "scope": "all",
+     "value": 24.2,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "wordfreq",
+       "version": "3.1.1",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 153,
+     "note": null
+    },
+    {
+     "id": "M17b",
+     "name": "content words outside the 5,000 most common",
+     "unit": "%",
+     "scope": "all",
+     "value": 10.5,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "wordfreq",
+       "version": "3.1.1",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 153,
+     "note": null
+    },
+    {
+     "id": "M12",
+     "name": "flat stretches of 2 s or more",
+     "unit": "count",
+     "scope": "all",
+     "value": 0,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "praat",
+       "version": "Praat 6.1.38, parselmouth 0.4.7",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": 0,
+     "note": "From 1 of 4 answers; 3 have under 10 s of voiced speech."
+    },
+    {
+     "id": "M13a",
+     "name": "phrase endings: rising",
+     "unit": "count",
+     "scope": "all",
+     "value": 0,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "praat",
+       "version": "Praat 6.1.38, parselmouth 0.4.7",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": 0,
+     "note": "From 1 of 4 answers; 3 have under 10 s of voiced speech."
+    },
+    {
+     "id": "M13b",
+     "name": "phrase endings: falling",
+     "unit": "count",
+     "scope": "all",
+     "value": 20,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "praat",
+       "version": "Praat 6.1.38, parselmouth 0.4.7",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": 20,
+     "note": "From 1 of 4 answers; 3 have under 10 s of voiced speech."
+    },
+    {
+     "id": "M13c",
+     "name": "phrase endings: level",
+     "unit": "count",
+     "scope": "all",
+     "value": 2,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "praat",
+       "version": "Praat 6.1.38, parselmouth 0.4.7",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": 2,
+     "note": "From 1 of 4 answers; 3 have under 10 s of voiced speech."
+    },
+    {
+     "id": "M14",
+     "name": "loudness variation",
+     "unit": "ratio",
+     "scope": "all",
+     "value": null,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": {
+      "code": "not_enabled",
+      "text": "openSMILE not enabled: its licence is not accepted"
+     },
+     "sources": [
+      {
+       "tool": "opensmile",
+       "version": "did not run",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "nc",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": null,
+     "note": null
+    },
+    {
+     "id": "M15",
+     "name": "loudness peaks",
+     "unit": "per s",
+     "scope": "all",
+     "value": null,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": {
+      "code": "not_enabled",
+      "text": "openSMILE not enabled: its licence is not accepted"
+     },
+     "sources": [
+      {
+       "tool": "opensmile",
+       "version": "did not run",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "nc",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": null,
+     "note": null
+    },
+    {
+     "id": "M19",
+     "name": "median pitch",
+     "unit": "Hz",
+     "scope": "all",
+     "value": 180,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "praat",
+       "version": "Praat 6.1.38, parselmouth 0.4.7",
+       "weight": 0.5
+      },
+      {
+       "tool": "swiftf0",
+       "version": "swift-f0 0.3.0, onnxruntime 1.30.0",
+       "weight": 0.5
+      }
+     ],
+     "agreement": "agree",
+     "spread_st": 0.02,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": 2,
+     "note": "Weights: Praat 0.5, SwiftF0 0.5; the tools differ by 0.02 st."
+    },
+    {
+     "id": "M11",
+     "name": "pitch range (p20-p80)",
+     "unit": "semitones",
+     "scope": "all",
+     "value": 3.7,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "praat",
+       "version": "Praat 6.1.38, parselmouth 0.4.7",
+       "weight": 0.5
+      },
+      {
+       "tool": "swiftf0",
+       "version": "swift-f0 0.3.0, onnxruntime 1.30.0",
+       "weight": 0.5
+      }
+     ],
+     "agreement": "agree",
+     "spread_st": 0.14,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": 2,
+     "note": "Weights: Praat 0.5, SwiftF0 0.5; the tools differ by 0.14 st."
+    },
+    {
+     "id": "M01",
+     "name": "speaking time",
+     "unit": "s",
+     "scope": "part1",
+     "value": 35.5,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "silero-vad",
+       "version": "faster_whisper 1.2.1",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": null,
+     "note": null
+    },
+    {
+     "id": "M04",
+     "name": "silent pauses of 0.25 s or more",
+     "unit": "per min",
+     "scope": "part1",
+     "value": 15.5,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "silero-vad",
+       "version": "faster_whisper 1.2.1",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 11,
+     "note": null
+    },
+    {
+     "id": "M05",
+     "name": "mean silent pause",
+     "unit": "s",
+     "scope": "part1",
+     "value": 0.6,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "silero-vad",
+       "version": "faster_whisper 1.2.1",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 11,
+     "note": null
+    },
+    {
+     "id": "M06",
+     "name": "pauses of 1 s or more",
+     "unit": "count",
+     "scope": "part1",
+     "value": 1,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "silero-vad",
+       "version": "faster_whisper 1.2.1",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 1,
+     "note": null
+    },
+    {
+     "id": "M02",
+     "name": "speech rate",
+     "unit": "syll/s",
+     "scope": "part1",
+     "value": 4.2,
+     "kind": "estimated",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "fluentfolio",
+       "version": "0.1.0",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 180,
+     "note": null
+    },
+    {
+     "id": "M03",
+     "name": "articulation rate",
+     "unit": "syll/s",
+     "scope": "part1",
+     "value": 5.1,
+     "kind": "estimated",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "fluentfolio",
+       "version": "0.1.0",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 180,
+     "note": null
+    },
+    {
+     "id": "M08",
+     "name": "mean length of run",
+     "unit": "syll",
+     "scope": "part1",
+     "value": 12.9,
+     "kind": "estimated",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "fluentfolio",
+       "version": "0.1.0",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 14,
+     "note": null
+    },
+    {
+     "id": "M09a",
+     "name": "response latency (median)",
+     "unit": "s",
+     "scope": "part1",
+     "value": null,
+     "kind": "measured",
+     "reliability": "medium",
+     "missing": {
+      "code": "not_valid_in_mode",
+      "text": "Response latency is measured only when someone asks the questions."
+     },
+     "sources": [
+      {
+       "tool": "parakeet-tdt-0.6b-v2",
+       "version": "0bbb45a3365852604aef28b538a8f066f4ccaa85",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "cc-by",
+     "valid_in_mode": false,
+     "context_only": false,
+     "n": null,
+     "note": null
+    },
+    {
+     "id": "M09b",
+     "name": "answers after more than 10 s",
+     "unit": "count",
+     "scope": "part1",
+     "value": null,
+     "kind": "measured",
+     "reliability": "medium",
+     "missing": {
+      "code": "not_valid_in_mode",
+      "text": "Response latency is measured only when someone asks the questions."
+     },
+     "sources": [
+      {
+       "tool": "parakeet-tdt-0.6b-v2",
+       "version": "0bbb45a3365852604aef28b538a8f066f4ccaa85",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "cc-by",
+     "valid_in_mode": false,
+     "context_only": false,
+     "n": null,
+     "note": null
+    },
+    {
+     "id": "M07",
+     "name": "pauses inside a clause",
+     "unit": "%",
+     "scope": "part1",
+     "value": 0.0,
+     "kind": "estimated",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "spacy-en-core-web-sm",
+       "version": "spaCy 3.8.16, en_core_web_sm 3.7.1",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 11,
+     "note": null
+    },
+    {
+     "id": "M10",
+     "name": "filled pauses",
+     "unit": "per min",
+     "scope": "part1",
+     "value": 0.0,
+     "kind": "estimated",
+     "reliability": "low",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "parakeet-tdt-0.6b-v2",
+       "version": "0bbb45a3365852604aef28b538a8f066f4ccaa85",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "cc-by",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 0,
+     "note": null
+    },
+    {
+     "id": "M18",
+     "name": "linking-word variety",
+     "unit": "ratio",
+     "scope": "part1",
+     "value": 1.0,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "fluentfolio",
+       "version": "0.1.0",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 2,
+     "note": null
+    },
+    {
+     "id": "M16",
+     "name": "word variety (MATTR, 50-word windows)",
+     "unit": "ratio",
+     "scope": "part1",
+     "value": 0.82,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "fluentfolio",
+       "version": "0.1.0",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 144,
+     "note": null
+    },
+    {
+     "id": "M17a",
+     "name": "content words outside the 2,000 most common",
+     "unit": "%",
+     "scope": "part1",
+     "value": 21.0,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "wordfreq",
+       "version": "3.1.1",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 62,
+     "note": null
+    },
+    {
+     "id": "M17b",
+     "name": "content words outside the 5,000 most common",
+     "unit": "%",
+     "scope": "part1",
+     "value": 11.3,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "wordfreq",
+       "version": "3.1.1",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 62,
+     "note": null
+    },
+    {
+     "id": "M12",
+     "name": "flat stretches of 2 s or more",
+     "unit": "count",
+     "scope": "part1",
+     "value": null,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": {
+      "code": "insufficient_sample",
+      "text": "no answer has 10 s of voiced speech or more"
+     },
+     "sources": [
+      {
+       "tool": "praat",
+       "version": "Praat 6.1.38, parselmouth 0.4.7",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": null,
+     "note": null
+    },
+    {
+     "id": "M13a",
+     "name": "phrase endings: rising",
+     "unit": "count",
+     "scope": "part1",
+     "value": null,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": {
+      "code": "insufficient_sample",
+      "text": "no answer has 10 s of voiced speech or more"
+     },
+     "sources": [
+      {
+       "tool": "praat",
+       "version": "Praat 6.1.38, parselmouth 0.4.7",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": null,
+     "note": null
+    },
+    {
+     "id": "M13b",
+     "name": "phrase endings: falling",
+     "unit": "count",
+     "scope": "part1",
+     "value": null,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": {
+      "code": "insufficient_sample",
+      "text": "no answer has 10 s of voiced speech or more"
+     },
+     "sources": [
+      {
+       "tool": "praat",
+       "version": "Praat 6.1.38, parselmouth 0.4.7",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": null,
+     "note": null
+    },
+    {
+     "id": "M13c",
+     "name": "phrase endings: level",
+     "unit": "count",
+     "scope": "part1",
+     "value": null,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": {
+      "code": "insufficient_sample",
+      "text": "no answer has 10 s of voiced speech or more"
+     },
+     "sources": [
+      {
+       "tool": "praat",
+       "version": "Praat 6.1.38, parselmouth 0.4.7",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": null,
+     "note": null
+    },
+    {
+     "id": "M14",
+     "name": "loudness variation",
+     "unit": "ratio",
+     "scope": "part1",
+     "value": null,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": {
+      "code": "not_enabled",
+      "text": "openSMILE not enabled: its licence is not accepted"
+     },
+     "sources": [
+      {
+       "tool": "opensmile",
+       "version": "did not run",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "nc",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": null,
+     "note": null
+    },
+    {
+     "id": "M15",
+     "name": "loudness peaks",
+     "unit": "per s",
+     "scope": "part1",
+     "value": null,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": {
+      "code": "not_enabled",
+      "text": "openSMILE not enabled: its licence is not accepted"
+     },
+     "sources": [
+      {
+       "tool": "opensmile",
+       "version": "did not run",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "nc",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": null,
+     "note": null
+    },
+    {
+     "id": "M19",
+     "name": "median pitch",
+     "unit": "Hz",
+     "scope": "part1",
+     "value": null,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": {
+      "code": "insufficient_sample",
+      "text": "no answer has 10 s of voiced speech or more"
+     },
+     "sources": [
+      {
+       "tool": "fluentfolio",
+       "version": "0.1.0",
+       "weight": 1.0
+      }
+     ],
+     "agreement": "too_little_speech",
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": null,
+     "note": null
+    },
+    {
+     "id": "M11",
+     "name": "pitch range (p20-p80)",
+     "unit": "semitones",
+     "scope": "part1",
+     "value": null,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": {
+      "code": "insufficient_sample",
+      "text": "no answer has 10 s of voiced speech or more"
+     },
+     "sources": [
+      {
+       "tool": "fluentfolio",
+       "version": "0.1.0",
+       "weight": 1.0
+      }
+     ],
+     "agreement": "too_little_speech",
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": null,
+     "note": null
+    },
+    {
+     "id": "M01",
+     "name": "speaking time",
+     "unit": "s",
+     "scope": "part2",
+     "value": 53.3,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "silero-vad",
+       "version": "faster_whisper 1.2.1",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": null,
+     "note": null
+    },
+    {
+     "id": "M04",
+     "name": "silent pauses of 0.25 s or more",
+     "unit": "per min",
+     "scope": "part2",
+     "value": 19.0,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "silero-vad",
+       "version": "faster_whisper 1.2.1",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 21,
+     "note": null
+    },
+    {
+     "id": "M05",
+     "name": "mean silent pause",
+     "unit": "s",
+     "scope": "part2",
+     "value": 0.6,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "silero-vad",
+       "version": "faster_whisper 1.2.1",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 21,
+     "note": null
+    },
+    {
+     "id": "M06",
+     "name": "pauses of 1 s or more",
+     "unit": "count",
+     "scope": "part2",
+     "value": 2,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "silero-vad",
+       "version": "faster_whisper 1.2.1",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 2,
+     "note": null
+    },
+    {
+     "id": "M02",
+     "name": "speech rate",
+     "unit": "syll/s",
+     "scope": "part2",
+     "value": 4.1,
+     "kind": "estimated",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "fluentfolio",
+       "version": "0.1.0",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 273,
+     "note": "words without letters (such as numbers) not counted: 1"
+    },
+    {
+     "id": "M03",
+     "name": "articulation rate",
+     "unit": "syll/s",
+     "scope": "part2",
+     "value": 5.1,
+     "kind": "estimated",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "fluentfolio",
+       "version": "0.1.0",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 273,
+     "note": "words without letters (such as numbers) not counted: 1"
+    },
+    {
+     "id": "M08",
+     "name": "mean length of run",
+     "unit": "syll",
+     "scope": "part2",
+     "value": 12.4,
+     "kind": "estimated",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "fluentfolio",
+       "version": "0.1.0",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 22,
+     "note": "words without letters (such as numbers) not counted: 1"
+    },
+    {
+     "id": "M09a",
+     "name": "response latency (median)",
+     "unit": "s",
+     "scope": "part2",
+     "value": null,
+     "kind": "measured",
+     "reliability": "medium",
+     "missing": {
+      "code": "not_valid_in_mode",
+      "text": "Response latency is measured only when someone asks the questions."
+     },
+     "sources": [
+      {
+       "tool": "parakeet-tdt-0.6b-v2",
+       "version": "0bbb45a3365852604aef28b538a8f066f4ccaa85",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "cc-by",
+     "valid_in_mode": false,
+     "context_only": false,
+     "n": null,
+     "note": null
+    },
+    {
+     "id": "M09b",
+     "name": "answers after more than 10 s",
+     "unit": "count",
+     "scope": "part2",
+     "value": null,
+     "kind": "measured",
+     "reliability": "medium",
+     "missing": {
+      "code": "not_valid_in_mode",
+      "text": "Response latency is measured only when someone asks the questions."
+     },
+     "sources": [
+      {
+       "tool": "parakeet-tdt-0.6b-v2",
+       "version": "0bbb45a3365852604aef28b538a8f066f4ccaa85",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "cc-by",
+     "valid_in_mode": false,
+     "context_only": false,
+     "n": null,
+     "note": null
+    },
+    {
+     "id": "M07",
+     "name": "pauses inside a clause",
+     "unit": "%",
+     "scope": "part2",
+     "value": 0.0,
+     "kind": "estimated",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "spacy-en-core-web-sm",
+       "version": "spaCy 3.8.16, en_core_web_sm 3.7.1",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 21,
+     "note": null
+    },
+    {
+     "id": "M10",
+     "name": "filled pauses",
+     "unit": "per min",
+     "scope": "part2",
+     "value": 0.0,
+     "kind": "estimated",
+     "reliability": "low",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "parakeet-tdt-0.6b-v2",
+       "version": "0bbb45a3365852604aef28b538a8f066f4ccaa85",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "cc-by",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 0,
+     "note": null
+    },
+    {
+     "id": "M18",
+     "name": "linking-word variety",
+     "unit": "ratio",
+     "scope": "part2",
+     "value": 0.88,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "fluentfolio",
+       "version": "0.1.0",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 8,
+     "note": null
+    },
+    {
+     "id": "M16",
+     "name": "word variety (MATTR, 50-word windows)",
+     "unit": "ratio",
+     "scope": "part2",
+     "value": 0.8,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "fluentfolio",
+       "version": "0.1.0",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "permissive",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 209,
+     "note": null
+    },
+    {
+     "id": "M17a",
+     "name": "content words outside the 2,000 most common",
+     "unit": "%",
+     "scope": "part2",
+     "value": 26.4,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "wordfreq",
+       "version": "3.1.1",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 91,
+     "note": null
+    },
+    {
+     "id": "M17b",
+     "name": "content words outside the 5,000 most common",
+     "unit": "%",
+     "scope": "part2",
+     "value": 9.9,
+     "kind": "measured",
+     "reliability": "high",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "wordfreq",
+       "version": "3.1.1",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": false,
+     "n": 91,
+     "note": null
+    },
+    {
+     "id": "M12",
+     "name": "flat stretches of 2 s or more",
+     "unit": "count",
+     "scope": "part2",
+     "value": 0,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "praat",
+       "version": "Praat 6.1.38, parselmouth 0.4.7",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": 0,
+     "note": "From the one answer."
+    },
+    {
+     "id": "M13a",
+     "name": "phrase endings: rising",
+     "unit": "count",
+     "scope": "part2",
+     "value": 0,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "praat",
+       "version": "Praat 6.1.38, parselmouth 0.4.7",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": 0,
+     "note": "From the one answer."
+    },
+    {
+     "id": "M13b",
+     "name": "phrase endings: falling",
+     "unit": "count",
+     "scope": "part2",
+     "value": 20,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "praat",
+       "version": "Praat 6.1.38, parselmouth 0.4.7",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": 20,
+     "note": "From the one answer."
+    },
+    {
+     "id": "M13c",
+     "name": "phrase endings: level",
+     "unit": "count",
+     "scope": "part2",
+     "value": 2,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "praat",
+       "version": "Praat 6.1.38, parselmouth 0.4.7",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": 2,
+     "note": "From the one answer."
+    },
+    {
+     "id": "M14",
+     "name": "loudness variation",
+     "unit": "ratio",
+     "scope": "part2",
+     "value": null,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": {
+      "code": "not_enabled",
+      "text": "openSMILE not enabled: its licence is not accepted"
+     },
+     "sources": [
+      {
+       "tool": "opensmile",
+       "version": "did not run",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "nc",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": null,
+     "note": null
+    },
+    {
+     "id": "M15",
+     "name": "loudness peaks",
+     "unit": "per s",
+     "scope": "part2",
+     "value": null,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": {
+      "code": "not_enabled",
+      "text": "openSMILE not enabled: its licence is not accepted"
+     },
+     "sources": [
+      {
+       "tool": "opensmile",
+       "version": "did not run",
+       "weight": 1.0
+      }
+     ],
+     "agreement": null,
+     "spread_st": null,
+     "nc_input": false,
+     "licence_class": "nc",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": null,
+     "note": null
+    },
+    {
+     "id": "M19",
+     "name": "median pitch",
+     "unit": "Hz",
+     "scope": "part2",
+     "value": 180,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "praat",
+       "version": "Praat 6.1.38, parselmouth 0.4.7",
+       "weight": 0.5
+      },
+      {
+       "tool": "swiftf0",
+       "version": "swift-f0 0.3.0, onnxruntime 1.30.0",
+       "weight": 0.5
+      }
+     ],
+     "agreement": "agree",
+     "spread_st": 0.02,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": 2,
+     "note": "Weights: Praat 0.5, SwiftF0 0.5; the tools differ by 0.02 st."
+    },
+    {
+     "id": "M11",
+     "name": "pitch range (p20-p80)",
+     "unit": "semitones",
+     "scope": "part2",
+     "value": 3.7,
+     "kind": "context",
+     "reliability": "medium",
+     "missing": null,
+     "sources": [
+      {
+       "tool": "praat",
+       "version": "Praat 6.1.38, parselmouth 0.4.7",
+       "weight": 0.5
+      },
+      {
+       "tool": "swiftf0",
+       "version": "swift-f0 0.3.0, onnxruntime 1.30.0",
+       "weight": 0.5
+      }
+     ],
+     "agreement": "agree",
+     "spread_st": 0.14,
+     "nc_input": false,
+     "licence_class": "gpl",
+     "valid_in_mode": true,
+     "context_only": true,
+     "n": 2,
+     "note": "Weights: Praat 0.5, SwiftF0 0.5; the tools differ by 0.14 st."
+    }
+   ],
+   "pointers": [
+    {
+     "id": "X01",
+     "name": "repetition candidates",
+     "items": [],
+     "shown": 0,
+     "total": 0,
+     "note": null
+    },
+    {
+     "id": "X02",
+     "name": "self-correction candidates",
+     "items": [],
+     "shown": 0,
+     "total": 0,
+     "note": null
+    },
+    {
+     "id": "X03",
+     "name": "linking words and phrases used",
+     "items": [
+      {
+       "utterance_id": "U001",
+       "first": 27,
+       "last": 27,
+       "text": "[withheld for audio check]"
+      },
+      {
+       "utterance_id": "U001",
+       "first": 52,
+       "last": 52,
+       "text": "because"
+      },
+      {
+       "utterance_id": "U005",
+       "first": 76,
+       "last": 76,
+       "text": "first"
+      },
+      {
+       "utterance_id": "U006",
+       "first": 0,
+       "last": 1,
+       "text": "after that"
+      },
+      {
+       "utterance_id": "U006",
+       "first": 32,
+       "last": 32,
+       "text": "also"
+      },
+      {
+       "utterance_id": "U006",
+       "first": 62,
+       "last": 62,
+       "text": "first"
+      },
+      {
+       "utterance_id": "U006",
+       "first": 81,
+       "last": 81,
+       "text": "second"
+      },
+      {
+       "utterance_id": "U006",
+       "first": 88,
+       "last": 88,
+       "text": "finally"
+      },
+      {
+       "utterance_id": "U007",
+       "first": 11,
+       "last": 11,
+       "text": "so"
+      },
+      {
+       "utterance_id": "U007",
+       "first": 27,
+       "last": 27,
+       "text": "next"
+      }
+     ],
+     "shown": 10,
+     "total": 10,
+     "note": "Found by matching a word list, so a word counts even where it does not link ideas, such as \"first\" used as an adverb. Read each use in the transcript."
+    },
+    {
+     "id": "X04",
+     "name": "rare words used",
+     "items": [
+      {
+       "utterance_id": "U001",
+       "first": 19,
+       "last": 19,
+       "text": "[withheld for audio check]"
+      },
+      {
+       "utterance_id": "U002",
+       "first": 14,
+       "last": 14,
+       "text": "vegetables"
+      },
+      {
+       "utterance_id": "U003",
+       "first": 10,
+       "last": 10,
+       "text": "cafe"
+      },
+      {
+       "utterance_id": "U004",
+       "first": 14,
+       "last": 14,
+       "text": "dishes"
+      },
+      {
+       "utterance_id": "U004",
+       "first": 35,
+       "last": 35,
+       "text": "dish"
+      },
+      {
+       "utterance_id": "U004",
+       "first": 38,
+       "last": 38,
+       "text": "spicy"
+      },
+      {
+       "utterance_id": "U004",
+       "first": 40,
+       "last": 40,
+       "text": "soup"
+      },
+      {
+       "utterance_id": "U005",
+       "first": 11,
+       "last": 11,
+       "text": "hometown"
+      },
+      {
+       "utterance_id": "U005",
+       "first": 51,
+       "last": 51,
+       "text": "scenery"
+      },
+      {
+       "utterance_id": "U005",
+       "first": 61,
+       "last": 61,
+       "text": "chilly"
+      },
+      {
+       "utterance_id": "U005",
+       "first": 72,
+       "last": 72,
+       "text": "stroll"
+      },
+      {
+       "utterance_id": "U006",
+       "first": 10,
+       "last": 10,
+       "text": "picnic"
+      },
+      {
+       "utterance_id": "U006",
+       "first": 15,
+       "last": 15,
+       "text": "sandwiches"
+      },
+      {
+       "utterance_id": "U006",
+       "first": 23,
+       "last": 23,
+       "text": "swim"
+      },
+      {
+       "utterance_id": "U006",
+       "first": 51,
+       "last": 51,
+       "text": "ducks"
+      },
+      {
+       "utterance_id": "U007",
+       "first": 1,
+       "last": 1,
+       "text": "grandparents"
+      }
+     ],
+     "shown": 16,
+     "total": 16,
+     "note": "Content words outside the 5,000 most common English words (wordfreq's list), each at its first use; names found by the grammar parser left out. A frequency count, not a judgement of level or of correct use."
+    },
+    {
+     "id": "X05",
+     "name": "sentence structures, two examples of each",
+     "items": [
+      {
+       "utterance_id": "U005",
+       "first": 42,
+       "last": 43,
+       "text": "passive: is surrounded"
+      },
+      {
+       "utterance_id": "U006",
+       "first": 24,
+       "last": 29,
+       "text": "conditional: if the weather is warm enough."
+      },
+      {
+       "utterance_id": "U006",
+       "first": 37,
+       "last": 43,
+       "text": "relative clause: that you can rent for an hour."
+      }
+     ],
+     "shown": 3,
+     "total": 3,
+     "note": "all answers: 1.2 clauses per unit, 8 subordinate clauses; Part 1: 1.2 clauses per unit, 3 subordinate clauses; Part 2: 1.2 clauses per unit, 5 subordinate clauses. A unit is a main clause with the clauses that depend on it. Found: conditional 1, relative clause 1, passive 1, modal of speculation 0. From spaCy's parser, which is trained on written text: read each example in the transcript. Not an error count."
+    },
+    {
+     "id": "X06",
+     "name": "words to check (pronunciation)",
+     "items": [],
+     "shown": 0,
+     "total": 0,
+     "note": "Not checked."
+    },
+    {
+     "id": "X07",
+     "name": "what the pronunciation check covered",
+     "items": [],
+     "shown": 0,
+     "total": 0,
+     "note": "Not checked: the pronunciation check is off in Settings."
+    }
+   ],
+   "details": {
+    "measures": [
+     {
+      "id": "DM01",
+      "name": "pauses of 0.5 s or more",
+      "unit": "count",
+      "scope": "all",
+      "value": 17,
+      "kind": "measured",
+      "reliability": "high",
+      "missing": null,
+      "sources": [
+       {
+        "tool": "silero-vad",
+        "version": "faster_whisper 1.2.1",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "permissive",
+      "valid_in_mode": true,
+      "context_only": false,
+      "n": 17,
+      "note": null
+     },
+     {
+      "id": "DM02",
+      "name": "words per minute",
+      "unit": "words/min",
+      "scope": "all",
+      "value": 194.7,
+      "kind": "estimated",
+      "reliability": "medium",
+      "missing": null,
+      "sources": [
+       {
+        "tool": "fluentfolio",
+        "version": "0.1.0",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "permissive",
+      "valid_in_mode": true,
+      "context_only": false,
+      "n": 353,
+      "note": null
+     },
+     {
+      "id": "DM03",
+      "name": "vowel length contrast (nPVI-V)",
+      "unit": "index",
+      "scope": "all",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "no_mfa",
+       "text": "MFA did not align these answers (it is off, not installed, or its check failed)."
+      },
+      "sources": [
+       {
+        "tool": "mfa",
+        "version": "did not run",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "cc-by",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM04",
+      "name": "vowel length variation (VarcoV)",
+      "unit": "index",
+      "scope": "all",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "no_mfa",
+       "text": "MFA did not align these answers (it is off, not installed, or its check failed)."
+      },
+      "sources": [
+       {
+        "tool": "mfa",
+        "version": "did not run",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "cc-by",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM05",
+      "name": "vowel share of speech (%V)",
+      "unit": "%",
+      "scope": "all",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "no_mfa",
+       "text": "MFA did not align these answers (it is off, not installed, or its check failed)."
+      },
+      "sources": [
+       {
+        "tool": "mfa",
+        "version": "did not run",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "cc-by",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM06",
+      "name": "mean vowel length",
+      "unit": "ms",
+      "scope": "all",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "no_mfa",
+       "text": "MFA did not align these answers (it is off, not installed, or its check failed)."
+      },
+      "sources": [
+       {
+        "tool": "mfa",
+        "version": "did not run",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "cc-by",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM07",
+      "name": "mean consonant length",
+      "unit": "ms",
+      "scope": "all",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "no_mfa",
+       "text": "MFA did not align these answers (it is off, not installed, or its check failed)."
+      },
+      "sources": [
+       {
+        "tool": "mfa",
+        "version": "did not run",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "cc-by",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM08",
+      "name": "pitch variation (standard deviation)",
+      "unit": "semitones",
+      "scope": "all",
+      "value": 2.1,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": null,
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": "From 1 of 4 answers; 3 have under 10 s of voiced speech."
+     },
+     {
+      "id": "DM09",
+      "name": "voiced share",
+      "unit": "%",
+      "scope": "all",
+      "value": 66.6,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": null,
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": "From 1 of 4 answers; 3 have under 10 s of voiced speech."
+     },
+     {
+      "id": "DM01",
+      "name": "pauses of 0.5 s or more",
+      "unit": "count",
+      "scope": "part1",
+      "value": 5,
+      "kind": "measured",
+      "reliability": "high",
+      "missing": null,
+      "sources": [
+       {
+        "tool": "silero-vad",
+        "version": "faster_whisper 1.2.1",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "permissive",
+      "valid_in_mode": true,
+      "context_only": false,
+      "n": 5,
+      "note": null
+     },
+     {
+      "id": "DM02",
+      "name": "words per minute",
+      "unit": "words/min",
+      "scope": "part1",
+      "value": 202.9,
+      "kind": "estimated",
+      "reliability": "medium",
+      "missing": null,
+      "sources": [
+       {
+        "tool": "fluentfolio",
+        "version": "0.1.0",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "permissive",
+      "valid_in_mode": true,
+      "context_only": false,
+      "n": 144,
+      "note": null
+     },
+     {
+      "id": "DM03",
+      "name": "vowel length contrast (nPVI-V)",
+      "unit": "index",
+      "scope": "part1",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "no_mfa",
+       "text": "MFA did not align these answers (it is off, not installed, or its check failed)."
+      },
+      "sources": [
+       {
+        "tool": "mfa",
+        "version": "did not run",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "cc-by",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM04",
+      "name": "vowel length variation (VarcoV)",
+      "unit": "index",
+      "scope": "part1",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "no_mfa",
+       "text": "MFA did not align these answers (it is off, not installed, or its check failed)."
+      },
+      "sources": [
+       {
+        "tool": "mfa",
+        "version": "did not run",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "cc-by",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM05",
+      "name": "vowel share of speech (%V)",
+      "unit": "%",
+      "scope": "part1",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "no_mfa",
+       "text": "MFA did not align these answers (it is off, not installed, or its check failed)."
+      },
+      "sources": [
+       {
+        "tool": "mfa",
+        "version": "did not run",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "cc-by",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM06",
+      "name": "mean vowel length",
+      "unit": "ms",
+      "scope": "part1",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "no_mfa",
+       "text": "MFA did not align these answers (it is off, not installed, or its check failed)."
+      },
+      "sources": [
+       {
+        "tool": "mfa",
+        "version": "did not run",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "cc-by",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM07",
+      "name": "mean consonant length",
+      "unit": "ms",
+      "scope": "part1",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "no_mfa",
+       "text": "MFA did not align these answers (it is off, not installed, or its check failed)."
+      },
+      "sources": [
+       {
+        "tool": "mfa",
+        "version": "did not run",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "cc-by",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM08",
+      "name": "pitch variation (standard deviation)",
+      "unit": "semitones",
+      "scope": "part1",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no answer has 10 s of voiced speech or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM09",
+      "name": "voiced share",
+      "unit": "%",
+      "scope": "part1",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no answer has 10 s of voiced speech or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM01",
+      "name": "pauses of 0.5 s or more",
+      "unit": "count",
+      "scope": "part2",
+      "value": 12,
+      "kind": "measured",
+      "reliability": "high",
+      "missing": null,
+      "sources": [
+       {
+        "tool": "silero-vad",
+        "version": "faster_whisper 1.2.1",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "permissive",
+      "valid_in_mode": true,
+      "context_only": false,
+      "n": 12,
+      "note": null
+     },
+     {
+      "id": "DM02",
+      "name": "words per minute",
+      "unit": "words/min",
+      "scope": "part2",
+      "value": 189.4,
+      "kind": "estimated",
+      "reliability": "medium",
+      "missing": null,
+      "sources": [
+       {
+        "tool": "fluentfolio",
+        "version": "0.1.0",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "permissive",
+      "valid_in_mode": true,
+      "context_only": false,
+      "n": 209,
+      "note": null
+     },
+     {
+      "id": "DM03",
+      "name": "vowel length contrast (nPVI-V)",
+      "unit": "index",
+      "scope": "part2",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "no_mfa",
+       "text": "MFA did not align these answers (it is off, not installed, or its check failed)."
+      },
+      "sources": [
+       {
+        "tool": "mfa",
+        "version": "did not run",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "cc-by",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM04",
+      "name": "vowel length variation (VarcoV)",
+      "unit": "index",
+      "scope": "part2",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "no_mfa",
+       "text": "MFA did not align these answers (it is off, not installed, or its check failed)."
+      },
+      "sources": [
+       {
+        "tool": "mfa",
+        "version": "did not run",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "cc-by",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM05",
+      "name": "vowel share of speech (%V)",
+      "unit": "%",
+      "scope": "part2",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "no_mfa",
+       "text": "MFA did not align these answers (it is off, not installed, or its check failed)."
+      },
+      "sources": [
+       {
+        "tool": "mfa",
+        "version": "did not run",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "cc-by",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM06",
+      "name": "mean vowel length",
+      "unit": "ms",
+      "scope": "part2",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "no_mfa",
+       "text": "MFA did not align these answers (it is off, not installed, or its check failed)."
+      },
+      "sources": [
+       {
+        "tool": "mfa",
+        "version": "did not run",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "cc-by",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM07",
+      "name": "mean consonant length",
+      "unit": "ms",
+      "scope": "part2",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "no_mfa",
+       "text": "MFA did not align these answers (it is off, not installed, or its check failed)."
+      },
+      "sources": [
+       {
+        "tool": "mfa",
+        "version": "did not run",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "cc-by",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM08",
+      "name": "pitch variation (standard deviation)",
+      "unit": "semitones",
+      "scope": "part2",
+      "value": 2.1,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": null,
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": "From the one answer."
+     },
+     {
+      "id": "DM09",
+      "name": "voiced share",
+      "unit": "%",
+      "scope": "part2",
+      "value": 66.6,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": null,
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": "From the one answer."
+     },
+     {
+      "id": "DM10",
+      "name": "jitter (local)",
+      "unit": "%",
+      "scope": "A01",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM11",
+      "name": "shimmer (local)",
+      "unit": "%",
+      "scope": "A01",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM12",
+      "name": "harmonics-to-noise ratio",
+      "unit": "dB",
+      "scope": "A01",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM13a",
+      "name": "first formant (mean)",
+      "unit": "Hz",
+      "scope": "A01",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM13b",
+      "name": "second formant (mean)",
+      "unit": "Hz",
+      "scope": "A01",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM13c",
+      "name": "third formant (mean)",
+      "unit": "Hz",
+      "scope": "A01",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM10",
+      "name": "jitter (local)",
+      "unit": "%",
+      "scope": "A02",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM11",
+      "name": "shimmer (local)",
+      "unit": "%",
+      "scope": "A02",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM12",
+      "name": "harmonics-to-noise ratio",
+      "unit": "dB",
+      "scope": "A02",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM13a",
+      "name": "first formant (mean)",
+      "unit": "Hz",
+      "scope": "A02",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM13b",
+      "name": "second formant (mean)",
+      "unit": "Hz",
+      "scope": "A02",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM13c",
+      "name": "third formant (mean)",
+      "unit": "Hz",
+      "scope": "A02",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM10",
+      "name": "jitter (local)",
+      "unit": "%",
+      "scope": "A03",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM11",
+      "name": "shimmer (local)",
+      "unit": "%",
+      "scope": "A03",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM12",
+      "name": "harmonics-to-noise ratio",
+      "unit": "dB",
+      "scope": "A03",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM13a",
+      "name": "first formant (mean)",
+      "unit": "Hz",
+      "scope": "A03",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM13b",
+      "name": "second formant (mean)",
+      "unit": "Hz",
+      "scope": "A03",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM13c",
+      "name": "third formant (mean)",
+      "unit": "Hz",
+      "scope": "A03",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM10",
+      "name": "jitter (local)",
+      "unit": "%",
+      "scope": "A04",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM11",
+      "name": "shimmer (local)",
+      "unit": "%",
+      "scope": "A04",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM12",
+      "name": "harmonics-to-noise ratio",
+      "unit": "dB",
+      "scope": "A04",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM13a",
+      "name": "first formant (mean)",
+      "unit": "Hz",
+      "scope": "A04",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM13b",
+      "name": "second formant (mean)",
+      "unit": "Hz",
+      "scope": "A04",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     },
+     {
+      "id": "DM13c",
+      "name": "third formant (mean)",
+      "unit": "Hz",
+      "scope": "A04",
+      "value": null,
+      "kind": "context",
+      "reliability": "medium",
+      "missing": {
+       "code": "insufficient_sample",
+       "text": "no voiced stretch of 1 s or more"
+      },
+      "sources": [
+       {
+        "tool": "praat",
+        "version": "Praat 6.1.38, parselmouth 0.4.7",
+        "weight": 1.0
+       }
+      ],
+      "agreement": null,
+      "spread_st": null,
+      "nc_input": false,
+      "licence_class": "gpl",
+      "valid_in_mode": true,
+      "context_only": true,
+      "n": null,
+      "note": null
+     }
+    ],
+    "pointers": [
+     {
+      "id": "DX01",
+      "name": "\"like\", \"you know\" and \"I mean\", to read in context",
+      "items": [
+       {
+        "utterance_id": "U004",
+        "first": 2,
+        "last": 2,
+        "text": "like"
+       },
+       {
+        "utterance_id": "U005",
+        "first": 2,
+        "last": 2,
+        "text": "like"
+       },
+       {
+        "utterance_id": "U006",
+        "first": 56,
+        "last": 56,
+        "text": "like"
+       }
+      ],
+      "shown": 3,
+      "total": 3,
+      "note": null
+     }
+    ]
+   }
+  }
+ ],
+ "examiner_turns": [
+  {
+   "id": "Q01",
+   "start_ms": 824,
+   "end_ms": 2664,
+   "kind": "read_aloud",
+   "addressed_to": "candidate",
+   "text": "Do you live in a house or a flat?"
+  },
+  {
+   "id": "Q02",
+   "start_ms": 19464,
+   "end_ms": 21304,
+   "kind": "read_aloud",
+   "addressed_to": "candidate",
+   "text": "What do you usually do at the weekend?"
+  },
+  {
+   "id": "Q03",
+   "start_ms": 35480,
+   "end_ms": 36520,
+   "kind": "read_aloud",
+   "addressed_to": "candidate",
+   "text": "Do you like cooking?"
+  },
+  {
+   "id": "Q04",
+   "start_ms": 54360,
+   "end_ms": 62416,
+   "kind": "read_aloud",
+   "addressed_to": "candidate",
+   "text": "Describe a place you like to visit. You should say where it is. How often you go there. what you do there, and explain why you like it."
+  }
+ ],
+ "differences": [
+  {
+   "utterance_id": "U001",
+   "ours": "[withheld for audio check]",
+   "users": "[withheld for audio check]"
+  },
+  {
+   "utterance_id": "U001",
+   "ours": "[withheld for audio check]",
+   "users": "[withheld for audio check]"
+  },
+  {
+   "utterance_id": "U001",
+   "ours": "[withheld for audio check]",
+   "users": "[withheld for audio check]"
+  },
+  {
+   "utterance_id": "U004",
+   "ours": "week My favorite dish is",
+   "users": "week My favourite dish is"
+  },
+  {
+   "utterance_id": "U005",
+   "ours": "near my hometown It is about 30 minutes from",
+   "users": "near my home town It is about thirty minutes from"
+  },
+  {
+   "utterance_id": "U007",
+   "ours": "My grandparents took me",
+   "users": "My different took me"
+  }
+ ],
+ "definitions": [
+  {
+   "measure_id": "M01",
+   "unit": "s",
+   "definition": "Seconds of voice-detector speech inside the answers; silences under 0.25 s count as speech.",
+   "caveat": "Longer is not better; it depends on the questions.",
+   "how": "voice detector; silences under 0.25 s count as speech"
+  },
+  {
+   "measure_id": "M02",
+   "unit": "syll/s",
+   "definition": "Transcript syllables divided by the total answer time, pauses included.",
+   "caveat": "Faster is not better; this describes how the answers were spoken, not how good they were. Syllables come from spelling.",
+   "how": "syllables counted from spelling / total answer time"
+  },
+  {
+   "measure_id": "M03",
+   "unit": "syll/s",
+   "definition": "Transcript syllables divided by the speaking time, pauses of 0.25 s or more left out.",
+   "caveat": "Faster is not better; this describes how the answers were spoken, not how good they were. Syllables come from spelling.",
+   "how": "syllables counted from spelling / speaking time"
+  },
+  {
+   "measure_id": "M04",
+   "unit": "per min",
+   "definition": "Silences of 0.25 s or more inside the answers, per minute of answer time, from the voice detector.",
+   "caveat": "Fewer pauses is not better: where a pause falls matters more than how many there are.",
+   "how": "voice detector; count / minutes of answer time"
+  },
+  {
+   "measure_id": "M05",
+   "unit": "s",
+   "definition": "The mean length of the silent pauses of 0.25 s or more inside the answers.",
+   "caveat": "Shorter is not better on its own.",
+   "how": "voice detector; mean of the pauses of 0.25 s or more"
+  },
+  {
+   "measure_id": "M06",
+   "unit": "count",
+   "definition": "How many silent pauses inside the answers last 1 s or more.",
+   "caveat": "A long pause can be planning; read it with the transcript.",
+   "how": "voice detector; count"
+  },
+  {
+   "measure_id": "DM01",
+   "unit": "count",
+   "definition": "How many silent pauses inside the answers last 0.5 s or more.",
+   "caveat": "A view between the 0.25 s and 1 s counts.",
+   "how": ""
+  },
+  {
+   "measure_id": "M07",
+   "unit": "%",
+   "definition": "Percent of the silent pauses of 0.25 s or more whose words on both sides belong to one clause in spaCy's parse of the answer; the other pauses fall at a clause boundary.",
+   "caveat": "Fewer is not better on its own: a pause inside a clause can be planning or a search for a word. The parser is trained on written text, so read each pause in the transcript.",
+   "how": "grammar parser (spaCy) on the transcript; pauses from the voice detector"
+  },
+  {
+   "measure_id": "M08",
+   "unit": "syll",
+   "definition": "Mean number of syllables between silent pauses of 0.25 s or more.",
+   "caveat": "Longer is not better on its own; this describes how the answers were spoken, not how good they were.",
+   "how": "syllables counted from spelling between pauses of 0.25 s or more"
+  },
+  {
+   "measure_id": "M09a",
+   "unit": "s",
+   "definition": "Median time from a question's end to the first word of its answer; overlapping starts left out.",
+   "caveat": "A short wait is not better: thinking before answering is normal.",
+   "how": "question end to the answer's first word, from the speech model's word times"
+  },
+  {
+   "measure_id": "M09b",
+   "unit": "count",
+   "definition": "How many answers started more than 10 s after their question ended; these are not in the median.",
+   "caveat": "Check these by listening: the question may have been unclear.",
+   "how": "question end to the answer's first word; count"
+  },
+  {
+   "measure_id": "M10",
+   "unit": "per min",
+   "definition": "Hesitation sounds (um, uh, er and similar) per minute of answer time, as the transcript has them.",
+   "caveat": "The recogniser may miss or add hesitation sounds; fewer is not better on its own.",
+   "how": "speech model's transcript; count / minutes of answer time"
+  },
+  {
+   "measure_id": "DM02",
+   "unit": "words/min",
+   "definition": "Transcript words other than hesitation sounds, per minute of answer time.",
+   "caveat": "Kept out of the text for an AI chat, which might turn it into a band rule.",
+   "how": ""
+  },
+  {
+   "measure_id": "M16",
+   "unit": "ratio",
+   "definition": "The share of different words in each window of 50 words, averaged over all windows.",
+   "caveat": "Higher variety is not better on its own; topic and answer length change it.",
+   "how": "different words / 50 in each 50-word window, averaged"
+  },
+  {
+   "measure_id": "M17a",
+   "unit": "%",
+   "definition": "Percent of content words that are not among the 2,000 most frequent English words. Names of people and places found by the grammar parser are left out, and a word counts as common when its base form is (\"dishes\" as \"dish\").",
+   "caveat": "Rare is not good on its own; a rare word can be used wrongly.",
+   "how": "wordfreq ranks of the word and its base form; names left out"
+  },
+  {
+   "measure_id": "M17b",
+   "unit": "%",
+   "definition": "Percent of content words that are not among the 5,000 most frequent English words. Names of people and places found by the grammar parser are left out, and a word counts as common when its base form is (\"dishes\" as \"dish\").",
+   "caveat": "Rare is not good on its own; a rare word can be used wrongly.",
+   "how": "wordfreq ranks of the word and its base form; names left out"
+  },
+  {
+   "measure_id": "M18",
+   "unit": "ratio",
+   "definition": "Different linking words and phrases from Fluentfolio's list, divided by all uses of them.",
+   "caveat": "More variety is not better on its own; a marker can be used wrongly.",
+   "how": "different linking words / all their uses (list X03)"
+  },
+  {
+   "measure_id": "DM03",
+   "unit": "index",
+   "definition": "Mean difference in length between neighbouring vowel stretches, as a percent of their mean length.",
+   "caveat": "Context only: no norm says which values are better, and accents differ in rhythm.",
+   "how": ""
+  },
+  {
+   "measure_id": "DM04",
+   "unit": "index",
+   "definition": "Standard deviation of the vowel stretch lengths, as a percent of their mean.",
+   "caveat": "Context only: no norm says which values are better, and accents differ in rhythm.",
+   "how": ""
+  },
+  {
+   "measure_id": "DM05",
+   "unit": "%",
+   "definition": "Percent of the time inside words that vowels take up.",
+   "caveat": "Context only: no norm says which values are better, and accents differ in rhythm.",
+   "how": ""
+  },
+  {
+   "measure_id": "DM06",
+   "unit": "ms",
+   "definition": "Mean length of one vowel sound, from MFA's phone times.",
+   "caveat": "Context only: no norm says which values are better, and accents differ in rhythm.",
+   "how": ""
+  },
+  {
+   "measure_id": "DM07",
+   "unit": "ms",
+   "definition": "Mean length of one consonant sound, from MFA's phone times.",
+   "caveat": "Context only: no norm says which values are better, and accents differ in rhythm.",
+   "how": ""
+  },
+  {
+   "measure_id": "M11",
+   "unit": "semitones",
+   "definition": "The distance in semitones between the 20th and the 80th percentile of the candidate's pitch, over the answers with 10 s of voiced speech or more. Praat, SwiftF0 and openSMILE (when enabled) each measure it, and their values are combined with fixed weights.",
+   "caveat": "Use it as it stands when the tools agree (within 1.0 semitone), only for broad statements when they are approximate (within 3.2), and not at all when they disagree. A wider range is not better on its own: voices, topics and styles differ.",
+   "how": "Praat, SwiftF0 and openSMILE (when enabled), combined with fixed weights"
+  },
+  {
+   "measure_id": "M19",
+   "unit": "Hz",
+   "definition": "The middle of the candidate's pitch over the answers with 10 s of voiced speech or more, combined from the pitch tools in semitones and shown in Hz.",
+   "caveat": "Use it as it stands when the tools agree (within 1.0 semitone), only for broad statements when they are approximate (within 3.2), and not at all when they disagree. Context only: a voice's pitch says nothing about how well it speaks.",
+   "how": "Praat, SwiftF0 and openSMILE (when enabled), combined with fixed weights"
+  },
+  {
+   "measure_id": "M12",
+   "unit": "count",
+   "definition": "Stretches between pauses that last 2 s or more, with 1 s of pitch or more, whose pitch stays within 2 semitones (10th to 90th percentile). A semitone is the smallest step on a piano.",
+   "caveat": "Heuristic threshold, not a norm: a list or a calm, even style can be flat.",
+   "how": "heuristic: Praat pitch within 2 semitones for 2 s or more"
+  },
+  {
+   "measure_id": "M13a",
+   "unit": "count",
+   "definition": "Stretches between pauses whose pitch rises by 2 semitones or more over their last 0.3 s of voice.",
+   "caveat": "Heuristic thresholds, not a norm. Rising, falling and level endings are all normal in English; none is better.",
+   "how": "heuristic: Praat pitch rises 2 semitones or more in the last 0.3 s"
+  },
+  {
+   "measure_id": "M13b",
+   "unit": "count",
+   "definition": "Stretches between pauses whose pitch falls by 2 semitones or more over their last 0.3 s of voice.",
+   "caveat": "Heuristic thresholds, not a norm. Rising, falling and level endings are all normal in English; none is better.",
+   "how": "heuristic: Praat pitch falls 2 semitones or more in the last 0.3 s"
+  },
+  {
+   "measure_id": "M13c",
+   "unit": "count",
+   "definition": "Stretches between pauses whose pitch moves by less than 2 semitones over their last 0.3 s of voice.",
+   "caveat": "Heuristic thresholds, not a norm. Rising, falling and level endings are all normal in English; none is better.",
+   "how": "heuristic: Praat pitch moves under 2 semitones in the last 0.3 s"
+  },
+  {
+   "measure_id": "M14",
+   "unit": "ratio",
+   "definition": "How much the loudness of the candidate's speech varies: its standard deviation divided by its mean, pauses left out (openSMILE, eGeMAPS).",
+   "caveat": "Context only: the microphone, its distance and the room change it; more is not better on its own.",
+   "how": "openSMILE eGeMAPS; standard deviation / mean, pauses left out"
+  },
+  {
+   "measure_id": "M15",
+   "unit": "per s",
+   "definition": "Peaks in the loudness of the candidate's speech per second, pauses left out (openSMILE, eGeMAPS).",
+   "caveat": "Context only: it follows syllables and stress, and the recording changes it.",
+   "how": "openSMILE eGeMAPS; peaks per second, pauses left out"
+  },
+  {
+   "measure_id": "DM08",
+   "unit": "semitones",
+   "definition": "Standard deviation of the pitch in semitones over the frames where Praat found a pitch.",
+   "caveat": "More variation is not better on its own; voices and topics differ.",
+   "how": ""
+  },
+  {
+   "measure_id": "DM09",
+   "unit": "%",
+   "definition": "Percent of the candidate's speech frames in which Praat found a pitch.",
+   "caveat": "It depends on the sounds spoken and on the recording; context only.",
+   "how": ""
+  },
+  {
+   "measure_id": "DM10",
+   "unit": "%",
+   "definition": "Mean change in length between neighbouring voice cycles, as a percent of the mean, over the voiced stretches of 1 s or more in the answer.",
+   "caveat": "Context only: measured in connected speech, not on held vowels, so clinical norms do not apply.",
+   "how": ""
+  },
+  {
+   "measure_id": "DM11",
+   "unit": "%",
+   "definition": "Mean change in loudness between neighbouring voice cycles, as a percent of the mean, over the voiced stretches of 1 s or more in the answer.",
+   "caveat": "Context only: measured in connected speech, not on held vowels, so clinical norms do not apply.",
+   "how": ""
+  },
+  {
+   "measure_id": "DM12",
+   "unit": "dB",
+   "definition": "How much stronger the regular part of the voice is than its noise, in dB, over the voiced stretches of 1 s or more in the answer.",
+   "caveat": "Context only: measured in connected speech, not on held vowels, so clinical norms do not apply.",
+   "how": ""
+  },
+  {
+   "measure_id": "DM13a",
+   "unit": "Hz",
+   "definition": "Mean frequency of the lowest resonance of the mouth and throat, over the voiced stretches of 1 s or more in the answer.",
+   "caveat": "Context only: formants depend on the voice and on the vowels spoken.",
+   "how": ""
+  },
+  {
+   "measure_id": "DM13b",
+   "unit": "Hz",
+   "definition": "Mean frequency of the second resonance of the mouth and throat, over the voiced stretches of 1 s or more in the answer.",
+   "caveat": "Context only: formants depend on the voice and on the vowels spoken.",
+   "how": ""
+  },
+  {
+   "measure_id": "DM13c",
+   "unit": "Hz",
+   "definition": "Mean frequency of the third resonance of the mouth and throat, over the voiced stretches of 1 s or more in the answer.",
+   "caveat": "Context only: formants depend on the voice and on the vowels spoken.",
+   "how": ""
+  }
+ ],
+ "limitations": [
+  "No word is marked unsure: the confidence threshold for this speech model is not set yet."
+ ],
+ "disclaimer": "Fluentfolio measures a practice recording and gives no band. A band from an AI chat is an unofficial estimate. Fluentfolio is not affiliated with or endorsed by the British Council, IDP IELTS or Cambridge University Press & Assessment."
+}

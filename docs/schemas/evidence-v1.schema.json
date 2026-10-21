@@ -1,0 +1,1514 @@
+{
+  "$defs": {
+    "Answer": {
+      "additionalProperties": false,
+      "properties": {
+        "audio_ms": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Audio Ms"
+        },
+        "end_ms": {
+          "minimum": 0,
+          "title": "End Ms",
+          "type": "integer"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "part": {
+          "enum": [
+            1,
+            2,
+            3,
+            "unknown"
+          ],
+          "title": "Part"
+        },
+        "question_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Question Id"
+        },
+        "start_ms": {
+          "minimum": 0,
+          "title": "Start Ms",
+          "type": "integer"
+        },
+        "word_count": {
+          "minimum": 0,
+          "title": "Word Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "question_id",
+        "part",
+        "start_ms",
+        "end_ms",
+        "word_count",
+        "audio_ms"
+      ],
+      "title": "Answer",
+      "type": "object"
+    },
+    "Asr": {
+      "additionalProperties": false,
+      "properties": {
+        "confidence_threshold": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Confidence Threshold"
+        },
+        "filler_capture": {
+          "enum": [
+            "best_effort",
+            "lower_bound",
+            "unknown"
+          ],
+          "title": "Filler Capture",
+          "type": "string"
+        },
+        "model": {
+          "title": "Model",
+          "type": "string"
+        },
+        "punctuation": {
+          "const": "machine",
+          "title": "Punctuation",
+          "type": "string"
+        },
+        "revision": {
+          "title": "Revision",
+          "type": "string"
+        },
+        "transcript_style": {
+          "enum": [
+            "verbatim-best-effort",
+            "smoothed"
+          ],
+          "title": "Transcript Style",
+          "type": "string"
+        }
+      },
+      "required": [
+        "model",
+        "revision",
+        "transcript_style",
+        "filler_capture",
+        "punctuation",
+        "confidence_threshold"
+      ],
+      "title": "Asr",
+      "type": "object"
+    },
+    "Audio": {
+      "additionalProperties": false,
+      "properties": {
+        "clipping_pct": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Clipping Pct",
+          "type": "number"
+        },
+        "duration_ms": {
+          "exclusiveMinimum": 0,
+          "title": "Duration Ms",
+          "type": "integer"
+        },
+        "music_warning": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Music Warning"
+        },
+        "quality_class": {
+          "enum": [
+            "clean",
+            "laptop",
+            "meeting_codec",
+            "phone",
+            "noisy"
+          ],
+          "title": "Quality Class",
+          "type": "string"
+        },
+        "snr_db": {
+          "title": "Snr Db",
+          "type": "number"
+        }
+      },
+      "required": [
+        "duration_ms",
+        "quality_class",
+        "snr_db",
+        "clipping_pct",
+        "music_warning"
+      ],
+      "title": "Audio",
+      "type": "object"
+    },
+    "AudioCheck": {
+      "additionalProperties": false,
+      "description": "One candidate's span, by its times only: the words of the span never leave the job folder.",
+      "properties": {
+        "audio_end_ms": {
+          "minimum": 0,
+          "title": "Audio End Ms",
+          "type": "integer"
+        },
+        "audio_start_ms": {
+          "minimum": 0,
+          "title": "Audio Start Ms",
+          "type": "integer"
+        },
+        "candidate": {
+          "enum": [
+            "candidate",
+            "person1",
+            "person2"
+          ],
+          "title": "Candidate",
+          "type": "string"
+        },
+        "orig_end_ms": {
+          "minimum": 0,
+          "title": "Orig End Ms",
+          "type": "integer"
+        },
+        "orig_start_ms": {
+          "minimum": 0,
+          "title": "Orig Start Ms",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "candidate",
+        "orig_start_ms",
+        "orig_end_ms",
+        "audio_start_ms",
+        "audio_end_ms"
+      ],
+      "title": "AudioCheck",
+      "type": "object"
+    },
+    "AudioExport": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_only": {
+          "title": "Candidate Only",
+          "type": "boolean"
+        },
+        "duration_ms": {
+          "minimum": 0,
+          "title": "Duration Ms",
+          "type": "integer"
+        },
+        "partner_voice_included": {
+          "title": "Partner Voice Included",
+          "type": "boolean"
+        },
+        "produced": {
+          "title": "Produced",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "produced",
+        "candidate_only",
+        "duration_ms",
+        "partner_voice_included"
+      ],
+      "title": "AudioExport",
+      "type": "object"
+    },
+    "Candidate": {
+      "additionalProperties": false,
+      "properties": {
+        "answers": {
+          "items": {
+            "$ref": "#/$defs/Answer"
+          },
+          "title": "Answers",
+          "type": "array"
+        },
+        "details": {
+          "$ref": "#/$defs/Details"
+        },
+        "heard_questions_first": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Heard Questions First"
+        },
+        "id": {
+          "enum": [
+            "candidate",
+            "person1",
+            "person2"
+          ],
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "enum": [
+            "the candidate",
+            "Person 1",
+            "Person 2"
+          ],
+          "title": "Label",
+          "type": "string"
+        },
+        "measures": {
+          "items": {
+            "$ref": "#/$defs/Measure"
+          },
+          "title": "Measures",
+          "type": "array"
+        },
+        "part2": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Part2"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "parts": {
+          "items": {
+            "$ref": "#/$defs/PartSpan"
+          },
+          "title": "Parts",
+          "type": "array"
+        },
+        "pointers": {
+          "items": {
+            "$ref": "#/$defs/Pointers"
+          },
+          "title": "Pointers",
+          "type": "array"
+        },
+        "roles": {
+          "$ref": "#/$defs/Roles"
+        },
+        "speaker": {
+          "title": "Speaker",
+          "type": "string"
+        },
+        "speech_ms": {
+          "minimum": 0,
+          "title": "Speech Ms",
+          "type": "integer"
+        },
+        "utterances": {
+          "items": {
+            "$ref": "#/$defs/Utterance"
+          },
+          "title": "Utterances",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "speaker",
+        "heard_questions_first",
+        "roles",
+        "parts",
+        "speech_ms",
+        "part2",
+        "answers",
+        "utterances",
+        "measures",
+        "pointers",
+        "details"
+      ],
+      "title": "Candidate",
+      "type": "object"
+    },
+    "Definition": {
+      "additionalProperties": false,
+      "properties": {
+        "caveat": {
+          "title": "Caveat",
+          "type": "string"
+        },
+        "definition": {
+          "title": "Definition",
+          "type": "string"
+        },
+        "how": {
+          "title": "How",
+          "type": "string"
+        },
+        "measure_id": {
+          "title": "Measure Id",
+          "type": "string"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "measure_id",
+        "unit",
+        "definition",
+        "caveat",
+        "how"
+      ],
+      "title": "Definition",
+      "type": "object"
+    },
+    "Details": {
+      "additionalProperties": false,
+      "description": "Kept out of the text for an AI chat: no descriptor maps to these, so a chat would invent a meaning.",
+      "properties": {
+        "measures": {
+          "items": {
+            "$ref": "#/$defs/Measure"
+          },
+          "title": "Measures",
+          "type": "array"
+        },
+        "pointers": {
+          "items": {
+            "$ref": "#/$defs/Pointers"
+          },
+          "title": "Pointers",
+          "type": "array"
+        }
+      },
+      "required": [
+        "measures",
+        "pointers"
+      ],
+      "title": "Details",
+      "type": "object"
+    },
+    "DeviceInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "requested": {
+          "enum": [
+            "auto",
+            "cpu",
+            "gpu"
+          ],
+          "title": "Requested",
+          "type": "string"
+        },
+        "resolved": {
+          "enum": [
+            "cpu",
+            "gpu"
+          ],
+          "title": "Resolved",
+          "type": "string"
+        }
+      },
+      "required": [
+        "requested",
+        "resolved",
+        "reason"
+      ],
+      "title": "DeviceInfo",
+      "type": "object"
+    },
+    "Difference": {
+      "additionalProperties": false,
+      "properties": {
+        "ours": {
+          "title": "Ours",
+          "type": "string"
+        },
+        "users": {
+          "title": "Users",
+          "type": "string"
+        },
+        "utterance_id": {
+          "title": "Utterance Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "utterance_id",
+        "ours",
+        "users"
+      ],
+      "title": "Difference",
+      "type": "object"
+    },
+    "ExaminerTurn": {
+      "additionalProperties": false,
+      "description": "What was said to a candidate: by the examiner, or a question the learner read aloud in solo.",
+      "properties": {
+        "addressed_to": {
+          "enum": [
+            "candidate",
+            "person1",
+            "person2"
+          ],
+          "title": "Addressed To",
+          "type": "string"
+        },
+        "end_ms": {
+          "minimum": 0,
+          "title": "End Ms",
+          "type": "integer"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "question",
+            "prompt",
+            "cue_card",
+            "read_aloud",
+            "other"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "start_ms": {
+          "minimum": 0,
+          "title": "Start Ms",
+          "type": "integer"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "start_ms",
+        "end_ms",
+        "kind",
+        "addressed_to",
+        "text"
+      ],
+      "title": "ExaminerTurn",
+      "type": "object"
+    },
+    "Manifest": {
+      "additionalProperties": false,
+      "properties": {
+        "asr": {
+          "$ref": "#/$defs/Asr"
+        },
+        "audio": {
+          "$ref": "#/$defs/Audio"
+        },
+        "audio_check": {
+          "items": {
+            "$ref": "#/$defs/AudioCheck"
+          },
+          "title": "Audio Check",
+          "type": "array"
+        },
+        "audio_export": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AudioExport"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "commit": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{7,40}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Commit"
+        },
+        "created_utc": {
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$",
+          "title": "Created Utc",
+          "type": "string"
+        },
+        "device": {
+          "$ref": "#/$defs/DeviceInfo"
+        },
+        "export_id": {
+          "pattern": "^[0-9a-f]{6}$",
+          "title": "Export Id",
+          "type": "string"
+        },
+        "job_id": {
+          "title": "Job Id",
+          "type": "string"
+        },
+        "layout": {
+          "enum": [
+            "mixed",
+            "per-track",
+            "two-files"
+          ],
+          "title": "Layout",
+          "type": "string"
+        },
+        "mode": {
+          "enum": [
+            "solo",
+            "interview",
+            "role-swap"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "nc_component_used": {
+          "title": "Nc Component Used",
+          "type": "boolean"
+        },
+        "overrides_applied": {
+          "title": "Overrides Applied",
+          "type": "boolean"
+        },
+        "prompt_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Prompt Version"
+        },
+        "python_assigns_band": {
+          "const": false,
+          "title": "Python Assigns Band",
+          "type": "boolean"
+        },
+        "stub": {
+          "title": "Stub",
+          "type": "boolean"
+        },
+        "swap_style": {
+          "anyOf": [
+            {
+              "enum": [
+                "once",
+                "per-question"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Swap Style"
+        },
+        "tool_version": {
+          "title": "Tool Version",
+          "type": "string"
+        },
+        "tools": {
+          "items": {
+            "$ref": "#/$defs/Tool"
+          },
+          "title": "Tools",
+          "type": "array"
+        },
+        "unsure_word_share_pct": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Unsure Word Share Pct"
+        },
+        "user_transcript": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/UserTranscript"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "warnings": {
+          "items": {
+            "$ref": "#/$defs/WarningEntry"
+          },
+          "title": "Warnings",
+          "type": "array"
+        }
+      },
+      "required": [
+        "export_id",
+        "job_id",
+        "tool_version",
+        "prompt_version",
+        "created_utc",
+        "python_assigns_band",
+        "stub",
+        "commit",
+        "mode",
+        "layout",
+        "swap_style",
+        "asr",
+        "unsure_word_share_pct",
+        "audio",
+        "device",
+        "audio_export",
+        "audio_check",
+        "user_transcript",
+        "tools",
+        "warnings",
+        "nc_component_used",
+        "overrides_applied"
+      ],
+      "title": "Manifest",
+      "type": "object"
+    },
+    "Measure": {
+      "additionalProperties": false,
+      "description": "One value for one scope: \"all\", a Part or an answer ID; `value` and `missing` are never both set.",
+      "properties": {
+        "agreement": {
+          "anyOf": [
+            {
+              "enum": [
+                "agree",
+                "approximate",
+                "unreliable",
+                "too_little_speech",
+                "single_tool"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Agreement"
+        },
+        "context_only": {
+          "title": "Context Only",
+          "type": "boolean"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "measured",
+            "estimated",
+            "pointer",
+            "context"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "licence_class": {
+          "enum": [
+            "permissive",
+            "cc-by",
+            "gpl",
+            "nc"
+          ],
+          "title": "Licence Class",
+          "type": "string"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Missing"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "n": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "N"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "nc_input": {
+          "default": false,
+          "title": "Nc Input",
+          "type": "boolean"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        },
+        "reliability": {
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Reliability",
+          "type": "string"
+        },
+        "scope": {
+          "title": "Scope",
+          "type": "string"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/Source"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "spread_st": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Spread St"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        },
+        "valid_in_mode": {
+          "title": "Valid In Mode",
+          "type": "boolean"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "unit",
+        "scope",
+        "value",
+        "kind",
+        "reliability",
+        "sources",
+        "licence_class",
+        "valid_in_mode",
+        "context_only"
+      ],
+      "title": "Measure",
+      "type": "object"
+    },
+    "Missing": {
+      "additionalProperties": false,
+      "description": "Why a value is empty: the tool did not run, was switched off or had nothing to measure.",
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "text"
+      ],
+      "title": "Missing",
+      "type": "object"
+    },
+    "Part2": {
+      "additionalProperties": false,
+      "properties": {
+        "ended_by": {
+          "enum": [
+            "stopped",
+            "examiner_prompt",
+            "cut_off",
+            "unknown"
+          ],
+          "title": "Ended By",
+          "type": "string"
+        },
+        "examiner_prompts_n": {
+          "minimum": 0,
+          "title": "Examiner Prompts N",
+          "type": "integer"
+        },
+        "long_turn_ms": {
+          "minimum": 0,
+          "title": "Long Turn Ms",
+          "type": "integer"
+        },
+        "prep_excluded_ms": {
+          "minimum": 0,
+          "title": "Prep Excluded Ms",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "prep_excluded_ms",
+        "long_turn_ms",
+        "ended_by",
+        "examiner_prompts_n"
+      ],
+      "title": "Part2",
+      "type": "object"
+    },
+    "PartSpan": {
+      "additionalProperties": false,
+      "properties": {
+        "confidence": {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "end_ms": {
+          "minimum": 0,
+          "title": "End Ms",
+          "type": "integer"
+        },
+        "part": {
+          "enum": [
+            1,
+            2,
+            3,
+            "unknown"
+          ],
+          "title": "Part"
+        },
+        "source": {
+          "enum": [
+            "auto",
+            "user",
+            "question_list"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "start_ms": {
+          "minimum": 0,
+          "title": "Start Ms",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "part",
+        "start_ms",
+        "end_ms",
+        "source",
+        "confidence"
+      ],
+      "title": "PartSpan",
+      "type": "object"
+    },
+    "PointerItem": {
+      "additionalProperties": false,
+      "properties": {
+        "first": {
+          "minimum": 0,
+          "title": "First",
+          "type": "integer"
+        },
+        "last": {
+          "minimum": 0,
+          "title": "Last",
+          "type": "integer"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "utterance_id": {
+          "title": "Utterance Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "utterance_id",
+        "first",
+        "last",
+        "text"
+      ],
+      "title": "PointerItem",
+      "type": "object"
+    },
+    "Pointers": {
+      "additionalProperties": false,
+      "description": "A list of candidates for the learner or the AI to check, never a count of mistakes.",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/PointerItem"
+          },
+          "title": "Items",
+          "type": "array"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        },
+        "shown": {
+          "minimum": 0,
+          "title": "Shown",
+          "type": "integer"
+        },
+        "total": {
+          "minimum": 0,
+          "title": "Total",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "items",
+        "shown",
+        "total"
+      ],
+      "title": "Pointers",
+      "type": "object"
+    },
+    "Roles": {
+      "additionalProperties": false,
+      "properties": {
+        "confidence": {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "method": {
+          "enum": [
+            "pyannote",
+            "sherpa",
+            "tracks",
+            "single",
+            "user"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "swap_times_ms": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Swap Times Ms",
+          "type": "array"
+        }
+      },
+      "required": [
+        "confidence",
+        "method",
+        "swap_times_ms"
+      ],
+      "title": "Roles",
+      "type": "object"
+    },
+    "Source": {
+      "additionalProperties": false,
+      "properties": {
+        "tool": {
+          "title": "Tool",
+          "type": "string"
+        },
+        "version": {
+          "title": "Version",
+          "type": "string"
+        },
+        "weight": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Weight",
+          "type": "number"
+        }
+      },
+      "required": [
+        "tool",
+        "version",
+        "weight"
+      ],
+      "title": "Source",
+      "type": "object"
+    },
+    "Speaker": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "pyannote",
+            "sherpa",
+            "tracks",
+            "single"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "speech_ms": {
+          "minimum": 0,
+          "title": "Speech Ms",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "speech_ms",
+        "source"
+      ],
+      "title": "Speaker",
+      "type": "object"
+    },
+    "Tool": {
+      "additionalProperties": false,
+      "description": "One step of the analysis as it ran; `ran` names what actually ran, so a fallback is never hidden.",
+      "properties": {
+        "coverage": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Coverage"
+        },
+        "device": {
+          "anyOf": [
+            {
+              "enum": [
+                "cpu",
+                "gpu"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device"
+        },
+        "fallback_for": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Fallback For"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "licence_class": {
+          "anyOf": [
+            {
+              "enum": [
+                "permissive",
+                "cc-by",
+                "gpl",
+                "nc"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Licence Class"
+        },
+        "peak_ram_mb": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Peak Ram Mb"
+        },
+        "peak_vram_mb": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Peak Vram Mb"
+        },
+        "ran": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Ran"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reason"
+        },
+        "reason_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reason Code"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "partial",
+            "skipped",
+            "unavailable",
+            "failed",
+            "disabled"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Version"
+        },
+        "wall_ms": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Wall Ms"
+        }
+      },
+      "required": [
+        "id",
+        "status",
+        "reason_code",
+        "reason",
+        "coverage",
+        "version",
+        "ran",
+        "fallback_for",
+        "device",
+        "wall_ms",
+        "peak_ram_mb",
+        "peak_vram_mb",
+        "licence_class"
+      ],
+      "title": "Tool",
+      "type": "object"
+    },
+    "UserTranscript": {
+      "additionalProperties": false,
+      "properties": {
+        "differences_shown": {
+          "minimum": 0,
+          "title": "Differences Shown",
+          "type": "integer"
+        },
+        "differences_total": {
+          "minimum": 0,
+          "title": "Differences Total",
+          "type": "integer"
+        },
+        "names_removed": {
+          "title": "Names Removed",
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "none",
+            "ingested"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "word_match_pct": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Word Match Pct"
+        }
+      },
+      "required": [
+        "status",
+        "names_removed",
+        "word_match_pct",
+        "differences_shown",
+        "differences_total"
+      ],
+      "title": "UserTranscript",
+      "type": "object"
+    },
+    "Utterance": {
+      "additionalProperties": false,
+      "properties": {
+        "answer_id": {
+          "title": "Answer Id",
+          "type": "string"
+        },
+        "end_ms": {
+          "minimum": 0,
+          "title": "End Ms",
+          "type": "integer"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "start_ms": {
+          "minimum": 0,
+          "title": "Start Ms",
+          "type": "integer"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "answer_id",
+        "start_ms",
+        "end_ms",
+        "text"
+      ],
+      "title": "Utterance",
+      "type": "object"
+    },
+    "WarningEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "text"
+      ],
+      "title": "WarningEntry",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "The whole evidence package of one job.",
+  "properties": {
+    "candidates": {
+      "items": {
+        "$ref": "#/$defs/Candidate"
+      },
+      "title": "Candidates",
+      "type": "array"
+    },
+    "definitions": {
+      "items": {
+        "$ref": "#/$defs/Definition"
+      },
+      "title": "Definitions",
+      "type": "array"
+    },
+    "differences": {
+      "items": {
+        "$ref": "#/$defs/Difference"
+      },
+      "title": "Differences",
+      "type": "array"
+    },
+    "disclaimer": {
+      "title": "Disclaimer",
+      "type": "string"
+    },
+    "examiner_turns": {
+      "items": {
+        "$ref": "#/$defs/ExaminerTurn"
+      },
+      "title": "Examiner Turns",
+      "type": "array"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "manifest": {
+      "$ref": "#/$defs/Manifest"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "speakers": {
+      "items": {
+        "$ref": "#/$defs/Speaker"
+      },
+      "title": "Speakers",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "manifest",
+    "speakers",
+    "candidates",
+    "examiner_turns",
+    "differences",
+    "definitions",
+    "limitations",
+    "disclaimer"
+  ],
+  "title": "Fluentfolio evidence 1.0.0",
+  "type": "object"
+}

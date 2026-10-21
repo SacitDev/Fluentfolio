@@ -1,0 +1,41 @@
+# Fluentfolio's own semgrep rules, run with the registry's p/python: semgrep --config p/python --config .semgrep
+rules:
+  - id: ff-hf-logout
+    languages: [python]
+    severity: ERROR
+    message: >-
+      logout() without token_name removes every Hugging Face token saved on this computer, the learner's own
+      included. Pass the name Fluentfolio recorded when it saved its token.
+    patterns:
+      - pattern: huggingface_hub.logout(...)
+      - pattern-not: huggingface_hub.logout(..., token_name=$NAME, ...)
+
+  - id: ff-no-os-environ-to-child
+    languages: [python]
+    severity: ERROR
+    message: >-
+      A child process gets an environment built for it (child_env, own_env), never the whole os.environ:
+      it may hold the Hugging Face token, PYTHONPATH or a proxy password.
+    paths:
+      include: [src/]
+    pattern-either:
+      - patterns:
+          - pattern: subprocess.$CALL(...)
+          - metavariable-regex:
+              metavariable: $CALL
+              regex: ^(Popen|run|call|check_call|check_output)$
+          - pattern-not: subprocess.$CALL(..., env=$ENV, ...)
+      - pattern: subprocess.$CALL(..., env=os.environ, ...)
+      - pattern: subprocess.$CALL(..., env=os.environ.copy(), ...)
+      - pattern: subprocess.$CALL(..., env=dict(os.environ, ...), ...)
+      - pattern: subprocess.$CALL(..., env={**os.environ, ...}, ...)
+
+  - id: ff-no-markup-safe
+    languages: [generic]
+    severity: ERROR
+    message: >-
+      Text in a page is always escaped: a transcript or a file name can hold markup. Do not mark text as safe
+      with Markup() or the |safe filter, and do not switch autoescape off.
+    paths:
+      include: [src/fluentfolio/web/]
+    pattern-regex: (\bMarkup\s*\(|\|\s*safe\b|autoescape\s*(=\s*False|false))

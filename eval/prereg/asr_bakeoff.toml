@@ -1,0 +1,303 @@
+# Pre-registration: which speech model gives the most faithful transcript of a learner's speech.
+# Committed before any model runs on a test split. After the freeze no value, rule or threshold below
+# changes; a model that loses is a result. Thresholds that are "set on dev" are fitted on the dev splits
+# only, then frozen before the test splits run. All hashes are SHA-256 in lower-case hex.
+
+name = "asr_bakeoff"
+question = """
+Should the default speech model stay Parakeet TDT 0.6B v2 or should v3 be proposed instead, does Canary 1B v2
+earn a place next to Whisper, which transcript style does each model get, do the voiced-gap markers go into
+the text for the AI chat, and what confidence threshold does each model use for unsure words?"""
+seed = 20261013
+max_run_hours = 8
+
+# ---------------------------------------------------------------------------------------------------------
+[[candidates]]
+id = "parakeet-tdt-0.6b-v2"
+repo = "istupakov/parakeet-tdt-0.6b-v2-onnx"
+revision = "0bbb45a3365852604aef28b538a8f066f4ccaa85"
+role = "the default; stays the default whatever the result, unless the maintainer accepts a proposed switch"
+
+[[candidates]]
+id = "parakeet-tdt-0.6b-v3"
+repo = "istupakov/parakeet-tdt-0.6b-v3-onnx"
+revision = "8f23f0c03c8761650bdb5b40aaf3e40d2c15f1ce"
+role = "an option; may be proposed as the default"
+
+[[candidates]]
+id = "whisper-large-v3-turbo"
+repo = "mobiuslabsgmbh/faster-whisper-large-v3-turbo"
+revision = "0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf"
+role = "an option, run as shipped (no initial prompt)"
+# A second Whisper run with this prompt counts invented text only; it never decides anything else.
+filler_prompt = "Umm, let me think like, hmm... Okay, here's what I'm, like, thinking."
+
+[[candidates]]
+id = "canary-1b-v2"
+repo = "istupakov/canary-1b-v2-onnx"
+revision = "5ebc1520cef7b6b318b3526ad17adbfe00bc1bfc"
+role = "shipped next to Whisper only if it meets every Canary rule below"
+# Word times come from the runtime as shipped; if it gives none, from the product's CTC alignment pass,
+# whose time is counted in Canary's real-time factor.
+word_times = "runtime, else the CTC alignment pass"
+
+# Every model runs through the product's own speech step code (VAD chunks, word output, guards), int8 ONNX
+# or CTranslate2 as shipped, on the GPU where the product allows it and on the CPU for the CPU timings.
+
+# ---------------------------------------------------------------------------------------------------------
+[data.edacc]
+what = "EdAcc, English conversations over video calls between speakers with many accents"
+source = "https://huggingface.co/datasets/edinburghcstr/edacc"
+revision = "d9ae7bd344f0562b766ec93ee5ce8f2f9568ce66"
+licence = "CC BY-SA 4.0 (the dataset card says: Public Domain, Creative Commons Attribution-ShareAlike)"
+dev_split = "validation"
+test_split = "test"
+# Shards: per split, the shard files in order of sha256("20261013:" + file name); each one is taken when it
+# keeps that split's total at or under 1.5 GB (10^9 bytes), otherwise passed over. This gives the lists below.
+shard_rule = "sha256 order of '20261013:<file name>', first fit under 1.5 GB per split"
+# Items: an item is one row, with the ID "<shard file name>:<row number>". A row is eligible when its
+# speaker's l1 is given (not empty) and does not contain "english" (case-insensitive), it lasts 1-30 s, its
+# reference is not the dataset's placeholder for a stretch left out of scoring, and its normalised
+# reference has 3 words or more. Speakers are taken in order of sha256("20261013:" + speaker); from each,
+# rows in order of sha256("20261013:" + item ID), each one taken when it keeps the speaker's total at or
+# under 180 s. A next speaker is added only while the split's total is under 1,800 s. Only the metadata
+# columns and the reference's word count are read to apply this rule.
+selection = "l1 given, no 'english'; rows of 1-30 s with 3+ words; speakers by hash, 180 s each, to 1800 s"
+l1_exclude = "english"
+row_min_s = 1
+row_max_s = 30
+min_words = 3
+not_scored = "IGNORE_TIME_SEGMENT_IN_SCORING"  # the whole reference text of a row left out of scoring
+speaker_cap_s = 180
+split_target_s = 1800
+
+[[data.edacc.dev_shards]]
+file = "data/validation-00003-of-00006-b26008b096562d41.parquet"
+size = 491614484
+sha256 = "03c26e00c5e921d8316301a1088723e217e3f85c860f454565358e5bf27a01bf"
+
+[[data.edacc.dev_shards]]
+file = "data/validation-00004-of-00006-8cad96ca1a653334.parquet"
+size = 786779035
+sha256 = "aaab611405faacf6ea737f824ebd032e150c7b0d61fb2a9f7f9f82c42ba0cc3a"
+
+[[data.edacc.test_shards]]
+file = "data/test-00004-of-00010-806407c9bc68112a.parquet"
+size = 257093852
+sha256 = "923dde356508439b93babc65940567d80915ffe34d6fed8dad23e09931388320"
+
+[[data.edacc.test_shards]]
+file = "data/test-00000-of-00010-f0aceb1ca4406ff1.parquet"
+size = 471245844
+sha256 = "1aeffcba6a8a77b7b2c0be70fa7a30fa437f8a5705b02d1d5cab2932d76af767"
+
+[[data.edacc.test_shards]]
+file = "data/test-00002-of-00010-2b021baedb4deb8a.parquet"
+size = 333196154
+sha256 = "c165a89a35511863acf301fbca747a92b44a2694a344ebf3edc0586de337ba26"
+
+[[data.edacc.test_shards]]
+file = "data/test-00008-of-00010-d1aa19b51ad423da.parquet"
+size = 408862837
+sha256 = "9056bf79642ea7ef6044486b44a2e087cc2b2640bba50dde9f922882d8551598"
+
+[data.nyra]
+what = "Nyra disfluency set: one speaker, verbatim references with fillers, cut-offs and repetitions"
+source = "https://huggingface.co/datasets/nyralabs/disfluency_speech_english"
+revision = "723e9e69bfbdc8214a9b8ce8815985e90afcbaa3"
+licence = "Apache-2.0"
+selection = "every clip of each split"
+
+[data.nyra.dev]
+file = "data/validation-00000-of-00001.parquet"
+size = 53655526
+sha256 = "c4866c81d11c7166a5dc2ce8d971634397614193ce53e3b250c2af29b2fdab56"
+clips = 250
+
+[data.nyra.test]
+file = "data/test-00000-of-00001.parquet"
+size = 50998705
+sha256 = "b1abf839d6dee9832d642b2d0be2de077cd9cdd1964bc505196f39720f55e9da"
+clips = 249
+
+[data.librispeech]
+what = "LibriSpeech test-clean, read speech; harness check only"
+source = "https://openslr.trmal.net/resources/12/test-clean.tar.gz"
+sha256 = "39fde525e59672dc6d1551919b1478f724438a95aa55f874b576be21967e6c23"
+licence = "CC BY 4.0"
+selection = "utterances in order of sha256('20261013:' + utterance ID), taken until 600 s"
+target_s = 600
+
+[data.composed]
+what = "sessions composed from public clips with exact truth: set B, CS-HES and non-speech clips"
+# Set B: the six committed recipes with seed + 1000 and no voice of set A. Each synthetic voice is replaced
+# by another Kokoro-82M voice (revision f3ff3571) of the same sex and accent (the map below), and each of its
+# lines is synthesised again from the same text. The LibriSpeech candidate is replaced by the test-clean
+# speaker of the same sex who appears in no committed recipe, the first in order of
+# sha256("20261013:" + recipe name + ":" + speaker ID); each clip by that speaker's unused utterance closest
+# in duration (ties by utterance ID). Built locally, never committed. Each clip is prepared as set A's
+# were (eval/sets.py), except that silence frames up to -37 dBFS are cut, not only those under -55 dBFS:
+# the new speakers' noise floors reach about -50 dBFS. An utterance the builder still refuses is passed
+# over for the next one in that order.
+set_b = "six recipes, seed + 1000, every voice replaced: Kokoro voices by the map, LibriSpeech by hash"
+set_b_voices = { bf_emma = "bf_isabella", bm_george = "bm_lewis", af_bella = "af_nicole" }
+hesitations = "CS-HES, derived from CS-SOLO with fillers and repeated lead words at known times"
+# Non-speech: 120 s each, made locally: digital silence with a noise floor 60 dB under full scale, pink noise
+# at 30 dB under full scale, and the synthetic music bed (held chords and a sung line) at 20 dB under full
+# scale.
+non_speech = ["silence", "pink_noise", "music"]
+non_speech_s = 120
+
+# ---------------------------------------------------------------------------------------------------------
+[normaliser]
+# One normaliser for every model and set, in eval/ only: lower case; digits spelled as words; "%" as
+# "percent"; the backchannels below written as one word, so they never count as fillers; hyphens and
+# slashes as spaces; punctuation removed except an apostrophe inside a word; tags in brackets ([laughter],
+# <noise>) removed, except the filler tags below; runs of spaces collapsed. Repair retention reads the
+# cut-off marks (*) from the reference before this normaliser removes them.
+fillers = ["uh", "um", "er", "erm", "ah", "eh", "hmm", "mm"]
+filler_tags = ["[uh]", "[um]"]
+backchannels = ["uh-huh", "huh-uh", "mm-hmm"]
+
+[metrics]
+wer = "word error rate after the normaliser, with jiwer; per item, then pooled over the set (errors / words)"
+content_wer = "the same with every filler removed from both sides"
+fillers = """
+position-matched filler precision, recall and F1: every filler form and filler tag becomes one FILLER
+token; the reference and the output are aligned word by word (jiwer's alignment); an output FILLER aligned
+to a reference FILLER is a true positive, any other output FILLER a false positive, any other reference
+FILLER a false negative"""
+grammar_edits = """
+grammar-edit rate per 100 reference words: aligned substitutions where both words belong to the same group
+of be (am is are was were be been being), have (have has had having), do (do does did doing done),
+articles (a an the) or pronouns (i me my mine you your yours he him his she her hers it its we us our ours
+they them their theirs), or where the longer word is the shorter one (of 2 letters or more) plus one of the
+endings s, es, ed or ing, or plus d after a final e; a final e is dropped before ing"""
+grammar_endings = ["s", "es", "ed", "ing"]
+repair_retention = """
+on Nyra: the share of the reference's repeated words (a word written twice in a row) and cut-off words
+(ending in *) whose aligned output word keeps them: the repeated word appears twice, or the output has a
+word that starts with the cut-off's letters"""
+insertions = "words written per minute of the non-speech clips"
+timestamps = "share of words with a start and end inside their chunk, and starts that never go backwards"
+clip_edge_error = """
+composed sessions: for each truth clip whose first and last reference words were both recognised, the
+absolute difference in ms between the first word's start and the clip's start, and between the last
+word's end and the clip's end; the median over all edges"""
+real_time_factor = "processing wall time / audio duration, on the GPU and on the CPU (CPU on a 20-min subset)"
+cpu_subset = "Nyra test clips in order of sha256('20261013:' + clip ID), taken until 1,200 s"
+cpu_subset_s = 1200
+peak_ram = "the largest resident memory of the whole process tree, sampled every 0.5 s"
+canary_loop_guard = "the number of segments Canary's loop guard dropped"
+# The guard drops a whole segment with more tokens a second than this, or with a run of `run` words said
+# `repeats` times or more (the product's values, tied to it by a test).
+canary_loop_guard_values = { tokens_per_s = 8.0, run = 4, repeats = 3 }
+# The voiced-gap values below in numbers, tied to the product's by a test.
+voiced_gap_values = { gap_ms = 200, speech_ms = 200, other_speaker_ms = 300 }
+voiced_gap = """
+a voiced gap is a stretch of 200 ms or more between two words of one utterance in which the voice
+detector marks 200 ms or more of speech, not within 300 ms of another speaker's speech. Precision on the
+composed sessions: a gap is correct when it overlaps a truth filler, repeated word or cut-off the model did
+not write. Precision on Nyra: a gap is correct when the aligned reference between its two words holds a
+filler tag, a cut-off, a sound tag or a repeated word that the output lacks"""
+confidence = """
+for each model that gives a confidence: a word is unsure when its confidence is under the threshold; the
+target is the output words that the alignment marks as substituted or inserted"""
+
+[metrics.grammar_groups]
+# The closed groups of the grammar-edit counter, as listed in the grammar_edits text above.
+be = ["am", "is", "are", "was", "were", "be", "been", "being"]
+have = ["have", "has", "had", "having"]
+do = ["do", "does", "did", "doing", "done"]
+article = ["a", "an", "the"]
+pronoun = ["i", "me", "my", "mine", "you", "your", "yours", "he", "him", "his", "she", "her", "hers", "it",
+           "its", "we", "us", "our", "ours", "they", "them", "their", "theirs"]
+
+# ---------------------------------------------------------------------------------------------------------
+[counter_check]
+# Before any decision uses it, a reviewer with IELTS expertise judges 20 aligned pairs that the grammar-edit
+# counter flags on EdAcc dev output. Below 0.8 precision the metric is reported as "not reliable" and drops
+# out of every rule that names it.
+pairs = 20
+min_precision = 0.8
+model = "whisper-large-v3-turbo"  # the candidate most likely to smooth a speaker's grammar
+order = "the flagged substitutions in order of sha256('20261013:<row ID>:<reference word index>'), first 20"
+# The check's result, recorded before the freeze; every rule that names the grammar-edit rate follows it.
+reliable = false
+result = """
+Not reliable. The counter flagged exactly 20 substitutions in 3,347 reference words of the first dev
+selection, and the reviewer judged 15 of them real grammar edits: precision 0.75. Four false flags were one
+pronoun heard as another (a misheard word, not an edit) and one was borderline. Once the row left out of
+scoring was removed, 3,342 words gave 20 flags again: 19 of the same, of which 14 were judged real, and one
+new, judged real too: precision 0.75 (15 of 20) again. Both counts take the borderline flag as false; taken
+as real, precision would be exactly 0.80, so the counter stands on the bar at best."""
+
+[calibration]
+# The harness is checked first. Outside a range, no decision is taken until the cause is found.
+parakeet_v2_librispeech_wer_pct = [1.0, 3.5]
+canary_nyra_test_filler_f1_pct = [16.7, 36.7]  # the published 26.7 plus or minus 10 points
+# The Canary filler F1 here is the Nyra benchmark's own scoring at a pinned commit, as the published figure
+# is; if that scorer cannot be used, the position-matched F1 above is used and the report says so.
+
+[statistics]
+method = "paired bootstrap of the difference between two models"
+resamples = 2000
+seed = 20261013
+interval = "95 % percentile interval"
+units = { edacc = "speaker", nyra = "clip" }
+better = "the interval excludes 0 and the margin in the rule is met"
+
+# ---------------------------------------------------------------------------------------------------------
+[decisions.default_model]
+rule = """
+Propose Parakeet v3 as the default only if its filler F1 on the Nyra test split is at least 5 points
+higher than v2's (interval excludes 0) and its WER on the EdAcc test selection is no more than 1 point
+higher than v2's. Otherwise v2 stays the default. A proposal is a recommendation to the maintainer, not
+a change."""
+filler_f1_margin_points = 5.0
+wer_margin_points = 1.0
+
+[decisions.canary]
+rule = """
+Canary is added next to Whisper only if every condition holds: a lower grammar-edit rate than Whisper on
+the EdAcc test selection (interval excludes 0); filler F1 on the Nyra test split at least Whisper's; WER on
+the EdAcc test selection no more than Whisper's + 2 points; median clip-edge error on composed set B no more
+than Parakeet v2's + 40 ms; a CPU real-time factor of 1.0 or less with alignment time included; peak RAM
+6.5 GB or less. Canary never replaces Whisper. When the counter check finds the grammar-edit rate not
+reliable, the first condition drops out and every other one still holds."""
+wer_margin_points = 2.0
+edge_margin_ms = 40
+cpu_rtf_max = 1.0
+peak_ram_gb_max = 6.5
+
+[decisions.transcript_style]
+rule = """
+A model's style is verbatim-best-effort only when its grammar-edit rate on the EdAcc test selection is no
+more than Parakeet v2's + 1 per 100 words; otherwise smoothed. Whisper is always smoothed. When the counter
+check finds the grammar-edit rate not reliable, no model is judged by it and the conservative default
+applies: verbatim-best-effort for both Parakeet models, smoothed for Whisper and for Canary."""
+margin_per_100_words = 1.0
+
+[decisions.voiced_gaps]
+rule = """
+Voiced-gap markers go into the text for the AI chat only if their precision is 0.7 or more on the composed
+sessions and 0.7 or more on Nyra test; otherwise they stay in the details folder."""
+min_precision = 0.7
+
+[decisions.confidence]
+rule = """
+Per model, on EdAcc dev and Nyra dev together: the threshold from 0.05 to 0.95 in steps of 0.05 with the
+highest F1 for finding substituted or inserted words; ties to the lower threshold. If the best F1 is under
+0.2, the model gets no threshold and the evidence says so. Fixed before the test splits run."""
+grid = [0.05, 0.95, 0.05]
+min_f1 = 0.2
+
+[decisions.parakeet_cpu]
+rule = """
+If Parakeet v2 on this machine's CPU takes more than 3 minutes for the 15-minute composed session, the
+report says so with the measured time and proposes GPU support for it; the product does not change."""
+max_cpu_s_for_15_min = 180
+
+[report]
+lines = ["prereg_sha256: <sha256 of this file at the freeze commit>", "Decision: <one line per decision>"]
+content = "every model, every set and every metric, including the ones that lose, with per-item outputs"
