@@ -33,6 +33,19 @@ def test_committed_lock_is_clean(platform: str) -> None:
     assert lock_problems(text, platform) == []
 
 
+@pytest.mark.parametrize("platform", PLATFORMS)
+def test_security_packages_are_unique_and_keep_the_verified_conda_hashes(platform: str) -> None:
+    text = resources.files("fluentfolio.data").joinpath(f"mfa-env-{platform}.txt").read_text(encoding="utf-8")
+    expected = {
+        "filelock": "filelock-4.2.1-pyhd8ed1ab_0.conda#f3f085703753cf802b2719d28a570465",
+        "setuptools": "setuptools-84.1.0-pyhe730653_0.conda#1541d7acfe174f08d7696ea882765533",
+    }
+    prefix = "https://conda.anaconda.org/conda-forge/noarch/"
+    for name, package in expected.items():
+        lines = [line for line in text.splitlines() if f"/{name}-" in line]
+        assert lines == [prefix + package]
+
+
 def test_planted_defaults_channel_and_missing_hash_are_found() -> None:
     text = resources.files("fluentfolio.data").joinpath("mfa-env-win-64.txt").read_text(encoding="utf-8")
     planted = (

@@ -1,6 +1,6 @@
 [project]
 name = "fluentfolio"
-version = "0.1.0"
+version = "0.1.1"
 description = "Measured evidence from IELTS Speaking practice recordings, with a grading prompt for any AI chat."
 readme = "README.md"
 license = "MIT"
@@ -78,10 +78,12 @@ build-backend = "uv_build"
 [tool.uv]
 # Only versions at least two weeks old, and wheels for both supported platforms.
 exclude-newer = "14 days"
-# Two exceptions, for security fixes. Remove each one after the date given, when that version is two weeks old.
+# Exceptions for security fixes. Remove each after the date given, when that version is two weeks old.
 # certifi 2026.10.19 drops a certificate authority whose keys leaked (GHSA-6q48-6c7w-9gw2): after 3 November 2026.
 # pillow 13.0.0 fixes nine image flaws published on 20 October 2026: after 30 October 2026.
-exclude-newer-package = { certifi = "2026-10-21T00:00:00Z", pillow = "2026-10-21T00:00:00Z" }
+# filelock 4.2.1 fixes unsafe lock-file handling: after 31 October 2026.
+# setuptools 84.1.0 fixes a Windows path escape during legacy wheel installation: after 2 November 2026.
+exclude-newer-package = { certifi = "2026-10-21T00:00:00Z", pillow = "2026-10-21T00:00:00Z", filelock = "2026-10-18T00:00:00Z", setuptools = "2026-10-20T00:00:00Z" }
 required-environments = [
     "sys_platform == 'win32' and platform_machine == 'AMD64'",
     "sys_platform == 'linux' and platform_machine == 'x86_64'",

@@ -8,10 +8,12 @@ aligner's, else the speech model's own.
 from __future__ import annotations
 
 import csv
+import json
 import re
 import sys
 import unicodedata
 from dataclasses import dataclass
+from importlib import resources
 from pathlib import Path
 from typing import Any
 
@@ -27,6 +29,13 @@ RATE = 16000
 PAD_MS = 200  # audio kept around an utterance's words, never more than half the gap to a neighbour word
 MAX_CUT_MS = 30000
 IS_WINDOWS = sys.platform == "win32"
+LOCK = "mfa-env-win-64.txt" if IS_WINDOWS else "mfa-env-linux-64.txt"
+SECURITY_PACKAGES = ("filelock", "setuptools")
+LOCK_RECORD = re.compile(
+    r"https://conda\.anaconda\.org/conda-forge/noarch/"
+    r"(?P<name>filelock|setuptools)-(?P<version>[^/-]+)-(?P<build>[^/#]+)"
+    r"\.(?:conda|tar\.bz2)#(?P<md5>[0-9a-f]{32})"
+)
 DICTIONARY = "english_us_arpa.dict"
 ACOUSTIC = "english_us_arpa_acoustic.zip"
 G2P = "english_us_arpa_g2p.zip"
@@ -161,6 +170,27 @@ def env_dir(app: Path) -> Path:
     return app / "envs" / "mfa"
 
 
+def env_current(app: Path) -> bool:
+    """Whether both security-package records match the bundled lock; installed bytes are not checked."""
+    try:
+        text = resources.files("fluentfolio.data").joinpath(LOCK).read_text(encoding="utf-8")
+        for name in SECURITY_PACKAGES:
+            entries = [line for line in text.splitlines() if f"/{name}-" in line and not line.startswith("#")]
+            if len(entries) != 1 or (expected := LOCK_RECORD.fullmatch(entries[0])) is None:
+                return False
+            records = list((env_dir(app) / "conda-meta").glob(f"{name}-*.json"))
+            if len(records) != 1:
+                return False
+            record = json.loads(records[0].read_text(encoding="utf-8"))
+            if not isinstance(record, dict) or any(
+                record.get(k) != v for k, v in expected.groupdict().items()
+            ):
+                return False
+    except (OSError, UnicodeError, json.JSONDecodeError):
+        return False
+    return True
+
+
 def python(env: Path) -> Path:
     return env / "python.exe" if IS_WINDOWS else env / "bin" / "python"
 
@@ -220,6 +250,8 @@ def prepare(job: Path, app: Path, models: Path) -> Program | Row:
     record = read_json(job / "job.json")
     if not catalogue.switched_on(record["settings"].get("components", {}), "mfa", SYSTEM):
         return {"status": "disabled"}
+    if not env_current(app):
+        return {"status": "unavailable", "code": "E_COMPONENT_UNAVAILABLE"}
     tool = program(app, models, record["job_id"])
     files = [Path(tool.argv[0]), *(models / "mfa" / name for name in (DICTIONARY, ACOUSTIC, G2P))]
     if not all(f.is_file() for f in files):

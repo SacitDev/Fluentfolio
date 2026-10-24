@@ -61,7 +61,7 @@ Windows and Linux never install.
 | execnet | 2.1.2 | MIT | permissive | development |
 | fastapi | 0.142.2 | MIT | permissive | app |
 | faster-whisper | 1.2.1 | MIT | permissive | app |
-| filelock | 4.0.6 | MIT | permissive | app |
+| filelock | 4.2.1 | MIT | permissive | app |
 | flatbuffers | 25.12.19 | Apache-2.0 | permissive | app |
 | fonttools | 4.66.0 | MIT | permissive | app |
 | frozenlist | 1.8.0 | Apache-2.0 | permissive | app |
@@ -128,7 +128,7 @@ Windows and Linux never install.
 | onnx-asr | 0.12.0 | MIT | permissive | app |
 | onnxruntime | 1.30.0 | MIT | permissive | app |
 | opensmile | 2.6.0 | LicenseRef-openSMILE-Research | nc | app |
-| opentelemetry-api | 1.45.0 | Apache-2.0 | permissive | app |
+| opentelemetry-api | 1.45.1 | Apache-2.0 | permissive | app |
 | opentelemetry-exporter-http-transport | 0.66b0 | Apache-2.0 | permissive | app |
 | opentelemetry-exporter-otlp | 1.45.0 | Apache-2.0 | permissive | app |
 | opentelemetry-exporter-otlp-common | 0.66b0 | Apache-2.0 | permissive | app |
@@ -136,8 +136,8 @@ Windows and Linux never install.
 | opentelemetry-exporter-otlp-proto-grpc | 1.45.0 | Apache-2.0 | permissive | app |
 | opentelemetry-exporter-otlp-proto-http | 1.45.0 | Apache-2.0 | permissive | app |
 | opentelemetry-proto | 1.45.0 | Apache-2.0 | permissive | app |
-| opentelemetry-sdk | 1.45.0 | Apache-2.0 | permissive | app |
-| opentelemetry-semantic-conventions | 0.66b0 | Apache-2.0 | permissive | app |
+| opentelemetry-sdk | 1.45.1 | Apache-2.0 | permissive | app |
+| opentelemetry-semantic-conventions | 0.66b1 | Apache-2.0 | permissive | app |
 | optuna | 5.0.0 | MIT | permissive | app |
 | oyaml | 1.0 | MIT | permissive | app |
 | packaging | 26.3 | Apache-2.0 OR BSD-2-Clause | permissive | app |
@@ -184,7 +184,7 @@ Windows and Linux never install.
 | safetensors | 0.8.0 | Apache-2.0 | permissive | app |
 | scikit-learn | 1.9.1 | BSD-3-Clause | permissive | app |
 | scipy | 1.18.1 | BSD | permissive | app |
-| setuptools | 84.0.0 | MIT | permissive | app |
+| setuptools | 84.1.0 | MIT | permissive | app |
 | shellcheck-py | 0.11.0.1 | MIT | permissive | development |
 | shellingham | 1.5.4 | ISC | permissive | app |
 | sherpa-onnx | 1.13.8 | Apache-2.0 | permissive | app |

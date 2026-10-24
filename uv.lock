@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = "==3.12.*"
 resolution-markers = [
     "sys_platform == 'win32' and extra != 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130'",
@@ -28,7 +28,9 @@ exclude-newer-span = "P14D"
 
 [options.exclude-newer-package]
 certifi = "2026-10-21T00:00:00Z"
+filelock = "2026-10-18T00:00:00Z"
 pillow = "2026-10-21T00:00:00Z"
+setuptools = "2026-10-20T00:00:00Z"
 
 [manifest]
 excludes = ["torchcodec"]
@@ -355,7 +357,7 @@ name = "bandit"
 version = "1.9.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "sys_platform == 'win32' or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
     { name = "pyyaml" },
     { name = "rich" },
     { name = "stevedore" },
@@ -406,7 +408,7 @@ name = "cffi"
 version = "2.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pycparser", marker = "implementation_name != 'PyPy' or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "pycparser", marker = "implementation_name != 'PyPy'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/9e/ef/008a1939e372c06329a3fce4279c02f328488f3526744906eeec3da7ad5f/cffi-2.1.1.tar.gz", hash = "sha256:dd31f52ea1086513bb9df30f8fcee9b8918323ae067a3d5b78bc826a000712be", size = 530807, upload-time = "2026-08-03T21:21:18.939Z" }
 wheels = [
@@ -589,7 +591,7 @@ name = "cuda-bindings"
 version = "13.4.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cuda-pathfinder", marker = "(sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform == 'emscripten' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform == 'win32' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "cuda-pathfinder", marker = "(sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/65/11/1293429c1c3a3e19b551275e65efddd122a905bbe7e368816a59f3ef2a41/cuda_bindings-13.4.3-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:bfbd3f7d4ac04dd41dc49121b9e408c8283992f47124c2290ecb79bbbadcca8e", size = 6488226, upload-time = "2026-09-23T02:22:00.578Z" },
@@ -616,43 +618,43 @@ wheels = [
 
 [package.optional-dependencies]
 cublas = [
-    { name = "nvidia-cublas", marker = "(platform_machine != 'aarch64' and platform_machine != 'x86_64' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform != 'linux' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
-    { name = "nvidia-cuda-nvrtc", marker = "(platform_machine != 'aarch64' and platform_machine != 'x86_64' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform != 'linux' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-cublas", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-cuda-nvrtc", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
 ]
 cudart = [
-    { name = "nvidia-cuda-runtime", marker = "(platform_machine != 'aarch64' and platform_machine != 'x86_64' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform != 'linux' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-cuda-runtime", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
 ]
 cufft = [
-    { name = "nvidia-cufft", marker = "(platform_machine != 'aarch64' and platform_machine != 'x86_64' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform != 'linux' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
-    { name = "nvidia-nvjitlink", marker = "(platform_machine != 'aarch64' and platform_machine != 'x86_64' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform != 'linux' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-cufft", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-nvjitlink", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
 ]
 cufile = [
-    { name = "nvidia-cufile", marker = "(platform_machine != 'aarch64' and platform_machine != 'x86_64' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform != 'linux' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-cufile", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
 ]
 cupti = [
-    { name = "nvidia-cuda-cupti", marker = "(platform_machine != 'aarch64' and platform_machine != 'x86_64' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform != 'linux' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-cuda-cupti", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
 ]
 curand = [
-    { name = "nvidia-curand", marker = "(platform_machine != 'aarch64' and platform_machine != 'x86_64' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform != 'linux' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-curand", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
 ]
 cusolver = [
-    { name = "nvidia-cublas", marker = "(platform_machine != 'aarch64' and platform_machine != 'x86_64' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform != 'linux' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
-    { name = "nvidia-cusolver", marker = "(platform_machine != 'aarch64' and platform_machine != 'x86_64' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform != 'linux' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
-    { name = "nvidia-cusparse", marker = "(platform_machine != 'aarch64' and platform_machine != 'x86_64' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform != 'linux' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
-    { name = "nvidia-nvjitlink", marker = "(platform_machine != 'aarch64' and platform_machine != 'x86_64' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform != 'linux' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-cublas", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-cusolver", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-cusparse", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-nvjitlink", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
 ]
 cusparse = [
-    { name = "nvidia-cusparse", marker = "(platform_machine != 'aarch64' and platform_machine != 'x86_64' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform != 'linux' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
-    { name = "nvidia-nvjitlink", marker = "(platform_machine != 'aarch64' and platform_machine != 'x86_64' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform != 'linux' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-cusparse", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-nvjitlink", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
 ]
 nvjitlink = [
-    { name = "nvidia-nvjitlink", marker = "(platform_machine != 'aarch64' and platform_machine != 'x86_64' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform != 'linux' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-nvjitlink", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
 ]
 nvrtc = [
-    { name = "nvidia-cuda-nvrtc", marker = "(platform_machine != 'aarch64' and platform_machine != 'x86_64' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform != 'linux' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-cuda-nvrtc", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
 ]
 nvtx = [
-    { name = "nvidia-nvtx", marker = "(platform_machine != 'aarch64' and platform_machine != 'x86_64' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform != 'linux' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-nvtx", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
 ]
 
 [[package]]
@@ -686,7 +688,7 @@ version = "0.25.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
-    { name = "colorama", marker = "sys_platform == 'win32' or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
     { name = "packaging" },
     { name = "requirements-parser" },
     { name = "tomli" },
@@ -778,11 +780,11 @@ wheels = [
 
 [[package]]
 name = "filelock"
-version = "4.0.6"
+version = "4.2.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/2b/2d/5cb7a5ac017031e96a63173f3d57a8a5162ce36f9ff461e62bc6da4d88ab/filelock-4.0.6.tar.gz", hash = "sha256:323fab3b2fb22d889b29fa83774f60029addddb4b6a1bcfa1e73066eabffb5f2", size = 248237, upload-time = "2026-09-28T22:16:16.257Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d5/98/771d8ca889f220d7d7e352addf500666368f0fd081c6080a83767580c6e4/filelock-4.2.1.tar.gz", hash = "sha256:c4c937ccac2a813cee448e662a56366cfb374c0f8702e75f295c412cc1c5d5a3", size = 650997, upload-time = "2026-10-17T16:48:14.435Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a9/3b/b74ae9db2f78f1354278731372ae89870626be7b86cbb46b8d707acd1a98/filelock-4.0.6-py3-none-any.whl", hash = "sha256:9b139fb93b2ac5807f7feaf63aa4546fbd74074a2d3f554c040f40a4694d7b9f", size = 109077, upload-time = "2026-09-28T22:16:14.731Z" },
+    { url = "https://files.pythonhosted.org/packages/28/00/db89d339bc4ecdc8087fa7b8607ba22ffc27bf96286f340c9620bea428b3/filelock-4.2.1-py3-none-any.whl", hash = "sha256:7be2662e9e826b9bba28afc0f843a123280d799a2ea44bb5d35ccec67905ae44", size = 162455, upload-time = "2026-10-17T16:48:12.937Z" },
 ]
 
 [[package]]
@@ -795,7 +797,7 @@ wheels = [
 
 [[package]]
 name = "fluentfolio"
-version = "0.1.0"
+version = "0.1.1"
 source = { editable = "." }
 dependencies = [
     { name = "av" },
@@ -1126,7 +1128,7 @@ dependencies = [
     { name = "click" },
     { name = "filelock" },
     { name = "fsspec" },
-    { name = "hf-xet", marker = "platform_machine == 'AMD64' or platform_machine == 'aarch64' or platform_machine == 'amd64' or platform_machine == 'arm64' or platform_machine == 'x86_64' or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "hf-xet", marker = "platform_machine == 'AMD64' or platform_machine == 'aarch64' or platform_machine == 'amd64' or platform_machine == 'arm64' or platform_machine == 'x86_64'" },
     { name = "httpx" },
     { name = "packaging" },
     { name = "pyyaml" },
@@ -1580,7 +1582,7 @@ version = "2.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "ast-serialize" },
-    { name = "librt", marker = "platform_python_implementation != 'PyPy' or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "librt", marker = "platform_python_implementation != 'PyPy'" },
     { name = "mypy-extensions" },
     { name = "pathspec" },
     { name = "typing-extensions" },
@@ -1647,7 +1649,7 @@ name = "nvidia-cublas"
 version = "13.1.1.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-cuda-nvrtc", marker = "(sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform == 'emscripten' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform == 'win32' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-cuda-nvrtc", marker = "(sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a7/a1/0bd24ee8c8d03adac032fd2909426a00c88f8c57961b1277ded97f91119f/nvidia_cublas-13.1.1.3-py3-none-manylinux_2_27_aarch64.whl", hash = "sha256:b7a210458267ac818974c53038fbec2e969d5c99f305ab15c72522fa9f001dd5", size = 542848918, upload-time = "2026-04-08T18:46:22.985Z" },
@@ -1713,7 +1715,7 @@ name = "nvidia-cudnn-cu13"
 version = "9.24.0.43"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-cublas", marker = "(sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform == 'emscripten' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform == 'win32' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-cublas", marker = "(sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ca/30/7c257e3d5cb4fecb147b93895c66e29c93f8e76d74b45bb418ff0587c4ec/nvidia_cudnn_cu13-9.24.0.43-py3-none-manylinux_2_27_aarch64.whl", hash = "sha256:a6812a554a1ff0413e9c52b84c26c050380649ab9615f9c16bded368ce9f421f", size = 650976863, upload-time = "2026-07-02T16:23:39.248Z" },
@@ -1726,7 +1728,7 @@ name = "nvidia-cufft"
 version = "12.0.0.61"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-nvjitlink", marker = "(sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform == 'emscripten' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform == 'win32' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-nvjitlink", marker = "(sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/8b/ae/f417a75c0259e85c1d2f83ca4e960289a5f814ed0cea74d18c353d3e989d/nvidia_cufft-12.0.0.61-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:2708c852ef8cd89d1d2068bdbece0aa188813a0c934db3779b9b1faa8442e5f5", size = 214053554, upload-time = "2025-09-04T08:31:38.196Z" },
@@ -1758,9 +1760,9 @@ name = "nvidia-cusolver"
 version = "12.0.4.66"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-cublas", marker = "(sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform == 'emscripten' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform == 'win32' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
-    { name = "nvidia-cusparse", marker = "(sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform == 'emscripten' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform == 'win32' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
-    { name = "nvidia-nvjitlink", marker = "(sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform == 'emscripten' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform == 'win32' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-cublas", marker = "(sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-cusparse", marker = "(sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-nvjitlink", marker = "(sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/c8/c3/b30c9e935fc01e3da443ec0116ed1b2a009bb867f5324d3f2d7e533e776b/nvidia_cusolver-12.0.4.66-py3-none-manylinux_2_27_aarch64.whl", hash = "sha256:02c2457eaa9e39de20f880f4bd8820e6a1cfb9f9a34f820eb12a155aa5bc92d2", size = 223467760, upload-time = "2025-09-04T08:33:04.222Z" },
@@ -1773,7 +1775,7 @@ name = "nvidia-cusparse"
 version = "12.6.3.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-nvjitlink", marker = "(sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform == 'emscripten' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130') or (sys_platform == 'win32' and extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "nvidia-nvjitlink", marker = "(sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-11-fluentfolio-cu130') or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f8/94/5c26f33738ae35276672f12615a64bd008ed5be6d1ebcb23579285d960a9/nvidia_cusparse-12.6.3.3-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:80bcc4662f23f1054ee334a15c72b8940402975e0eab63178fc7e670aa59472c", size = 162155568, upload-time = "2025-09-04T08:33:42.864Z" },
@@ -1880,14 +1882,14 @@ wheels = [
 
 [[package]]
 name = "opentelemetry-api"
-version = "1.45.0"
+version = "1.45.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/1f/dc/e12c1fe1ed8a7b7149777127b1a0e12ce5bd5a81d97408bedc2128c260f5/opentelemetry_api-1.45.0.tar.gz", hash = "sha256:711ede81773c8025c2c03dac0450bc89f3d30aea6eabcc815c570d4e35a963f7", size = 72115, upload-time = "2026-09-25T12:32:28.399Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/2e/02/6e0ae9cc61bd3169d401077b507b3ebc344745171e1051ab430be012dcd9/opentelemetry_api-1.45.1.tar.gz", hash = "sha256:aa38ed19bcc084ba42782a73255b3582283eced7ad6dddbd6695189e69adfb75", size = 72804, upload-time = "2026-10-06T17:32:58.133Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/44/b9/040d1a1c7836922828e6480cd2366bb8fe0ebf75b413d2bb51a9b0e7f78f/opentelemetry_api-1.45.0-py3-none-any.whl", hash = "sha256:80e068aba7cd56c8b58512d6a36f8d25cb1dfaa0c0a4cc1c938ccf9f362d9cb3", size = 60020, upload-time = "2026-09-25T12:32:03.192Z" },
+    { url = "https://files.pythonhosted.org/packages/1e/41/f7dcf80b81ee8e71c1a2b59f14208bc723edbd89ed027a73b175abf6348e/opentelemetry_api-1.45.1-py3-none-any.whl", hash = "sha256:b31553efa588ae44bc306f863c785c5333a9ecc091248c6ee68b4b6c87fdedfb", size = 60256, upload-time = "2026-10-06T17:32:33.506Z" },
 ]
 
 [[package]]
@@ -1996,29 +1998,29 @@ wheels = [
 
 [[package]]
 name = "opentelemetry-sdk"
-version = "1.45.0"
+version = "1.45.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "opentelemetry-api" },
     { name = "opentelemetry-semantic-conventions" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ac/ed/ad32d76cc86ebce601105d01d13f8a08d6abc1852eaf69d79cf199bc1ee7/opentelemetry_sdk-1.45.0.tar.gz", hash = "sha256:20caa5130505e386c67c3da1c76e446c842698ced54c76c6148679539aa97972", size = 218337, upload-time = "2026-09-25T12:32:43.591Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a1/79/7392e21a1c8f0c61d90b223e31c7e48cb9d452e91a6b820ad24cca5f23c4/opentelemetry_sdk-1.45.1.tar.gz", hash = "sha256:63d24a6ca645019a631e6a51999c73e93adcac1196ca640b8ae78a7cc4762bf3", size = 218324, upload-time = "2026-10-06T17:33:13.26Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/8a/ae/46963201ce58d6b86f9e54087a39720a35ac9f57c3a9e440d275995c2b02/opentelemetry_sdk-1.45.0-py3-none-any.whl", hash = "sha256:5dc634c946546f61b757c5b1781f9fd1a10e96ffaf7357c797e508fe9c57e75e", size = 140132, upload-time = "2026-09-25T12:32:25.399Z" },
+    { url = "https://files.pythonhosted.org/packages/95/3c/87c42b4bd6dd297536f04cd9383d212ac557ecd49f2cbdcd46da1c9ef5c8/opentelemetry_sdk-1.45.1-py3-none-any.whl", hash = "sha256:c604c11dc429810812348989115fa44bd558772a3d7442afc43d024f2c250ca4", size = 140063, upload-time = "2026-10-06T17:32:55.04Z" },
 ]
 
 [[package]]
 name = "opentelemetry-semantic-conventions"
-version = "0.66b0"
+version = "0.66b1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "opentelemetry-api" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/2e/21/910f085c0b83b80e45c341c7859baef37c877046b2c44c88d5ff2d5db948/opentelemetry_semantic_conventions-0.66b0.tar.gz", hash = "sha256:97a77dce484c54861e7eeff7651fd8a806dd3c30e501dc316730215ec36890e6", size = 150247, upload-time = "2026-09-25T12:32:44.827Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/46/e4/dbbfb2a010c4db2224a5114638acede6fe563d33cc20fb1752cebcbe6298/opentelemetry_semantic_conventions-0.66b1.tar.gz", hash = "sha256:497ca63bf383723411e8eaf60c8779e9877633c936bb641080adab59d0eb6ec8", size = 150250, upload-time = "2026-10-06T17:33:14.073Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f4/93/2ad416d69c4ca8fd21ebc6894f23f4eda744dc6f43a14d7a9ffd7ed3abbd/opentelemetry_semantic_conventions-0.66b0-py3-none-any.whl", hash = "sha256:175b19dd98c4473f4f43a2b1df59186fd7b4a48cd3f77cbe03438b6d6fda230a", size = 206277, upload-time = "2026-09-25T12:32:26.484Z" },
+    { url = "https://files.pythonhosted.org/packages/bc/14/67f8aa798857f8cf686f515bf93d9bb877ce952ddc8efae0fa25b45ce0d6/opentelemetry_semantic_conventions-0.66b1-py3-none-any.whl", hash = "sha256:d4cddeb4315490b35213f55e2bdc9ac54bb1e4d318927475bed62b35545e581b", size = 206279, upload-time = "2026-10-06T17:32:56.103Z" },
 ]
 
 [[package]]
@@ -2067,7 +2069,7 @@ source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "numpy" },
     { name = "python-dateutil" },
-    { name = "tzdata", marker = "sys_platform == 'emscripten' or sys_platform == 'win32' or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "tzdata", marker = "sys_platform == 'emscripten' or sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/e2/17/d7b106e05bfa642e8694451e7d3d759c6a241c5386a5d962e4f66c047e06/pandas-3.0.6.tar.gz", hash = "sha256:66b07ef7315a31bfe1089cd3d71a7de781c9dca986762d0b4fe7c0ef17465d10", size = 4667686, upload-time = "2026-09-17T23:23:18.345Z" }
 wheels = [
@@ -2473,7 +2475,7 @@ name = "pytest"
 version = "9.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "sys_platform == 'win32' or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
     { name = "iniconfig" },
     { name = "packaging" },
     { name = "pluggy" },
@@ -2794,11 +2796,11 @@ wheels = [
 
 [[package]]
 name = "setuptools"
-version = "84.0.0"
+version = "84.1.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/6d/44/f5da03a8ef95d369145c5bb53050e7877c9f3d312e128605fd9504829143/setuptools-84.0.0.tar.gz", hash = "sha256:f4695c21257f0d9b537ec2692c941d02ee143b7cc1276941349a546573b2ef73", size = 1168449, upload-time = "2026-08-08T18:27:58.365Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/73/eb/7e5f628ee2eb168fecbf8026de7856b2543d6d609cc85f086b9a91ac93d6/setuptools-84.1.0.tar.gz", hash = "sha256:23657205b63d4d31395ab917815247f694aafad28cd21316bf5fd45a51048ea0", size = 1171783, upload-time = "2026-10-19T20:11:43.489Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/95/9c/c510029fc6ef33a6275cd2c5d3cecd6613dfd6aa401d57c54f1c18852ccf/setuptools-84.0.0-py3-none-any.whl", hash = "sha256:51a52592b3b99e102b609654876bd65f19f999935166d1352678931132b0c670", size = 818216, upload-time = "2026-08-08T18:27:56.719Z" },
+    { url = "https://files.pythonhosted.org/packages/18/02/b4bbb90f8f29e334898ff45c6d9b1fffaa6f378017052b3023a06262b5f7/setuptools-84.1.0-py3-none-any.whl", hash = "sha256:5231689c6ac8156cd155cfb98c3fd6fb252c3e7e9bd3d78b64d3c55f132624c9", size = 819380, upload-time = "2026-10-19T20:11:41.684Z" },
 ]
 
 [[package]]
@@ -3325,7 +3327,7 @@ name = "tqdm"
 version = "4.70.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "sys_platform == 'win32' or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/0d/ea/b2a5bd54b28a324dae8211928b2d730b6547500342c7e6c6dea08bd0a485/tqdm-4.70.1.tar.gz", hash = "sha256:cefd0eca11b2a37a3aee776544d4f4ae913f02688135b5556b8788dfa474afc4", size = 171846, upload-time = "2026-09-11T07:25:16.601Z" }
 wheels = [
@@ -3347,7 +3349,7 @@ version = "0.27.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "annotated-doc" },
-    { name = "colorama", marker = "sys_platform == 'win32' or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
     { name = "rich" },
     { name = "shellingham" },
 ]
@@ -3413,7 +3415,7 @@ name = "wasabi"
 version = "1.1.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "sys_platform == 'win32' or (extra == 'extra-11-fluentfolio-cpu' and extra == 'extra-11-fluentfolio-cu130')" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ac/f9/054e6e2f1071e963b5e746b48d1e3727470b2a490834d18ad92364929db3/wasabi-1.1.3.tar.gz", hash = "sha256:4bb3008f003809db0c3e28b4daf20906ea871a2bb43f9914197d540f4f2e0878", size = 30391, upload-time = "2024-05-31T16:56:18.99Z" }
 wheels = [

@@ -4,6 +4,10 @@ All notable changes are listed here. Versions follow [Semantic Versioning](https
 
 ## Unreleased
 
+## 0.1.1
+
+- Updates filelock to 4.2.1, opentelemetry-api to 1.45.1 and setuptools to 84.1.0 to address five published security advisories. The matching OpenTelemetry SDK and semantic conventions are updated with them. The usual two-week wait for other new package releases stays in place.
+- Updates filelock and setuptools in the optional MFA aligner's Windows and Linux environments too. An older environment is shown as needing an update and cannot run until it is reinstalled from Setup, or with `fluentfolio components install mfa`. Reinstallation needs an internet connection and downloads the environment's packages again; it does not remove recordings, analyses, settings or the downloaded speech models.
 - Install.cmd and Update.cmd now start Windows PowerShell with its own module path, also from a PowerShell 7 window. Before, Windows PowerShell took the modules of PowerShell 7 there. Two commands that the installer needs were then missing, so a new install stopped with an error.
 - When the installer uses the other folder it offers (if the usual one cannot be used), it makes that folder readable by you only. That step now also removes an "OWNER RIGHTS" entry, if the folder has one. The entry gives nobody else access, but before, the step counted it as another account and failed. Such an entry was seen only in tests on GitHub's Windows Server, on folders made inside a folder that Python had made private. A new folder at the top of a drive, where the installer's other folder goes, was not affected.
 

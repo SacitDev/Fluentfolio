@@ -39,6 +39,9 @@ jobs:
           cache-dependency-glob: uv.lock
       - run: uv sync --locked --extra cpu
       - run: uv run --locked python tools/check.py fast
+      - name: Build and check the patched optional MFA environment
+        timeout-minutes: 15
+        run: uv run --locked pytest -q -m network tests/network/test_mfa_environment.py
       - name: PSScriptAnalyzer on the Windows scripts
         if: runner.os == 'Windows'
         shell: pwsh

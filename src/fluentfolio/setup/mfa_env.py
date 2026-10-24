@@ -18,7 +18,6 @@ from fluentfolio.core.errors import SetupError
 from fluentfolio.jobs import runner
 
 IS_WINDOWS = sys.platform == "win32"
-LOCK = "mfa-env-win-64.txt" if IS_WINDOWS else "mfa-env-linux-64.txt"
 CREATE_S = 3600.0  # about 200 packages to fetch; micromamba prints no progress lines the runner reads
 CHECK_S = 300.0
 VERSION = re.compile(r"\d+\.\d+\.\d+")
@@ -47,7 +46,7 @@ def _env(app: Path) -> dict[str, str]:
 def installed_version(app: Path) -> str | None:
     """What `python -m montreal_forced_aligner version` says in the env, or None when it does not run."""
     env = mfa.env_dir(app)
-    if not mfa.python(env).is_file():
+    if not mfa.env_current(app) or not mfa.python(env).is_file():
         return None
     variables = runner.child_env(app, paths.data_root(), paths.models_dir(), None, cpu=True,
                                  extra_path=mfa.env_path(env))  # fmt: skip
@@ -71,7 +70,7 @@ def create(app: Path) -> str:
     env = mfa.env_dir(app)
     shutil.rmtree(env, ignore_errors=True)  # an update replaces the whole env
     variables = _env(app)
-    with resources.as_file(resources.files("fluentfolio.data").joinpath(LOCK)) as lock:
+    with resources.as_file(resources.files("fluentfolio.data").joinpath(mfa.LOCK)) as lock:
         done = runner.run(
             [str(exe), "create", "--no-rc", "-y", "-p", str(env),
              "--override-channels", "--channel", "conda-forge", "--file", str(lock)],

@@ -232,7 +232,7 @@ https://conda.anaconda.org/conda-forge/noarch/hyperframe-6.1.0-pyhd8ed1ab_0.cond
 https://conda.anaconda.org/conda-forge/noarch/certifi-2026.7.22-pyhd8ed1ab_0.conda#37e13edbe3b48f1095a9d085ef9cd83b
 https://conda.anaconda.org/conda-forge/noarch/idna-3.20-pyh5ded981_0.conda#ee73be987f9de9ea5c2fdaeefa7b6491
 https://conda.anaconda.org/conda-forge/noarch/truststore-0.10.5-pyh5ded981_0.conda#932e0e574fd29644d42c77b685885776
-https://conda.anaconda.org/conda-forge/noarch/filelock-4.1.1-pyhd8ed1ab_0.conda#fbff0cf6c30bdd9b38d0448fdadfe72d
+https://conda.anaconda.org/conda-forge/noarch/filelock-4.2.1-pyhd8ed1ab_0.conda#f3f085703753cf802b2719d28a570465
 https://conda.anaconda.org/conda-forge/noarch/fsspec-2026.9.0-pyhd8ed1ab_0.conda#42de5cd170647599a84f468a42fabb89
 https://conda.anaconda.org/conda-forge/noarch/click-8.5.0-pyh5ded981_0.conda#dea5b13a211bbf99876deb980b408a66
 https://conda.anaconda.org/conda-forge/noarch/platformdirs-4.13.0-pyh5ded981_0.conda#35cc2a176fc6f886d6efa41ecb5f1de0
@@ -241,7 +241,7 @@ https://conda.anaconda.org/conda-forge/noarch/decorator-5.3.1-pyhd8ed1ab_0.conda
 https://conda.anaconda.org/conda-forge/noarch/packaging-26.3-pyhc364b38_0.conda#936687ed80f295a1f5dbcf8bd34c252c
 https://conda.anaconda.org/conda-forge/noarch/narwhals-2.27.1-pyh5ded981_0.conda#772d508bf50139e7ff43f5a88746aef3
 https://conda.anaconda.org/conda-forge/noarch/threadpoolctl-3.7.0-pyhc455866_0.conda#8c05910e780502e362d658f00f5ec10f
-https://conda.anaconda.org/conda-forge/noarch/setuptools-84.0.0-pyh332efcf_0.conda#62ac906f1cd582c6c264c95625cb9d6f
+https://conda.anaconda.org/conda-forge/noarch/setuptools-84.1.0-pyhe730653_0.conda#1541d7acfe174f08d7696ea882765533
 https://conda.anaconda.org/conda-forge/noarch/pygments-2.21.0-pyhcf101f3_0.conda#2882dee445dfa45b0c5afce3ffb7730a
 https://conda.anaconda.org/conda-forge/noarch/typing_extensions-4.16.0-pyhcf101f3_0.conda#c70ad746c22219b9700931707482992c
 https://conda.anaconda.org/conda-forge/noarch/tqdm-4.70.1-pyhfa0c392_0.conda#ffc91f29264eeb8d3ba96fdc897316c3

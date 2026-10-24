@@ -114,9 +114,11 @@ def _files_status(c: Component, roots: Roots) -> tuple[Status, str] | None:
     if c.install == "env":
         files = [(mfa_env.file_target(f.path, roots.app, roots.models), f.size) for f in c.files_for(SYSTEM)]
         whole = all(p.is_file() and p.stat().st_size == size for p, size in files)
-        return None if whole and mfa.python(mfa.env_dir(roots.app)).is_file() else (
-            "needs-download", "its environment is not installed"
-        )  # fmt: skip
+        if not whole or not mfa.python(mfa.env_dir(roots.app)).is_file():
+            return "needs-download", "its environment is not installed"
+        if not mfa.env_current(roots.app):
+            return "needs-download", "its environment needs an update"
+        return None
     try:
         download.require(c, roots.models)
     except SetupError as exc:

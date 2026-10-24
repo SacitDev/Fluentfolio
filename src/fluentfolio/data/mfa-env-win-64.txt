@@ -108,7 +108,7 @@ https://conda.anaconda.org/conda-forge/win-64/svt-av1-4.0.1-hac47afa_0.conda#d97
 https://conda.anaconda.org/conda-forge/win-64/x264-1!164.3095-hfd05255_3.conda#4871b189ce6e4d5ea1ef26dc6ab6a0ad
 https://conda.anaconda.org/conda-forge/win-64/x265-3.5-h3ee6617_4.conda#4c268479e0b22b8939a779aeb8c08536
 https://conda.anaconda.org/conda-forge/win-64/ffmpeg-8.1.2-gpl_hdd6294f_902.conda#6efa244e707348f5b174e4cf4f945446
-https://conda.anaconda.org/conda-forge/noarch/filelock-4.1.1-pyhd8ed1ab_0.conda#fbff0cf6c30bdd9b38d0448fdadfe72d
+https://conda.anaconda.org/conda-forge/noarch/filelock-4.2.1-pyhd8ed1ab_0.conda#f3f085703753cf802b2719d28a570465
 https://conda.anaconda.org/conda-forge/noarch/munkres-1.1.4-pyhd8ed1ab_1.conda#37293a85a0f4f77bbd9cf7aaefc62609
 https://conda.anaconda.org/conda-forge/win-64/unicodedata2-18.0.0-py312he06e257_0.conda#99623d0df152a82f2ef345e8add291e1
 https://conda.anaconda.org/conda-forge/win-64/fonttools-4.66.1-py312h05f76fc_0.conda#a3c9c5a7088e090eb4aeec5a457944e5
@@ -205,6 +205,6 @@ https://conda.anaconda.org/conda-forge/win-64/sox-14.4.2-hb83ef69_1021.conda#e71
 https://conda.anaconda.org/conda-forge/win-64/sqlalchemy-2.1.4-py312he5662c2_0.conda#01a334790b1f8be2d16daf9c204a21fb
 https://conda.anaconda.org/conda-forge/win-64/sqlite-3.54.0-hdb435a2_101.conda#96e4b98490ed888b4075784037585eed
 https://conda.anaconda.org/conda-forge/noarch/montreal-forced-aligner-3.4.3-pyhd8ed1ab_1.conda#b522299d0d493b4f1196caf9a4b481c1
-https://conda.anaconda.org/conda-forge/noarch/setuptools-84.0.0-pyh332efcf_0.conda#62ac906f1cd582c6c264c95625cb9d6f
+https://conda.anaconda.org/conda-forge/noarch/setuptools-84.1.0-pyhe730653_0.conda#1541d7acfe174f08d7696ea882765533
 https://conda.anaconda.org/conda-forge/noarch/wheel-0.48.0-pyhd8ed1ab_0.conda#9a2124517bfd5d792e0f7b86eefdfeb8
 https://conda.anaconda.org/conda-forge/noarch/pip-26.2.1-pyh8b19718_0.conda#77b6cf3b0689d9fc68561df0db9b856d

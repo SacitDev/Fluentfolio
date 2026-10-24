@@ -12,6 +12,7 @@ from pathlib import Path
 
 import pytest
 from packaging.markers import Marker
+from packaging.version import Version
 
 ROOT = Path(__file__).parents[2]
 # The two supported systems as the lock's markers see them, and the wheel tag each one installs.
@@ -79,6 +80,14 @@ def missing_wheels(text: str) -> list[str]:
 
 def test_each_system_has_a_wheel_for_every_package_it_can_need() -> None:
     assert missing_wheels((ROOT / "uv.lock").read_text(encoding="utf-8")) == []
+
+
+def test_every_locked_copy_of_the_security_dependencies_is_patched() -> None:
+    lock = tomllib.loads((ROOT / "uv.lock").read_text(encoding="utf-8"))
+    floors = {"filelock": "4.2.1", "opentelemetry-api": "1.45.1", "setuptools": "84.1.0"}
+    for name, fixed in floors.items():
+        versions = [p["version"] for p in lock["package"] if p["name"] == name]
+        assert versions and all(Version(version) >= Version(fixed) for version in versions), name
 
 
 @pytest.mark.parametrize(
